@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Restaurantly Bootstrap Template - Index</title>
+	<title>PeRa Burger</title>
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 
@@ -58,7 +58,9 @@
 	<header id="header" class="fixed-top">
 		<div class="container d-flex align-items-center">
 
-			<h1 class="logo mr-auto"><a href="index.html">Restaurantly</a></h1>
+			<h1 class="logo mr-auto">
+				<img class="img-fluid" src="<?= base_url() ?>/public/img/peraburgelogo.png" alt="">
+			</h1>
 			<!-- Uncomment below if you prefer to use an image logo -->
 			<!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
