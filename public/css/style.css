@@ -9,13 +9,13 @@
 # General
 --------------------------------------------------------------*/
 body {
-  font-family: "Open Sans", sans-serif;
-  background: #0c0b09;
+  font-family: "Poppins", sans-serif;
+  background: #f4f6f9;
   color: #fff;
 }
 
 a {
-  color: #cda45e;
+  color: #76b119;
 }
 
 a:hover {
@@ -24,7 +24,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display", serif;
+  font-family: "Poppins", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -47,8 +47,8 @@ h1, h2, h3, h4, h5, h6 {
   top: calc(50% - 30px);
   left: calc(50% - 30px);
   border: 6px solid #1a1814;
-  border-top-color: #cda45e;
-  border-bottom-color: #cda45e;
+  border-top-color: #76b119;
+  border-bottom-color: #76b119;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -93,9 +93,9 @@ h1, h2, h3, h4, h5, h6 {
   width: 44px;
   height: 44px;
   border-radius: 50px;
-  color: #cda45e;
+  color: #76b119;
   transition: all 0.4s;
-  border: 2px solid #cda45e;
+  border: 2px solid #76b119;
 }
 
 .back-to-top i:hover {
@@ -130,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #topbar .contact-info i {
-  color: #d9ba85;
+  color: #76b119;
   padding-right: 4px;
 }
 
@@ -144,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
   list-style: none;
   padding: 0;
   margin: 0;
-  color: #cda45e;
+  color: #76b119;
 }
 
 #topbar .languages ul a {
@@ -166,12 +166,20 @@ h1, h2, h3, h4, h5, h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
-  background: rgba(12, 11, 9, 0.6);
+  
   border-bottom: 1px solid rgba(12, 11, 9, 0.6);
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
+ 
+}
+.headerhome{
+  background: rgba(12, 11, 9, 0.6);
   top: 40px;
+}
+.oscuro{
+  background: #393939;
+  top: 0px;
 }
 
 #header.header-scrolled {
@@ -185,9 +193,8 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
   line-height: 1;
-  font-weight: 300;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  
+  letter-spacing: 4px;
   font-family: "Poppins", sans-serif;
 }
 
@@ -230,11 +237,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
-  color: #d9ba85;
+  color: #76b119;
 }
 
 .nav-menu .book-a-table a {
-  border: 2px solid #cda45e;
+  border: 2px solid #76b119;
   color: #fff;
   border-radius: 50px;
   padding: 8px 25px;
@@ -515,7 +522,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero h1 span {
-  color: #cda45e;
+  color: #393939;
 }
 
 #hero h2 {
@@ -530,7 +537,8 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero .btn-menu, #hero .btn-book {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 25px;
+  background-color: #76b119;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   display: inline-block;
@@ -539,7 +547,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: 0.3s;
   line-height: 1;
   color: white;
-  border: 2px solid #cda45e;
+  border: 2px solid #fff;
 }
 
 #hero .btn-menu:hover, #hero .btn-book:hover {
@@ -554,7 +562,7 @@ h1, h2, h3, h4, h5, h6 {
 #hero .play-btn {
   width: 94px;
   height: 94px;
-  background: radial-gradient(#cda45e 50%, rgba(205, 164, 94, 0.4) 52%);
+  background: radial-gradient(#76b119 50%, rgba(205, 164, 94, 0.4) 52%);
   border-radius: 50%;
   display: block;
   position: relative;
@@ -719,8 +727,8 @@ section {
   margin: 0;
   font-size: 36px;
   font-weight: 700;
-  font-family: "Playfair Display", serif;
-  color: #cda45e;
+  font-family: "Poppins", sans-serif;
+  color: #76b119;
 }
 
 /*--------------------------------------------------------------
@@ -971,7 +979,9 @@ section {
 }
 
 .menu .menu-content::after {
-  content: "......................................................................" "...................................................................." "....................................................................";
+  content: "......................................................................"
+ "...................................................................."
+ "....................................................................";
   position: absolute;
   left: 20px;
   right: 0;
@@ -1792,4 +1802,15 @@ section {
   text-align: center;
   font-size: 13px;
   color: #fff;
+}
+
+.img-welcome{
+  
+  padding-bottom: 30px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #76b119;
+  border-color: #76b119;
 }
