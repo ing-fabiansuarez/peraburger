@@ -31,7 +31,8 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('/page2', 'Home::page2',['as'=>'page2']);
+$routes->get('crearpedido', 'Order::viewCreateOrder',['as'=>'view_createorder']);
+$routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclient']);
 
 /**
  * --------------------------------------------------------------------
