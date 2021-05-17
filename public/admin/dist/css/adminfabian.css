@@ -62,3 +62,7 @@ a:hover {
   left: calc(50% - 20px);
 }
 
+.prodimg {
+  width: 80px;
+  border-radius: 40%;
+}

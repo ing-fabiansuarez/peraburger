@@ -41,6 +41,19 @@
                         <form class="form-client" action="https://localhost/pera/createclient" method="post">
 
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Categor&oacute;a</label>
+                                <div class="col-sm-8">
+                                    <select id="departments" name="departments" class="form-control">
+                                        <option value="1">Combos</option>
+                                        <option value="2">Bebidas</option>
+                                        <option value="3">Helados</option>
+                                      
+
+                                    </select>
+                                    <p class="text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Producto</label>
                                 <div class="col-sm-8">
                                     <select id="departments" name="departments" class="form-control">
@@ -58,7 +71,9 @@
                                     <p class="text-danger"></p>
                                 </div>
                             </div>
+
                             
+
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">
@@ -77,29 +92,47 @@
                 <div class="card card-dark shadow-sm">
                     <div class="card-header">
                         <h3 class="card-title">LISTA DEL PEDIDO</h3>
-                        
+
                     </div>
                     <div class="card-body">
 
-                        <table class="table table-bordered">
+                        <table class="table table-hover table-striped table-responsive">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Task</th>
-                                    <th>Progress</th>
-                                    <th style="width: 40px">Label</th>
+                                    <th></th>
+                                    <th>Producto</th>
+                                    <th>Observaci&oacute;n</th>
+                                    <th style="width: 40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1.</td>
-                                    <td>Update software</td>
+
                                     <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                        </div>
+                                        <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
                                     </td>
-                                    <td><span class="badge bg-danger">55%</span></td>
+                                    <td>
+                                        <input type="hidden" name="reference" value="1054">
+                                        1054
+                                    </td>
+                                    <td>
+                                        <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="idcategory" value="14">
+                                        14
+                                    </td>
+                                    <td>
+
+                                        <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                    </td>
+                                    <td>
+                                        <button type="submit" style="border-color: transparent; background: transparent;">
+                                            <i class="far fa-save action-product icon-green"></i>
+                                        </button>
+                                    </td>
+
                                 </tr>
                                 <tr>
                                     <td>2.</td>
