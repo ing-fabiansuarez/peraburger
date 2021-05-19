@@ -41,13 +41,13 @@
                         <form class="form-client" action="https://localhost/pera/createclient" method="post">
 
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Categor&oacute;a</label>
+                                <label class="col-sm-4 col-form-label">Categor&iacute;a</label>
                                 <div class="col-sm-8">
                                     <select id="departments" name="departments" class="form-control">
                                         <option value="1">Combos</option>
                                         <option value="2">Bebidas</option>
                                         <option value="3">Helados</option>
-                                      
+
 
                                     </select>
                                     <p class="text-danger"></p>
@@ -66,13 +66,31 @@
                                         <option value="7">Barquilla en vaso</option>
                                         <option value="7">Porsion de papitas</option>
 
-
                                     </select>
                                     <p class="text-danger"></p>
                                 </div>
                             </div>
 
-                            
+                            <div class="form-group row">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                    <label class="custom-control-label" for="customSwitch1">Tomate</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                    <label class="custom-control-label" for="customSwitch2">Cebolla</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch3">
+                                    <label class="custom-control-label" for="customSwitch3">Lechuga</label>
+                                </div>
+                            </div>
+   
+
 
 
                             <div class="text-center">
@@ -95,77 +113,248 @@
 
                     </div>
                     <div class="card-body">
+                        <div class="card-body table-responsive p-0" style="height: 59vh;">
+                            <table class="table table-head-fixed table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>numero</th>
+                                        <th>Producto</th>
+                                        <th>Observaci&oacute;n</th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
 
-                        <table class="table table-hover table-striped table-responsive">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Producto</th>
-                                    <th>Observaci&oacute;n</th>
-                                    <th style="width: 40px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
 
-                                    <td>
-                                        <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
-                                    </td>
-                                    <td>
-                                        <input type="hidden" name="reference" value="1054">
-                                        1054
-                                    </td>
-                                    <td>
-                                        <input name="nameproduct" type="text" class="form-control" value="Serenidad">
-                                    </td>
-                                    <td>
-                                        <input type="hidden" name="idcategory" value="14">
-                                        14
-                                    </td>
-                                    <td>
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
 
-                                        <input name="activeproduct" type="text" class="form-control" value="si">
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
 
-                                    </td>
-                                    <td>
-                                        <button type="submit" style="border-color: transparent; background: transparent;">
-                                            <i class="far fa-save action-product icon-green"></i>
-                                        </button>
-                                    </td>
+                                    </tr>
+                                    <tr>
 
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td>Clean database</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-warning" style="width: 70%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-warning">70%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3.</td>
-                                    <td>Cron job running</td>
-                                    <td>
-                                        <div class="progress progress-xs progress-striped active">
-                                            <div class="progress-bar bg-primary" style="width: 30%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-primary">30%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4.</td>
-                                    <td>Fix and squish bugs</td>
-                                    <td>
-                                        <div class="progress progress-xs progress-striped active">
-                                            <div class="progress-bar bg-success" style="width: 90%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">90%</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="reference" value="1054">
+                                            1054
+                                        </td>
+                                        <td>
+                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="idcategory" value="14">
+                                            14
+                                        </td>
+                                        <td>
+
+                                            <input name="activeproduct" type="text" class="form-control" value="si">
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" style="border-color: transparent; background: transparent;">
+                                                <i class="far fa-save action-product icon-green"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
