@@ -1,5 +1,8 @@
 <?= $this->extend('admin/structure/main_admin_view') ?>
 <?= $this->section('title') ?> - Nuevo Pedido<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<script src="<?= base_url() ?>/public/admin/dist/js/ajax_product.js"></script>
+<?= $this->endSection() ?>
 
 
 
@@ -43,30 +46,20 @@
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Categor&iacute;a</label>
                                 <div class="col-sm-8">
-                                    <select id="departments" name="departments" class="form-control">
-                                        <option value="1">Combos</option>
-                                        <option value="2">Bebidas</option>
-                                        <option value="3">Helados</option>
-
-
+                                    <select id="categories-select" name="categories-select" class="form-control">
+                                        <?php foreach ($categories as $cat) { ?>
+                                            <option value="<?= $cat['id_category'] ?>"><?= $cat['name_category'] ?></option>
+                                        <?php } ?>
                                     </select>
                                     <p class="text-danger"></p>
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Producto</label>
                                 <div class="col-sm-8">
-                                    <select id="departments" name="departments" class="form-control">
-                                        <option value="1">PeRa Burguer</option>
-                                        <option value="2">PeRa Felicidad</option>
-                                        <option value="3">PeRa Amor</option>
-                                        <option value="4">Brutos Pero Decididos</option>
-                                        <option value="5">PeRa Locura</option>
-                                        <option value="6">Barquilla en cono</option>
-                                        <option value="7">Barquilla en vaso</option>
-                                        <option value="7">Porsion de papitas</option>
-
-                                    </select>
+                                    <div name="productossss" id="productossss">
+                                    </div>
                                     <p class="text-danger"></p>
                                 </div>
                             </div>
@@ -89,7 +82,7 @@
                                     <label class="custom-control-label" for="customSwitch3">Lechuga</label>
                                 </div>
                             </div>
-   
+
 
 
 
