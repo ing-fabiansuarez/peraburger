@@ -14,14 +14,12 @@ class RecipeModel extends Model
 
     protected $allowedFields = [];
 
-  /*   public function getEmployeeLogin(string $column,string $value){
-        return $this->db->table('employee e')
+    public function getIngredientsOfProduct( $product)
+    {
+        return $this->db->table('recipe r')
             ->select('*')
-            ->join('position p', 'e.id_position_employee = p.id_position')
-            ->where("e.$column", $value)
-            ->get()->getFirstRow();
-        //return $this->where($column,$value)->first();
-    } */
-
-
+            ->join('ingredient i', 'i.id_ingredient = r.ingredient_id_ingredient')
+            ->where("r.product_id_product", $product)
+            ->get()->getResultArray();
+    }
 }

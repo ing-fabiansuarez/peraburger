@@ -58,31 +58,21 @@
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Producto</label>
                                 <div class="col-sm-8">
-                                    <div name="productossss" id="productossss">
-                                    </div>
+                                    <select name='productossss' id='productossss' class='form-control' required></select>
                                     <p class="text-danger"></p>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                    <label class="custom-control-label" for="customSwitch1">Tomate</label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                                    <label class="custom-control-label" for="customSwitch2">Cebolla</label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                                    <label class="custom-control-label" for="customSwitch3">Lechuga</label>
+                                <label class="col-sm-4 col-form-label">Ingredientes</label>
+                                <div class="col-sm-8">
+                                    <select name='ingredients-div' id='ingredients-div' class='form-control' required></select>
+                                    <p class="text-danger"></p>
                                 </div>
                             </div>
 
+                            
+                           
 
 
 
