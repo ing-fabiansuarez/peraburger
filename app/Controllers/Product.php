@@ -31,15 +31,8 @@ class Product extends BaseController
 			foreach ($ingredients as $ingredient) {
 				$cadena = $cadena . '<option value="' . $ingredient['id_ingredient'] . '">' . $ingredient['name_ingredient'] . '</option>';
 			}
-			foreach ($ingredients as $ingredient) {
-				$cadena = $cadena . "</select><div class='form-group row'>
-				<div class='custom-control custom-switch'>
-					<input type='checkbox' class='custom-control-input' id='customSwitch1'>
-					<label class='custom-control-label' for='customSwitch1'>Tomate</label>
-				</div>
-			</div>";
-			}
-			echo $cadena . "";
+
+			echo $cadena . "</select>";
 			return true;
 		}
 	}

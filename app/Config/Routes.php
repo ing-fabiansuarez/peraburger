@@ -37,6 +37,8 @@ $routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclien
 $routes->get('/productofcategory', 'Product::ajaxProductOfCategory');
 $routes->get('/ingredientsofproduct', 'Product::ajaxProductRecipe');
 
+$routes->post('/addproduct', 'Order::addProductToListOrder',['as'=>'addproductlistorder']);
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

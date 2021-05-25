@@ -14,4 +14,10 @@ class Order extends BaseController
             'categories' => $mdlCategory->findAll()
         ]);
     }
+
+    public function addProductToListOrder(){
+      
+        dd($this->request->getPostGet());
+    }
+
 }
