@@ -8,7 +8,7 @@ $(document).ready(function () {
   $("#categories-select").change(function () {
     reloadproducts();
   });
-  $("#productossss").change(function () {
+  $("#products-select").change(function () {
     reloadingredients();
   });
 });
@@ -18,7 +18,7 @@ function reloadproducts() {
     url: base_url + "/productofcategory",
     data: "category=" + $("#categories-select").val(),
     success: function (r) {
-      $("#productossss").html(r);
+      $("#products-select").html(r);
       reloadingredients();
     },
   });
@@ -30,7 +30,7 @@ function reloadingredients() {
   $.ajax({
     type: "get",
     url: base_url + "/ingredientsofproduct",
-    data: "product=" + $("#productossss").val(),
+    data: "product=" + $("#products-select").val(),
     success: function (r) {
       $("#ingredients-div").html(r);
     },

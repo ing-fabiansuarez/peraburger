@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2021 a las 00:14:59
+-- Tiempo de generación: 26-05-2021 a las 01:09:12
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 7.4.16
 
@@ -72,20 +72,21 @@ CREATE TABLE `product` (
   `id_product` int(11) NOT NULL,
   `name_product` varchar(100) NOT NULL,
   `price_product` double NOT NULL,
-  `category_id_category` int(11) NOT NULL
+  `category_id_category` int(11) NOT NULL,
+  `image_product` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `product`
 --
 
-INSERT INTO `product` (`id_product`, `name_product`, `price_product`, `category_id_category`) VALUES
-(1, 'PeRa Burger', 13000, 1),
-(2, 'Brutos Pero Decididos', 25000, 1),
-(3, 'barquilla', 3000, 2),
-(4, 'Gaseosa Cocacola 350ml', 2500, 3),
-(5, 'Gaseosa Pepsi 350ml', 2000, 3),
-(6, 'Cono', 4000, 2);
+INSERT INTO `product` (`id_product`, `name_product`, `price_product`, `category_id_category`, `image_product`) VALUES
+(1, 'PeRa Burger', 13000, 1, '1.jpeg'),
+(2, 'Brutos Pero Decididos', 25000, 1, ''),
+(3, 'barquilla', 3000, 2, ''),
+(4, 'Gaseosa Cocacola 350ml', 2500, 3, ''),
+(5, 'Gaseosa Pepsi 350ml', 2000, 3, ''),
+(6, 'Cono', 4000, 2, '');
 
 -- --------------------------------------------------------
 

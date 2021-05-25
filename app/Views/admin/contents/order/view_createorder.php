@@ -60,7 +60,7 @@
                         <form class="form-client" action="<?= base_url() . route_to('addproductlistorder') ?>" method="post">
 
                             <div class="form-group row">
-                                <label class="col-sm-12 col-form-label">Categor&iacute;a</label>
+                                <label>Categor&iacute;a</label>
                                 <div class="col-sm-12">
                                     <select id="categories-select" name="categories-select" class="form-control">
                                         <?php foreach ($categories as $cat) { ?>
@@ -72,9 +72,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-12 col-form-label">Producto</label>
+                                <label>Producto</label>
                                 <div class="col-sm-12">
-                                    <select name='productossss' id='productossss' class='form-control' required></select>
+                                    <select name='products-select' id='products-select' class='form-control' required></select>
                                     <p class="text-danger"></p>
                                 </div>
                             </div>
@@ -82,12 +82,24 @@
                             <div class="form-group">
                                 <label>Sin...</label>
                                 <div class="select2-purple">
-
-                                    <select  name='ingredients-div[]' id='ingredients-div' class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                        
+                                    <select name='ingredients-div[]' id='ingredients-div' class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label>Cantidad</label>
+                                <div class="col-sm-12">
+                                    <select name="quantity" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <p class="text-danger"></p>
+                                </div>
+                            </div>
+
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">
