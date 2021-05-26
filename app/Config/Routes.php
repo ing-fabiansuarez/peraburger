@@ -34,6 +34,9 @@ $routes->get('/', 'Home::index');
 $routes->get('crearpedido', 'Order::viewCreateOrder',['as'=>'view_createorder']);
 $routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclient']);
 
+
+$routes->get('cart', 'Order::cart');
+
 $routes->get('/productofcategory', 'Product::ajaxProductOfCategory');
 $routes->get('/ingredientsofproduct', 'Product::ajaxProductRecipe');
 

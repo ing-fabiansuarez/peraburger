@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\CategoryModel;
+use App\Models\ProductModel;
 
 class Order extends BaseController
 {
@@ -10,6 +11,8 @@ class Order extends BaseController
     public function viewCreateOrder()
     {
         $mdlCategory  = new CategoryModel();
+        $mdlProduct = new ProductModel();
+        dd($mdlProduct->getInfoProductsListOrder($_SESSION['list_order']));
         return view('admin/contents/order/view_createorder', [
             'categories' => $mdlCategory->findAll()
         ]);
@@ -35,19 +38,22 @@ class Order extends BaseController
         d($this->request->getPostGet());
         d($whitout_ingredients);
         $quantity = $this->request->getPostGet('quantity');
-        $item = '';//OJO VOY AQUIIIIIIIIIIIII
         $newItem = [
-            $item => [
+            [
+                'id' => time(),
                 'product'  => $product,
                 'quantity'     => $quantity,
                 'whitout_ingredients'     => $whitout_ingredients
             ]
         ];
-
         if (isset($_SESSION['list_order'])) {
             $this->session->push('list_order', $newItem);
         } else {
             $this->session->set('list_order', $newItem);
         }
+        return redirect()->route('view_createorder');
+    }
+    public function cart(){
+        dd($_SESSION['list_order']);
     }
 }

@@ -125,12 +125,12 @@
                             <table class="table table-head-fixed table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>numero</th>
                                         <th>Producto</th>
+                                        <th>Nombre</th>
                                         <th>Observaci&oacute;n</th>
-                                        <th>1</th>
-                                        <th>2</th>
-                                        <th>3</th>
+                                        <th>Catidad</th>
+                                       
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -150,11 +150,7 @@
                                             <input type="hidden" name="idcategory" value="14">
                                             14
                                         </td>
-                                        <td>
-
-                                            <input name="activeproduct" type="text" class="form-control" value="si">
-
-                                        </td>
+                                      
                                         <td>
                                             <button type="submit" style="border-color: transparent; background: transparent;">
                                                 <i class="far fa-save action-product icon-green"></i>

@@ -14,14 +14,13 @@ class ProductModel extends Model
 
     protected $allowedFields = [];
 
-  /*   public function getEmployeeLogin(string $column,string $value){
-        return $this->db->table('employee e')
-            ->select('*')
-            ->join('position p', 'e.id_position_employee = p.id_position')
-            ->where("e.$column", $value)
-            ->get()->getFirstRow();
-        //return $this->where($column,$value)->first();
-    } */
+    public function getInfoProductsListOrder($list_order)
+    {
+        $arrayresult = array();
+        foreach ($list_order as $item) {
+            array_push($arrayresult, $this->find($item['product']));
+        }
+        return $arrayresult;
 
-
+    }
 }
