@@ -16,11 +16,22 @@ class ProductModel extends Model
 
     public function getInfoProductsListOrder($list_order)
     {
+        $mdlIngredient = new IngredientModel();
         $arrayresult = array();
         foreach ($list_order as $item) {
-            array_push($arrayresult, $this->find($item['product']));
+            $consultamdl = array();
+            $consultamdl = $this->find($item['product']);
+            $without_ingredients = array();
+            foreach($item['whitout_ingredients'] as $without){
+                array_push( $without_ingredients,$mdlIngredient->find($without));
+            }
+            $consultamdl = array_merge($consultamdl, [
+                'whitout_ingredients' => $without_ingredients,
+                'quantity' => $item['quantity'],
+                'id_list_order'=>$item['id']
+            ]);
+            array_push($arrayresult, $consultamdl);
         }
         return $arrayresult;
-
     }
 }

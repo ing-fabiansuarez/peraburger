@@ -44,11 +44,11 @@
 
         <div class="row">
 
-            <div class="col-md-3">
+            <div class="col-md-6">
 
                 <div class="card card-success shadow-sm">
                     <div class="card-header">
-                        <h3 class="card-title">Agregar Producto</h3>
+                        <h3 class="card-title">PASO 1: Agregar Producto</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -114,60 +114,127 @@
 
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-6">
+
                 <div class="card card-dark shadow-sm">
                     <div class="card-header">
-                        <h3 class="card-title">LISTA DEL PEDIDO</h3>
+                        <h3 class="card-title">PASO 2: LISTA DEL PEDIDO</h3>
 
                     </div>
-                    <div class="card-body">
-                        <div class="card-body table-responsive p-0" style="height: 59vh;">
-                            <table class="table table-head-fixed table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Producto</th>
-                                        <th>Nombre</th>
-                                        <th>Observaci&oacute;n</th>
-                                        <th>Catidad</th>
-                                       
-                                        <th>Acción</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
+                    <div class="card-body padding-0">
+                        <?php if (empty($list_order)) { ?>
 
-                                        <td>
-                                            <img src="https://www.tienda.peradk.com/public/pictures/miniatures/14-1054-Serenidad.jpg" alt="ne" class="img-fluid prodimg">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="reference" value="1054">
-                                            1054
-                                        </td>
-                                        <td>
-                                            <input name="nameproduct" type="text" class="form-control" value="Serenidad">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="idcategory" value="14">
-                                            14
-                                        </td>
-                                      
-                                        <td>
-                                            <button type="submit" style="border-color: transparent; background: transparent;">
-                                                <i class="far fa-save action-product icon-green"></i>
-                                            </button>
-                                        </td>
+                        <?php } else { ?>
+                            <div class="card-body table-responsive p-0" style="height: 59vh;">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Catidad</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
 
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $total = 0;
+                                        foreach ($list_order as $item_list) : ?>
+                                            <tr>
+
+                                                <td class="text-center">
+                                                    <img src="<?= base_url() . route_to('img-menu') . '/' . $item_list['category_id_category'] . '/' . $item_list['image_product'] ?>" alt="" class="img-fluid prodimg">
+                                                </td>
+                                                <td class="text-center">
+                                                    <?= $item_list['quantity'] ?>
+                                                </td>
+                                                <td>
+                                                    <strong><?= $item_list['name_product'] ?></strong><br>
+                                                    <?php if (empty($item_list['whitout_ingredients'])) :
+                                                        $discounts = 0;
+                                                    else : $discounts = 0;
+                                                        foreach ($item_list['whitout_ingredients'] as $without) :
+                                                            $discounts = $discounts + $without['price_ingredient'];
+                                                    ?>
+                                                            Sin <?= $without['name_ingredient'] . ' - $ ' . number_format($without['price_ingredient']) . '<br>' ?>
+
+                                                    <?php endforeach;
+                                                    endif; ?>
+                                                </td>
+                                                <td class="float-right">
+                                                    <?= '$ ' . number_format(($item_list['price_product'] * $item_list['quantity']) - $discounts) ?>
+                                                    <?php $total = $total + (($item_list['price_product'] * $item_list['quantity']) - $discounts) ?>
+                                                </td>
+                                                <td>
+                                                    <form action="<?= base_url() . route_to('deleteproductlistorder') ?>" method="post">
+                                                        <input type="hidden" name="id" value="<?= $item_list['id_list_order'] ?>">
+                                                        <button type="submit" style="border-color: transparent; background: transparent;">
+                                                            <i class="far fa-times-circle action-product icon-green"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <strong>TOTAL</strong>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td class="float-right">
+                                                <strong> <?= '$ ' . number_format($total) ?></strong>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        <?php } ?>
+                        <form action="<?= base_url() . route_to('view_createorder_finish') ?>" method="post">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">
+                                    CREAR PEDIDO
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- <div class="text-center">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                CREAR PEDIDO
+                            </button>
                         </div>
-
+                        <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Deseas crear el nuevo pedido?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Debes cobrar <strong><?= '$ ' . number_format($total) ?></strong></p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary">Si, crear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
-                    <!-- /.card-body -->
                 </div>
             </div>
 
         </div>
     </div>
+
 </section>
 <?= $this->endSection() ?>

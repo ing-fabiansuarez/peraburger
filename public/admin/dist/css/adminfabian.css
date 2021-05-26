@@ -15,7 +15,6 @@ a:hover {
 }
 
 .form-control {
-  height: 30px;
   padding: 0rem 0.75rem;
   color: black;
 }
@@ -31,6 +30,21 @@ a:hover {
 .btn-primary {
   color: #fff;
   background-color: #76b119;
+  border-color: #76b119;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #202020;
+  border-color: #76b119;
+}
+.btn-primary:active {
+  color: #fff;
+  background-color: #202020;
+  border-color: #76b119;
+}
+.btn-primary:focus {
+  color: #fff;
+  background-color: #202020;
   border-color: #76b119;
 }
 .card-header {
@@ -63,6 +77,10 @@ a:hover {
 }
 
 .prodimg {
-  width: 80px;
-  border-radius: 40%;
+  height: 50px;
+  border-radius: 10%;
+}
+
+.padding-0 {
+  padding: 0;
 }
