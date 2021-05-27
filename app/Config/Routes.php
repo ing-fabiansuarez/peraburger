@@ -37,9 +37,11 @@ $routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclien
 //routes crear order
 $routes->get('crearpedido', 'Order::viewCreateOrder',['as'=>'view_createorder']);
 $routes->post('crearpedido', 'Order::viewCreateOrderFinish',['as'=>'view_createorder_finish']);
+$routes->post('createpedido', 'Order::createOrder',['as'=>'create_order']);
 
 $routes->post('addproduct', 'Order::addProductToListOrder',['as'=>'addproductlistorder']);
 $routes->post('deleteproduct', 'Order::deleteProductToListOrder',['as'=>'deleteproductlistorder']);
+
 
 //routes prueba
 $routes->get('cart', 'Order::cart');

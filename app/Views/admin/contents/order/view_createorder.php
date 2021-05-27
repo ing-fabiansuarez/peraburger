@@ -43,6 +43,13 @@
     <div class="container-fluid">
 
         <div class="row">
+            <?php if (!empty(session('error'))) : ?>
+                <div class="alert alert-danger alert-dismissible col-md-12">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> <?= session('error.title') ?></h5>
+                    <?= session('error.body') ?>
+                </div>
+            <?php endif ?>
 
             <div class="col-md-6">
 
@@ -133,7 +140,6 @@
                                             <th>Catidad</th>
                                             <th>Nombre</th>
                                             <th>Precio</th>
-
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -177,58 +183,31 @@
                                         <?php endforeach; ?>
                                         <tr>
                                             <td>
-
                                             </td>
                                             <td>
                                                 <strong>TOTAL</strong>
                                             </td>
                                             <td>
-
                                             </td>
                                             <td class="float-right">
                                                 <strong> <?= '$ ' . number_format($total) ?></strong>
                                             </td>
                                             <td>
-
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
 
                             </div>
-                        <?php } ?>
-                        <form action="<?= base_url() . route_to('view_createorder_finish') ?>" method="post">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">
-                                    CREAR PEDIDO
-                                </button>
-                            </div>
-                        </form>
-                        
-                        <!-- <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                                CREAR PEDIDO
-                            </button>
-                        </div>
-                        <div class="modal fade" id="modal-default">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Deseas crear el nuevo pedido?</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Debes cobrar <strong><?= '$ ' . number_format($total) ?></strong></p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary">Si, crear</button>
-                                    </div>
+                            <form action="<?= base_url() . route_to('view_createorder_finish') ?>" method="post">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">
+                                        CREAR PEDIDO
+                                    </button>
                                 </div>
-                            </div>
-                        </div> -->
+                            </form>
+                        <?php } ?>
+
                     </div>
                 </div>
             </div>

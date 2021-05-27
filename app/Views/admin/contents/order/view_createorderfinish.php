@@ -136,30 +136,7 @@
 
 
 
-                        <!-- <div class="text-center">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                                    CREAR PEDIDO
-                                </button>
-                            </div>
-                            <div class="modal fade" id="modal-default">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Deseas crear el nuevo pedido?</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Debes cobrar <strong><?= '$ ' . number_format($total) ?></strong></p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                            <button type="button" class="btn btn-primary">Si, crear</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+
                     </div>
                 </div>
             </div>
@@ -176,161 +153,117 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="<?= base_url() . route_to('create_order') ?>" method="post">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- text input -->
+                                <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Cliente</label>
-                                        <input type="text" class="form-control" placeholder="Cedula">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                <div class="form-group">
                                         <label>Tipo</label>
-                                        <select class="form-control">
-                                            <option>Local</option>
-                                            <option>Domicilio</option>
-                                          
+                                        <select name="typeshipping" class="form-control">
+                                            <option value="1">Domicilio</option>
+                                            <option value="2">Local</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- textarea -->
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Textarea</label>
-                                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                        <label>Cedula *</label>
+                                        <input name="cedula" type="number" class="form-control" placeholder="Cedula *" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Textarea Disabled</label>
-                                        <textarea class="form-control" rows="3" placeholder="Enter ..." disabled=""></textarea>
+                                        <label>Nombre *</label>
+                                        <input name="name" type="text" class="form-control" placeholder="Nombre *" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Apellido</label>
+                                        <input name="surname" type="text" class="form-control" placeholder="Apellido">
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- input states -->
-                            <div class="form-group">
-                                <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
-                                    success</label>
-                                <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label" for="inputWarning"><i class="far fa-bell"></i> Input with
-                                    warning</label>
-                                <input type="text" class="form-control is-warning" id="inputWarning" placeholder="Enter ...">
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label" for="inputError"><i class="far fa-times-circle"></i> Input with
-                                    error</label>
-                                <input type="text" class="form-control is-invalid" id="inputError" placeholder="Enter ...">
-                            </div>
-
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- checkbox -->
+                                <div class="col-sm-3">
                                     <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox">
-                                            <label class="form-check-label">Checkbox</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked="">
-                                            <label class="form-check-label">Checkbox checked</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" disabled="">
-                                            <label class="form-check-label">Checkbox disabled</label>
-                                        </div>
+                                        <label>Direcci&oacute;n *</label>
+                                        <input name="adress" type="text" class="form-control" placeholder="Cedula *" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <!-- radio -->
+                                <div class="col-sm-3">
                                     <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radio1">
-                                            <label class="form-check-label">Radio</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radio1" checked="">
-                                            <label class="form-check-label">Radio checked</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" disabled="">
-                                            <label class="form-check-label">Radio disabled</label>
-                                        </div>
+                                        <label>Barrio *</label>
+                                        <input name="barrio" type="text" class="form-control" placeholder="Nombre *" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Domiciliario</label>
+                                        <select name="domi" class="form-control" required>
+                                            <option value="1">11</option>
+                                            <option value="1098823092">Fabian Suarez</option>
+                                            <option value="1094524552">Andres Rodrigues</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Valor *</label>
+                                        <input name="price_domi" type="number" class="form-control" placeholder="Valor domi*" required>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- select -->
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Select</label>
-                                        <select class="form-control">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <label>WhatsApp *</label>
+
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            </div>
+                                            <input name="whatsapp" type="number" class="form-control" required>
+                                        </div>
                                     </div>
+                                  
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label>Select Disabled</label>
-                                        <select class="form-control" disabled="">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <label>Observaci&oacute;n</label>
+                                        <textarea name="observation" class="form-control" rows="2" placeholder="Observaciones adicionales ..."></textarea>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- Select multiple-->
-                                    <div class="form-group">
-                                        <label>Select Multiple</label>
-                                        <select multiple="" class="form-control">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Select Multiple Disabled</label>
-                                        <select multiple="" class="form-control" disabled="">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                    CREAR PEDIDO
+                                </button>
+                            </div>
+                            <div class="modal fade" id="modal-default">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Deseas crear el nuevo pedido?</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Debes cobrar <strong><?= '$ ' . number_format($total) ?> + Valor de domicilio</strong></p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Si, crear</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
-
                     </div>
-                    <!-- /.card-body -->
                 </div>
-
             </div>
-
-
-
         </div>
     </div>
 
