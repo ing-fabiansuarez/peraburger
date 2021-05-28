@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Entities\Order as EntitiesOrder;
 use App\Models\CategoryModel;
+use App\Models\ClientModel;
 use App\Models\DomicilioModel;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
@@ -20,62 +21,110 @@ class Order extends BaseController
                 'body' => 'No hay productos en el carrito de compras.'
             ]);
         }
-        if (!$this->validate(
-            [
-                'typeshipping' => 'required',
-                'cedula' => 'required|is_natural',
-                'name' => 'required',
-                'adress' => 'required',
-                'barrio' => 'required',
-                'domi' => 'required|is_natural',
-                'price_domi' => 'required|decimal',
-                'whatsapp' => 'required|is_natural'
-            ]
-        )) {
+
+        $typeshipping_id_typeshipping = $this->request->getPostGet('typeshipping');
+
+        if (empty($typeshipping_id_typeshipping)) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
-                'body' => 'Tuvimos problemas al recibir los datos del pedido.'
+                'body' => 'No recibimos el tipo de envio.'
             ]);
         }
 
-
-        //datos recibidos del formulario
-        $typeshipping_id_typeshipping = $this->request->getPostGet('typeshipping');
-        $client_id_client = $this->request->getPostGet('cedula');
-        $name = $this->request->getPostGet('name');
-        $surname = $this->request->getPostGet('surname');
-        $adress = $this->request->getPostGet('adress');
-        $barrio = $this->request->getPostGet('barrio');
-        $domicilio_id_domicilio = $this->request->getPostGet('domi');
-        $price_domi = $this->request->getPostGet('price_domi');
-        $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
-        $observations_order = $this->request->getPostGet('observation');
-        $turn_machine = 13;
-
-        //datos Necesarios para crear el pedido
         $employee = '1098823092';
         $REFERENCE = date("Y-m-d") . '-' . time();
 
-        //FATA VERIFICAR SI EL DOMICILIARIO EXITE
-        //FALTA VERFICAR SI EXITE EL CLIENTE
+        $name = $this->request->getPostGet('name');
+        $surname = $this->request->getPostGet('surname');
+        $observations_order = $this->request->getPostGet('observation');
 
-        $new_domicilio = [
-            'id_domicilio' => $REFERENCE,
-            'address_domicilio' => $adress,
-            'neighborhood_domicilio' => $barrio,
-            'domiciliary_id_domiciliary' => $domicilio_id_domicilio,
-            'price_domicilio' => $price_domi,
-            'whatsapp_domicilio' => $whatsapp_domicilio
-        ];
-        
-        $mdlDomicilio = new DomicilioModel();
+
+        switch ($typeshipping_id_typeshipping) {
+            case 1:
+                if (!$this->validate(
+                    [
+                        'typeshipping' => 'required',
+                        'name' => 'required',
+                        'adress' => 'required',
+                        'barrio' => 'required',
+                        'domi' => 'required|is_natural',
+                        'price_domi' => 'required|decimal',
+                        'whatsapp' => 'required|is_natural'
+                    ]
+                )) {
+                    return redirect()->back()->with('error', [
+                        'title' => 'Alerta!',
+                        'body' => 'Tuvimos problemas al recibir los datos del pedido.'
+                    ]);
+                }
+
+                $adress = $this->request->getPostGet('adress');
+                $barrio = $this->request->getPostGet('barrio');
+                $domiciliario = $this->request->getPostGet('domi');
+                $price_domi = $this->request->getPostGet('price_domi');
+                $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
+                $turn_machine = null;
+                $domicilio = $REFERENCE;
+
+                $new_domicilio = [
+                    'id_domicilio' => $REFERENCE,
+                    'address_domicilio' => $adress,
+                    'neighborhood_domicilio' => $barrio,
+                    'domiciliary_id_domiciliary' => $domiciliario,
+                    'price_domicilio' => $price_domi,
+                    'whatsapp_domicilio' => $whatsapp_domicilio
+                ];
+
+                $mdlDomicilio = new DomicilioModel();
+
+                try {
+                    $mdlDomicilio->insert($new_domicilio);
+                } catch (Exception $e) {
+                    return redirect()->back()->with('error', [
+                        'title' => 'Alerta!',
+                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion del domicilio. <br>Excepción capturada:' .  $e->getMessage()
+                    ]);
+                }
+                break;
+
+            case 2:
+                if (!$this->validate(
+                    [
+                        'typeshipping' => 'required',
+                        'name' => 'required',
+                        'turn_machine' => 'required|is_natural',
+                    ]
+                )) {
+                    return redirect()->back()->with('error', [
+                        'title' => 'Alerta!',
+                        'body' => 'Tuvimos problemas al recibir los datos del pedido.'
+                    ]);
+                }
+                $turn_machine = $this->request->getPostGet('turn_machine');
+                $domicilio = 1;
+
+                break;
+            default:
+                return redirect()->back()->with('error', [
+                    'title' => 'Alerta!',
+                    'body' => 'El tipo de envio no esta programado.'
+                ]);
+                break;
+        }
+
+        $mdlClient = new ClientModel();
+
         try {
-            $mdlDomicilio->insert($new_domicilio);
+            $mdlClient->insert([
+                'id_client' => $REFERENCE,
+                'name_client' => $name,
+                'surname_client' => $surname
+            ]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
-                'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:'.  $e->getMessage()
-            ]); 
+                'body' => 'Ocurrio un error con el modelo, al tratar de insertar El cliente. <br>Excepción capturada:' .  $e->getMessage()
+            ]);
         }
 
         $new_order = new EntitiesOrder([
@@ -88,20 +137,13 @@ class Order extends BaseController
             'hour_order' => '',
             'consecutive_order' => '',
             'employee_id_employee' => $employee,
-            'domicilio_id_domicilio' => $REFERENCE,
-            'client_id_client' => $client_id_client
+            'domicilio_id_domicilio' => $domicilio,
+            'client_id_client' => $REFERENCE
         ]);
         $new_order->setTimeCreation();
         $new_order->setConsecutiveOfAllOrders();
         $new_order->setDarlyTurn();
-        switch ($typeshipping_id_typeshipping) {
-            case 1:
-                $new_order->setTurnMachine();
-                break;
-            case 2:
-                $new_order->setTurnMachine($turn_machine);
-                break;
-        }
+        $new_order->setTurnMachine($turn_machine);
 
         $mdlOrder = new OrderModel();
         try {
@@ -109,17 +151,14 @@ class Order extends BaseController
         } catch (Exception $e) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
-                'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:'.  $e->getMessage()
-            ]); 
+                'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:' .  $e->getMessage()
+            ]);
         }
-       
+
+        //HASTA AQUI SE A CREADO TODO DE LA NUEVA ORDEN BIEN
+
         d($new_order);
 
-
-
-
-
-        // d($this->request->getPostGet());
         echo "estamos dentro";
     }
 

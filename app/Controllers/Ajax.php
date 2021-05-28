@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\DomiciliaryModel;
 use App\Models\ProductModel;
 use App\Models\RecipeModel;
 
@@ -39,6 +40,8 @@ class Ajax extends BaseController
 	}
 	public function ajaxFormTypeShipping()
 	{
+		$mdlDomi = new DomiciliaryModel();
+		$domiciliaries = $mdlDomi->findAll();
 		$cadena1 =
 			"<div class='row'>
 				
@@ -72,9 +75,12 @@ class Ajax extends BaseController
 					<div class='form-group'>
 						<label>Domiciliario</label>
 						<select name='domi' class='form-control' required>
-							<option value='1'>NO IDENTIFICADO</option>
-							<option value='1098823092'>Fabian Suarez</option>
-							<option value='1094524552'>Andres Rodrigues</option>
+						";
+						foreach($domiciliaries as $domiciliary){
+							$cadena1.= "<option value='".$domiciliary['id_domiciliary']."'>".$domiciliary['name_domiciliary'].' '.$domiciliary['surname_domiciliary']."</option>";
+						}
+
+			$cadena1 .="
 						</select>
 					</div>
 				</div>
@@ -145,46 +151,47 @@ class Ajax extends BaseController
 					<input name='surname' type='text' class='form-control' placeholder='Apellido'>
 				</div>
 			</div>
-		</div>
-		<div class='row'>
-			<div class='col-sm-4'>
-				<div class='form-group'>
-					<label>Turno</label>
-					<input name='surname' type='number' class='form-control' placeholder='Turno'>
-				</div>
 			</div>
+			<div class='row'>
+				<div class='col-sm-4'>
+					<div class='form-group'>
+						<label>Turno *</label>
+						<input name='turn_machine' type='number' class='form-control' placeholder='Turno' required>
+					</div>
+				</div>
 
-			<div class='col-sm-8'>
-				<div class='form-group'>
-					<label>Observaci&oacute;n</label>
-					<textarea name='observation' class='form-control' rows='3' placeholder='Observaciones adicionales ...'></textarea>
-				</div>
-			</div>
-		</div>
-		<div class='text-center'>
-			<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
-				CREAR PEDIDO
-			</button>
-		</div>
-		<div class='modal fade' id='modal-default'>
-			<div class='modal-dialog'>
-				<div class='modal-content'>
-					<div class='modal-header'>
-						<h4 class='modal-title'>Deseas crear el nuevo pedido?</h4>
-						<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-							<span aria-hidden='true'>&times;</span>
-						</button>
-					</div>
-					<div class='modal-body'>
-						<p><strong>Se creara el nuevo pedido</strong></p>
-					</div>
-					<div class='modal-footer justify-content-between'>
-						<button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
-						<button type='submit' class='btn btn-primary'>Si, crear</button>
+				<div class='col-sm-8'>
+					<div class='form-group'>
+						<label>Observaci&oacute;n</label>
+						<textarea name='observation' class='form-control' rows='3' placeholder='Observaciones adicionales ...'></textarea>
 					</div>
 				</div>
 			</div>
-		</div>";
+			<div class='text-center'>
+				<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
+					CREAR PEDIDO
+				</button>
+			</div>
+			<div class='modal fade' id='modal-default'>
+				<div class='modal-dialog'>
+					<div class='modal-content'>
+						<div class='modal-header'>
+							<h4 class='modal-title'>Deseas crear el nuevo pedido?</h4>
+							<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+								<span aria-hidden='true'>&times;</span>
+							</button>
+						</div>
+						<div class='modal-body'>
+							<p><strong>Se creara el nuevo pedido</strong></p>
+						</div>
+						<div class='modal-footer justify-content-between'>
+							<button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+							<button type='submit' class='btn btn-primary'>Si, crear</button>
+						</div>
+					</div>
+				</div>
+			</div>";
+
 		switch ($this->request->getPostGet('type')) {
 			case 1:
 				echo $cadena1;

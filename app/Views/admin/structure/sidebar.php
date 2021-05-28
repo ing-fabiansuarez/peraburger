@@ -55,7 +55,8 @@
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
                             Crear Pedido
-                            <span class="badge badge-info right"><?php if(!empty($_SESSION['list_order'])):echo count($_SESSION['list_order']);endif; ?></span>
+                            <span class="badge badge-info right"><?php if (!empty($_SESSION['list_order'])) : echo count($_SESSION['list_order']);
+                                                                    endif; ?></span>
                         </p>
                     </a>
                 </li>
@@ -119,6 +120,16 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <li class="nav-header">DOMICILIARIO</li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('view_domiciliaries') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Crear Domiciliario
+                        </p>
+                    </a>
                 </li>
 
                 <li class="nav-header">CLIENTES</li>

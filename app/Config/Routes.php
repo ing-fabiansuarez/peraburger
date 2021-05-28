@@ -32,6 +32,7 @@ $routes->setAutoRoute(false);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+//routes clientes
 $routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclient']);
 
 //routes crear order
@@ -42,6 +43,9 @@ $routes->post('createpedido', 'Order::createOrder',['as'=>'create_order']);
 $routes->post('addproduct', 'Order::addProductToListOrder',['as'=>'addproductlistorder']);
 $routes->post('deleteproduct', 'Order::deleteProductToListOrder',['as'=>'deleteproductlistorder']);
 
+//routes domiciliarios
+$routes->get('crearcliente', 'Domiciliary::viewCreateDomiciliary',['as'=>'view_domiciliaries']);
+$routes->post('crearcliente', 'Domiciliary::createDomiciliary',['as'=>'createdomiciliaries']);
 
 //routes prueba
 $routes->get('cart', 'Order::cart');
