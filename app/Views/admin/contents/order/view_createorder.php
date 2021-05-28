@@ -51,7 +51,7 @@
                 </div>
             <?php endif ?>
 
-            <div class="col-md-6">
+            <div class="col-md-5">
 
                 <div class="card card-success shadow-sm">
                     <div class="card-header">
@@ -121,7 +121,7 @@
 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-7">
 
                 <div class="card card-dark shadow-sm">
                     <div class="card-header">

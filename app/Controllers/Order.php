@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entities\Order as EntitiesOrder;
 use App\Models\CategoryModel;
 use App\Models\ClientModel;
+use App\Models\DetailorderModel;
 use App\Models\DomicilioModel;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
@@ -154,10 +155,33 @@ class Order extends BaseController
                 'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:' .  $e->getMessage()
             ]);
         }
-
+        d($new_order);
         //HASTA AQUI SE A CREADO TODO DE LA NUEVA ORDEN BIEN
 
-        d($new_order);
+        $mdlDetailOrder = new DetailorderModel();
+        $mdlProducts = new ProductModel();
+
+        $allproducts = $mdlProducts->getInfoProductsListOrder($_SESSION['list_order']);
+        d($allproducts);
+        d($_SESSION['list_order']);
+
+        foreach ($allproducts as $producttoadd) {
+            $newproduct = [
+                'id_detailorder' => '',
+                'product_id_product' => $producttoadd['id_product'],
+                'order_id_order' => $REFERENCE,
+                'quantity_detailorder' => $producttoadd['quantity'],
+                'priceunit_detailorder' => $producttoadd['price_product']
+            ];
+            try {
+                $mdlDetailOrder->insert($newproduct);//AQUI VAMOS OJO ESTAMOS INSERTANDO LO DE LOS PRODUCTOS FALTA AUN INSERTATR LO DE LOS INGREDIENTES QUE QUITE
+            } catch (Exception $e) {
+                return redirect()->back()->with('error', [
+                    'title' => 'Alerta!',
+                    'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de cada uno de los productos del carrito. <br>Excepción capturada:' .  $e->getMessage()
+                ]);
+            }
+        }
 
         echo "estamos dentro";
     }
