@@ -48,9 +48,9 @@ $routes->get('cart', 'Order::cart');
 $routes->get('d', 'Order::d');
 
 //routes of ajax
-$routes->get('/productofcategory', 'Product::ajaxProductOfCategory');
-$routes->get('/ingredientsofproduct', 'Product::ajaxProductRecipe');
-
+$routes->post('/productofcategory', 'Ajax::ajaxProductOfCategory');
+$routes->post('/ingredientsofproduct', 'Ajax::ajaxProductRecipe');
+$routes->get('/formtypeshipping', 'Ajax::ajaxFormTypeShipping');
 
 
 //routes of pictures

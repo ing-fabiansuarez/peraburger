@@ -10,6 +10,12 @@ class DomicilioModel extends Model
     protected $primaryKey = 'id_domicilio';
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
-    protected $allowedFields = [];
-
+    protected $allowedFields = [
+        'id_domicilio',
+        'address_domicilio',
+        'neighborhood_domicilio',
+        'domiciliary_id_domiciliary',
+        'price_domicilio',
+        'whatsapp_domicilio'
+    ];
 }

@@ -1,25 +1,8 @@
 <?= $this->extend('admin/structure/main_admin_view') ?>
 <?= $this->section('title') ?> - Nuevo Pedido<?= $this->endSection() ?>
 <?= $this->section('js') ?>
-<script src="<?= base_url() ?>/public/admin/dist/js/ajax_product.js"></script>
-<script src="<?= base_url() ?>/public/admin/plugins/select2/js/select2.full.min.js"></script>
-<script>
-    $(function() {
-        //Initialize Select2 Elements
-        $('.select2').select2()
-
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        })
-    })
-</script>
+<script src="<?= base_url() ?>/public/admin/dist/js/ajax_typeshipping.js"></script>
 <?= $this->endSection() ?>
-<?= $this->section('css') ?>
-<link rel="stylesheet" href="<?= base_url() ?>/public/admin/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>/public/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<?= $this->endSection() ?>
-
 
 
 <?= $this->section('content') ?>
@@ -158,108 +141,17 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Tipo</label>
-                                        <select name="typeshipping" class="form-control">
+                                        <select name="typeshipping" id="typeshipping" class="form-control">
                                             <option value="1">Domicilio</option>
                                             <option value="2">Local</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Cedula *</label>
-                                        <input name="cedula" type="number" class="form-control" placeholder="Cedula *" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Nombre *</label>
-                                        <input name="name" type="text" class="form-control" placeholder="Nombre *" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Apellido</label>
-                                        <input name="surname" type="text" class="form-control" placeholder="Apellido">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Direcci&oacute;n *</label>
-                                        <input name="adress" type="text" class="form-control" placeholder="Cedula *" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Barrio *</label>
-                                        <input name="barrio" type="text" class="form-control" placeholder="Nombre *" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Domiciliario</label>
-                                        <select name="domi" class="form-control" required>
-                                            <option value="1">11</option>
-                                            <option value="1098823092">Fabian Suarez</option>
-                                            <option value="1094524552">Andres Rodrigues</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Valor *</label>
-                                        <input name="price_domi" type="number" class="form-control" placeholder="Valor domi*" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>WhatsApp *</label>
 
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                            </div>
-                                            <input name="whatsapp" type="number" class="form-control" required>
-                                        </div>
-                                    </div>
-                                  
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <label>Observaci&oacute;n</label>
-                                        <textarea name="observation" class="form-control" rows="2" placeholder="Observaciones adicionales ..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                                    CREAR PEDIDO
-                                </button>
-                            </div>
-                            <div class="modal fade" id="modal-default">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Deseas crear el nuevo pedido?</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Debes cobrar <strong><?= '$ ' . number_format($total) ?> + Valor de domicilio</strong></p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary">Si, crear</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id="form-typeshipping">
+                            </div> 
+
                         </form>
                     </div>
                 </div>

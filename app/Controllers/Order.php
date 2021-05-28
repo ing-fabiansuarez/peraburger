@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Entities\Order as EntitiesOrder;
 use App\Models\CategoryModel;
+use App\Models\DomicilioModel;
+use App\Models\OrderModel;
 use App\Models\ProductModel;
+use Exception;
 
 class Order extends BaseController
 {
 
     public function createOrder()
     {
-        if(empty($_SESSION['list_order'])){
+        if (empty($_SESSION['list_order'])) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
                 'body' => 'No hay productos en el carrito de compras.'
@@ -26,7 +29,7 @@ class Order extends BaseController
                 'barrio' => 'required',
                 'domi' => 'required|is_natural',
                 'price_domi' => 'required|decimal',
-                'whatsapp' => 'required|is_natural'  
+                'whatsapp' => 'required|is_natural'
             ]
         )) {
             return redirect()->back()->with('error', [
@@ -37,7 +40,7 @@ class Order extends BaseController
 
 
         //datos recibidos del formulario
-        $typeshipping_id_typeshipping =$this->request->getPostGet('typeshipping');
+        $typeshipping_id_typeshipping = $this->request->getPostGet('typeshipping');
         $client_id_client = $this->request->getPostGet('cedula');
         $name = $this->request->getPostGet('name');
         $surname = $this->request->getPostGet('surname');
@@ -47,40 +50,76 @@ class Order extends BaseController
         $price_domi = $this->request->getPostGet('price_domi');
         $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
         $observations_order = $this->request->getPostGet('observation');
+        $turn_machine = 13;
 
         //datos Necesarios para crear el pedido
         $employee = '1098823092';
-        $REFERENCE = date("Y") . '-' . date("m") . '-' . date("d") . '-' . time();
+        $REFERENCE = date("Y-m-d") . '-' . time();
 
         //FATA VERIFICAR SI EL DOMICILIARIO EXITE
         //FALTA VERFICAR SI EXITE EL CLIENTE
 
-        $domicilio = [
-            'id_domicilio'=>$REFERENCE,
-            'address_domicilio'=>$adress,
-            'neighborhood_domicilio'=>$barrio,
-            'domiciliary_id_domiciliary'=>$domicilio_id_domicilio,
-            'price_domicilio'=>$price_domi,
-            'whatsapp_domicilio'=>$whatsapp_domicilio
+        $new_domicilio = [
+            'id_domicilio' => $REFERENCE,
+            'address_domicilio' => $adress,
+            'neighborhood_domicilio' => $barrio,
+            'domiciliary_id_domiciliary' => $domicilio_id_domicilio,
+            'price_domicilio' => $price_domi,
+            'whatsapp_domicilio' => $whatsapp_domicilio
         ];
+        
+        $mdlDomicilio = new DomicilioModel();
+        try {
+            $mdlDomicilio->insert($new_domicilio);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', [
+                'title' => 'Alerta!',
+                'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:'.  $e->getMessage()
+            ]); 
+        }
 
         $new_order = new EntitiesOrder([
-            'id_order'=> $REFERENCE,
-            'typeshipping_id_typeshipping'=> $typeshipping_id_typeshipping,
-            'observations_order'=> $observations_order,
-            'employee_id_employee'=> $employee,
-            'domicilio_id_domicilio'=> $domicilio_id_domicilio,
-            'client_id_client'=> $client_id_client
+            'id_order' => $REFERENCE,
+            'typeshipping_id_typeshipping' => $typeshipping_id_typeshipping,
+            'darlyturn_order' => '',
+            'turnmachine_order' => '',
+            'observations_order' => $observations_order,
+            'date_order' => '',
+            'hour_order' => '',
+            'consecutive_order' => '',
+            'employee_id_employee' => $employee,
+            'domicilio_id_domicilio' => $REFERENCE,
+            'client_id_client' => $client_id_client
         ]);
-        $new_order->setTypeshipping_id_typeshipping();
+        $new_order->setTimeCreation();
+        $new_order->setConsecutiveOfAllOrders();
+        $new_order->setDarlyTurn();
+        switch ($typeshipping_id_typeshipping) {
+            case 1:
+                $new_order->setTurnMachine();
+                break;
+            case 2:
+                $new_order->setTurnMachine($turn_machine);
+                break;
+        }
 
+        $mdlOrder = new OrderModel();
+        try {
+            $mdlOrder->insert($new_order);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', [
+                'title' => 'Alerta!',
+                'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:'.  $e->getMessage()
+            ]); 
+        }
+       
         d($new_order);
 
 
 
 
 
-       // d($this->request->getPostGet());
+        // d($this->request->getPostGet());
         echo "estamos dentro";
     }
 

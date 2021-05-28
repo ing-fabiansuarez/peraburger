@@ -14,7 +14,7 @@ $(document).ready(function () {
 });
 function reloadproducts() {
   $.ajax({
-    type: "get",
+    type: "post",
     url: base_url + "/productofcategory",
     data: "category=" + $("#categories-select").val(),
     success: function (r) {
@@ -28,7 +28,7 @@ function reloadproducts() {
 
 function reloadingredients() {
   $.ajax({
-    type: "get",
+    type: "post",
     url: base_url + "/ingredientsofproduct",
     data: "product=" + $("#products-select").val(),
     success: function (r) {
