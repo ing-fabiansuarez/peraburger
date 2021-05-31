@@ -14,7 +14,7 @@ class ProductModel extends Model
 
     protected $allowedFields = [];
 
-    public function getInfoProductsListOrder($list_order)
+    public function getInfoProductsListOrder($list_order) //este metodo solo se utiliza para el array del carrito q esta cargado en la session
     {
         $mdlIngredient = new IngredientModel();
         $arrayresult = array();
@@ -22,16 +22,16 @@ class ProductModel extends Model
             $consultamdl = array();
             $consultamdl = $this->find($item['product']);
             $without_ingredients = array();
-            foreach($item['whitout_ingredients'] as $without){
-                array_push( $without_ingredients,$mdlIngredient->find($without));
+            foreach ($item['whitout_ingredients'] as $without) {
+                array_push($without_ingredients, $mdlIngredient->find($without));
             }
             $consultamdl = array_merge($consultamdl, [
                 'whitout_ingredients' => $without_ingredients,
                 'quantity' => $item['quantity'],
-                'id_list_order'=>$item['id']
+                'id_list_order' => $item['id']
             ]);
             array_push($arrayresult, $consultamdl);
         }
         return $arrayresult;
-    }
+    }  
 }

@@ -7,12 +7,33 @@ use App\Models\CategoryModel;
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
 use App\Models\DomicilioModel;
+use App\Models\IngredientModel;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
+use App\Models\RecipeModel;
+use App\Models\TypeshippingModel;
+use App\Models\WhitoutingredientModel;
 use Exception;
 
 class Order extends BaseController
 {
+    public function viewLoadOrder()
+    {
+        $mdlClient= new ClientModel();
+        $mdlOrder = new OrderModel();
+        $mdlDetailOrder = new DetailorderModel();
+        $mdlTypeshipping = new TypeshippingModel();
+        $mdlDomicilio = new DomicilioModel();
+        $REF = '2021-05-31-1622497010';
+
+        return view('admin/contents/order/view_order', [
+            'order' => $order = $mdlOrder->find($REF),
+            'list_of_products' => $mdlDetailOrder->getListOrderByReference($REF),
+            'client' => $mdlClient->find($order->client_id_client),
+            'typeshipping' => $mdlTypeshipping->find($order->typeshipping_id_typeshipping),
+            'domi'=> $mdlDomicilio->find($REF)
+        ]);
+    }
 
     public function createOrder()
     {
@@ -34,7 +55,6 @@ class Order extends BaseController
 
         $employee = '1098823092';
         $REFERENCE = date("Y-m-d") . '-' . time();
-
         $name = $this->request->getPostGet('name');
         $surname = $this->request->getPostGet('surname');
         $observations_order = $this->request->getPostGet('observation');
@@ -155,15 +175,18 @@ class Order extends BaseController
                 'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de la nueva orden. <br>Excepción capturada:' .  $e->getMessage()
             ]);
         }
-        d($new_order);
+        //d($new_order);
         //HASTA AQUI SE A CREADO TODO DE LA NUEVA ORDEN BIEN
 
         $mdlDetailOrder = new DetailorderModel();
         $mdlProducts = new ProductModel();
+        $mdlRecipe = new RecipeModel();
+        $mdlWhitout = new WhitoutingredientModel();
+        $mdlIngredint = new IngredientModel();
 
         $allproducts = $mdlProducts->getInfoProductsListOrder($_SESSION['list_order']);
-        d($allproducts);
-        d($_SESSION['list_order']);
+        //d($allproducts);
+        //d($_SESSION['list_order']);
 
         foreach ($allproducts as $producttoadd) {
             $newproduct = [
@@ -174,16 +197,32 @@ class Order extends BaseController
                 'priceunit_detailorder' => $producttoadd['price_product']
             ];
             try {
-                $mdlDetailOrder->insert($newproduct);//AQUI VAMOS OJO ESTAMOS INSERTANDO LO DE LOS PRODUCTOS FALTA AUN INSERTATR LO DE LOS INGREDIENTES QUE QUITE
+                $id = $mdlDetailOrder->insert($newproduct);
             } catch (Exception $e) {
                 return redirect()->back()->with('error', [
                     'title' => 'Alerta!',
                     'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de cada uno de los productos del carrito. <br>Excepción capturada:' .  $e->getMessage()
                 ]);
             }
+            
+            foreach ($producttoadd['whitout_ingredients'] as $whitout) {
+                $new_whit_out = [
+                    'detailorder_id_detailorder' => $id,
+                    'recipe_id_recipe' => $mdlRecipe->where('product_id_product', $producttoadd['id_product'])->where('ingredient_id_ingredient', $whitout['id_ingredient'])->first()['id_recipe'],
+                    'discount_hasnot'=>$mdlIngredint->find($whitout['id_ingredient'])['price_ingredient']
+                ];
+                try {
+                    $mdlWhitout->insert($new_whit_out);
+                } catch (Exception $e) {
+                    return redirect()->back()->with('error', [
+                        'title' => 'Alerta!',
+                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de los ingredientes que el cliente no quiere. <br>Excepción capturada:' .  $e->getMessage()
+                    ]);
+                }
+            }
         }
 
-        echo "estamos dentro";
+        echo $REFERENCE;
     }
 
     public function viewCreateOrderFinish()

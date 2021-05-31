@@ -39,26 +39,31 @@ $routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclien
 $routes->get('crearpedido', 'Order::viewCreateOrder',['as'=>'view_createorder']);
 $routes->post('crearpedido', 'Order::viewCreateOrderFinish',['as'=>'view_createorder_finish']);
 $routes->post('createpedido', 'Order::createOrder',['as'=>'create_order']);
+$routes->get('pedido', 'Order::viewLoadOrder',['as'=>'view_load_order']);
 
 $routes->post('addproduct', 'Order::addProductToListOrder',['as'=>'addproductlistorder']);
 $routes->post('deleteproduct', 'Order::deleteProductToListOrder',['as'=>'deleteproductlistorder']);
 
 //routes domiciliarios
-$routes->get('crearcliente', 'Domiciliary::viewCreateDomiciliary',['as'=>'view_domiciliaries']);
-$routes->post('crearcliente', 'Domiciliary::createDomiciliary',['as'=>'createdomiciliaries']);
+$routes->get('creardomiciliario', 'Domiciliary::viewCreateDomiciliary',['as'=>'view_domiciliaries']);
+$routes->post('creardomiciliario', 'Domiciliary::createDomiciliary',['as'=>'createdomiciliaries']);
 
 //routes prueba
 $routes->get('cart', 'Order::cart');
 $routes->get('d', 'Order::d');
 
 //routes of ajax
-$routes->post('/productofcategory', 'Ajax::ajaxProductOfCategory');
-$routes->post('/ingredientsofproduct', 'Ajax::ajaxProductRecipe');
-$routes->get('/formtypeshipping', 'Ajax::ajaxFormTypeShipping');
+$routes->post('productofcategory', 'Ajax::ajaxProductOfCategory');
+$routes->post('ingredientsofproduct', 'Ajax::ajaxProductRecipe');
+$routes->get('formtypeshipping', 'Ajax::ajaxFormTypeShipping');
 
 
 //routes of pictures
 $routes->add('/public/admin/dist/img/menu', '', ['as' => 'img-menu']);
+
+//reportes
+$routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
+
 
 /**
  * --------------------------------------------------------------------
