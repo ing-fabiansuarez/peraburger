@@ -71,7 +71,7 @@
 
                                             <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
                                             <form action="<?= base_url() . route_to('print_order') ?>" method="post">
-                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                                <button type="submit" class="btn btn-primary float-right"  style="margin-right: 5px;">
                                                     <i class="fas fa-download"></i> Generate PDF
                                                 </button>
                                             </form>
