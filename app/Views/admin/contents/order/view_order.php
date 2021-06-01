@@ -68,11 +68,19 @@
                                     <div class="card-body">
 
                                         <div class="row no-print">
-
-                                            <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                                            <form action="<?= base_url() . route_to('print_order') ?>" method="post">
-                                                <button type="submit" class="btn btn-primary float-right"  style="margin-right: 5px;">
-                                                    <i class="fas fa-download"></i> Generate PDF
+                                            <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
+                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
+                                                    <i class="fas fa-download"></i> Cliente
+                                                </button>
+                                            </form>
+                                            <form action="<?= base_url() . route_to('print_kitchen') ?>" method="post" target="_blank">
+                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
+                                                    <i class="fas fa-download"></i> Cocina
+                                                </button>
+                                            </form>
+                                            <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
+                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
+                                                    <i class="fas fa-print"></i> Etiqueta
                                                 </button>
                                             </form>
                                         </div>

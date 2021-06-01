@@ -63,6 +63,7 @@ $routes->add('/public/admin/dist/img/menu', '', ['as' => 'img-menu']);
 
 //reportes
 $routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
+$routes->post('cosina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
 
 
 /**
