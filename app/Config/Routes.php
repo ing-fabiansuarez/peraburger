@@ -1,12 +1,13 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
-if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
-{
+if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
 	require SYSTEMPATH . 'Config/Routes.php';
 }
 
@@ -30,47 +31,49 @@ $routes->setAutoRoute(false);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->group('/',['filter'=>'auth'], function ($routes) {
+	$routes->get('', 'Home::index', ['as' => 'home_system']);
 
-//routes clientes
-$routes->get('crearcliente', 'Client::viewCreateClient',['as'=>'view_createclient']);
+	//routes clientes
+	$routes->get('crearcliente', 'Client::viewCreateClient', ['as' => 'view_createclient']);
 
-//routes crear order
-$routes->get('crearpedido', 'Order::viewCreateOrder',['as'=>'view_createorder']);
-$routes->post('crearpedido', 'Order::viewCreateOrderFinish',['as'=>'view_createorder_finish']);
-$routes->post('createpedido', 'Order::createOrder',['as'=>'create_order']);
-$routes->get('pedido', 'Order::viewLoadOrder',['as'=>'view_load_order']);
+	//routes crear order
+	$routes->get('crearpedido', 'Order::viewCreateOrder', ['as' => 'view_createorder']);
+	$routes->post('crearpedido', 'Order::viewCreateOrderFinish', ['as' => 'view_createorder_finish']);
+	$routes->post('createpedido', 'Order::createOrder', ['as' => 'create_order']);
+	$routes->get('pedido', 'Order::viewLoadOrder', ['as' => 'view_load_order']);
 
-//routes para list of ordenes
-$routes->get('listadepedidos', 'Listorders::view_main',['as'=>'view_list_order']);
+	//routes para list of ordenes
+	$routes->get('listadepedidos', 'Listorders::view_main', ['as' => 'view_list_order']);
 
-$routes->post('addproduct', 'Order::addProductToListOrder',['as'=>'addproductlistorder']);
-$routes->post('deleteproduct', 'Order::deleteProductToListOrder',['as'=>'deleteproductlistorder']);
+	$routes->post('addproduct', 'Order::addProductToListOrder', ['as' => 'addproductlistorder']);
+	$routes->post('deleteproduct', 'Order::deleteProductToListOrder', ['as' => 'deleteproductlistorder']);
 
-//routes domiciliarios
-$routes->get('creardomiciliario', 'Domiciliary::viewCreateDomiciliary',['as'=>'view_domiciliaries']);
-$routes->post('creardomiciliario', 'Domiciliary::createDomiciliary',['as'=>'createdomiciliaries']);
+	//routes domiciliarios
+	$routes->get('creardomiciliario', 'Domiciliary::viewCreateDomiciliary', ['as' => 'view_domiciliaries']);
+	$routes->post('creardomiciliario', 'Domiciliary::createDomiciliary', ['as' => 'createdomiciliaries']);
 
-//routes prueba
-$routes->get('cart', 'Order::cart');
-$routes->get('d', 'Order::d');
+	//routes prueba
+	$routes->get('cart', 'Order::cart');
+	$routes->get('d', 'Order::d');
 
-//routes of ajax
-$routes->post('productofcategory', 'Ajax::ajaxProductOfCategory');
-$routes->post('ingredientsofproduct', 'Ajax::ajaxProductRecipe');
-$routes->get('formtypeshipping', 'Ajax::ajaxFormTypeShipping');
+	//routes of ajax
+	$routes->post('productofcategory', 'Ajax::ajaxProductOfCategory');
+	$routes->post('ingredientsofproduct', 'Ajax::ajaxProductRecipe');
+	$routes->get('formtypeshipping', 'Ajax::ajaxFormTypeShipping');
 
 
-//routes of pictures
-$routes->add('/public/admin/dist/img/menu', '', ['as' => 'img-menu']);
+	//routes of pictures
+	$routes->add('/public/admin/dist/img/menu', '', ['as' => 'img-menu']);
 
-//reportes
-$routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
-$routes->post('cosina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
-
+	//reportes
+	$routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
+	$routes->post('cosina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
+});
 
 //routes of auth
 $routes->group('auth', function ($routes) {
+	
 	$routes->get('login', 'Auth::login', ['as' => 'login']);
 	$routes->post('check', 'Auth::signin', ['as' => 'check_login']);
 	$routes->get('logout', 'Auth::logout', ['as' => 'logout']);
@@ -89,7 +92,6 @@ $routes->group('auth', function ($routes) {
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
-{
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

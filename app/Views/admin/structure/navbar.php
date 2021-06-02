@@ -55,7 +55,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="https://www.tienda.peradk.com/adminpage/logout">
+            <a class="nav-link" href="<?=base_url().route_to('logout')?>">
                 <i class="fas fa-sign-in-alt"></i> Salida
             </a>
         </li>
