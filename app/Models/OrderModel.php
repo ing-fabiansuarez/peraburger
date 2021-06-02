@@ -23,5 +23,5 @@ class OrderModel extends Model
         'employee_id_employee',
         'domicilio_id_domicilio',
         'client_id_client'
-    ];
+    ]; 
 }

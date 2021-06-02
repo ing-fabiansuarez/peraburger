@@ -86,10 +86,13 @@ a:hover {
 }
 
 .bg-corporative {
-  background-color: #76b119!important;
+  background-color: #76b119 !important;
   color: #fff;
 }
 
-.height-100{
-height: 100%;
+.height-100 {
+  height: 100%;
+}
+.card-primary:not(.card-outline) > .card-header {
+  background-color: #76b119;
 }

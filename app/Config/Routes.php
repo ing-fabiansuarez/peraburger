@@ -41,6 +41,9 @@ $routes->post('crearpedido', 'Order::viewCreateOrderFinish',['as'=>'view_createo
 $routes->post('createpedido', 'Order::createOrder',['as'=>'create_order']);
 $routes->get('pedido', 'Order::viewLoadOrder',['as'=>'view_load_order']);
 
+//routes para list of ordenes
+$routes->get('listadepedidos', 'Listorders::view_main',['as'=>'view_list_order']);
+
 $routes->post('addproduct', 'Order::addProductToListOrder',['as'=>'addproductlistorder']);
 $routes->post('deleteproduct', 'Order::deleteProductToListOrder',['as'=>'deleteproductlistorder']);
 
@@ -65,6 +68,13 @@ $routes->add('/public/admin/dist/img/menu', '', ['as' => 'img-menu']);
 $routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
 $routes->post('cosina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
 
+
+//routes of auth
+$routes->group('auth', function ($routes) {
+	$routes->get('login', 'Auth::login', ['as' => 'login']);
+	$routes->post('check', 'Auth::signin', ['as' => 'check_login']);
+	$routes->get('logout', 'Auth::logout', ['as' => 'logout']);
+});
 
 /**
  * --------------------------------------------------------------------
