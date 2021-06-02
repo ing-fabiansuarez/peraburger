@@ -41,10 +41,10 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->get('crearpedido', 'Order::viewCreateOrder', ['as' => 'view_createorder']);
 	$routes->post('crearpedido', 'Order::viewCreateOrderFinish', ['as' => 'view_createorder_finish']);
 	$routes->post('createpedido', 'Order::createOrder', ['as' => 'create_order']);
-	$routes->get('pedido', 'Order::viewLoadOrder', ['as' => 'view_load_order']);
+	$routes->get('pedido/(:segment)', 'Order::viewLoadOrder/$1', ['as' => 'view_load_order']);
 
 	//routes para list of ordenes
-	$routes->get('listadepedidos', 'Listorders::view_main', ['as' => 'view_list_order']);
+	$routes->get('listadepedidos/(:segment)', 'Listorders::view_main/$1', ['as' => 'view_list_order']);
 
 	$routes->post('addproduct', 'Order::addProductToListOrder', ['as' => 'addproductlistorder']);
 	$routes->post('deleteproduct', 'Order::deleteProductToListOrder', ['as' => 'deleteproductlistorder']);

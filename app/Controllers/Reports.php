@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
+use App\Models\OrderModel;
+use App\Models\TypeshippingModel;
 
 class Reports extends BaseController
 {
@@ -11,7 +13,7 @@ class Reports extends BaseController
     {
         $mdlDetailOrder = new DetailorderModel();
         $mdlClient = new ClientModel();
-        $REF = '2021-05-31-1622497010';
+        $REF = $this->request->getPostGet('reference');
         $list_of_products = $mdlDetailOrder->getListOrderByReference($REF);
 
         //Se declara la libreria
@@ -32,7 +34,7 @@ class Reports extends BaseController
         $pdf->cell(69, 4, 'CL 5 4 31 BRR CENTRO', 0, 1, 'C');
         $pdf->cell(69, 4, 'Pamplona - Norte de Santander', 0, 1, 'C');
         $pdf->cell(69, 4, 'Agente Responsable de Impuesto al Consumo', 0, 1, 'C');
-        $pdf->cell(69, 4, utf8_decode('N° ').$REF, 0, 1, 'C');
+        $pdf->cell(69, 4, utf8_decode('N° ') . $REF, 0, 1, 'C');
         $pdf->cell(69, 4, '', 0, 1, 'C');
         $client = $mdlClient->find($REF);
         $pdf->SetFont('Times', 'B', 8);
@@ -73,12 +75,19 @@ class Reports extends BaseController
 
     public function printKitchen()
     {
-        
+        //atributo del formularo
+        $REF = $this->request->getPostGet('reference');
+
+        //declaracion de los modelos
         $mdlDetailOrder = new DetailorderModel();
         $mdlClient = new ClientModel();
-        $REF = '2021-05-31-1622497010';
+        $mdlOrder = new OrderModel();
+        $mdlType = new TypeshippingModel();
+
+        //uso de los modelos
         $client = $mdlClient->find($REF);
         $list_of_products = $mdlDetailOrder->getListOrderByReference($REF);
+        $order = $mdlOrder->find($REF);
 
         //Se declara la libreria
         $pdf = new \FPDF("P", "mm", array(75, 150));
@@ -92,39 +101,40 @@ class Reports extends BaseController
         $pdf->SetFont('Times', 'B', 9);
 
         // CONTENIDO DE LA PAGINA
-        
+
         $pdf->Image(base_url() . '/public/img/peraburgelogo1.png', 3, 1, 30);
 
-        
+
         $pdf->cell(50, 1, '', 0, 1, 'C');
-        
-       
+
+
         $pdf->SetFont('Times', 'B', 12);
-        $pdf->cell(20, 4,'TURNO:', 0, 0, 'L');
-        $pdf->cell(10, 4,'1', 0, 0, 'L');
-        $pdf->cell(39, 4,'DOMICILIO', 0, 1, 'R');
-        $pdf->cell(69, 4,utf8_decode('N° ').$REF, 0, 1, 'C');
+        $pdf->cell(20, 4, 'TURNO:', 0, 0, 'L');
+        $pdf->cell(10, 4, $order->turnmachine_order, 0, 0, 'L');
+
+        $pdf->cell(39, 4, $mdlType->find($order->typeshipping_id_typeshipping)['name_typeshipping'], 0, 1, 'R');
+        $pdf->cell(69, 4, utf8_decode('N° ') . $REF, 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 8);
         $pdf->cell(69, 4, utf8_decode('CLIENTE: ') . $client['name_client'] . ' ' . $client['surname_client'], 0, 1, 'L');
         $pdf->SetFont('Times', 'B', 12);
-        $pdf->cell(69, 3,'', 0, 1, 'C');
-        $pdf->cell(69, 4,'Formato de Cocina', 0, 1, 'C');
+        $pdf->cell(69, 3, '', 0, 1, 'C');
+        $pdf->cell(69, 4, 'Formato de Cocina', 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 9);
         $pdf->cell(69, 4, '', 0, 1, 'C');
         $pdf->cell(10, 4, 'Cant.', 'BT', 0, 'C');
         $pdf->cell(39, 4, utf8_decode('Descripción'), 'BT', 0, 'C');
         $pdf->cell(20, 4, utf8_decode('Hecho'), 'BT', 1, 'C');
-       
+
 
         foreach ($list_of_products as $item_list) {
             $pdf->SetFont('Times', 'B', 9);
             $pdf->cell(10, 4, $item_list['quantity_detailorder'], 0, 0, 'C');
             $pdf->cell(39, 4,  $item_list['name_product'], 'R', 1, 'L');
-           
+
 
             foreach ($item_list['whitout'] as $whitout) {
                 $pdf->SetFont('Times', '', 8);
-                
+
                 $pdf->cell(49, 4, 'Sin ' . $whitout['name_ingredient'], 'R', 1, 'R');
             }
             $pdf->cell(49, 2, '', 'TR', 0, 'R');

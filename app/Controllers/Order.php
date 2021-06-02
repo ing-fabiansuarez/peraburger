@@ -17,21 +17,21 @@ use Exception;
 
 class Order extends BaseController
 {
-    public function viewLoadOrder()
+    public function viewLoadOrder($REF)
     {
-        $mdlClient= new ClientModel();
+        $mdlClient = new ClientModel();
         $mdlOrder = new OrderModel();
         $mdlDetailOrder = new DetailorderModel();
         $mdlTypeshipping = new TypeshippingModel();
         $mdlDomicilio = new DomicilioModel();
-        $REF = '2021-05-31-1622497010';
+
 
         return view('admin/contents/order/view_order', [
             'order' => $order = $mdlOrder->find($REF),
             'list_of_products' => $mdlDetailOrder->getListOrderByReference($REF),
             'client' => $mdlClient->find($order->client_id_client),
             'typeshipping' => $mdlTypeshipping->find($order->typeshipping_id_typeshipping),
-            'domi'=> $mdlDomicilio->find($REF)
+            'domi' => $mdlDomicilio->find($REF)
         ]);
     }
 
@@ -53,7 +53,7 @@ class Order extends BaseController
             ]);
         }
 
-        $employee = '1098823092';
+        $employee = session()->cedula_employee;
         $REFERENCE = date("Y-m-d") . '-' . time();
         $name = $this->request->getPostGet('name');
         $surname = $this->request->getPostGet('surname');
@@ -159,7 +159,8 @@ class Order extends BaseController
             'consecutive_order' => '',
             'employee_id_employee' => $employee,
             'domicilio_id_domicilio' => $domicilio,
-            'client_id_client' => $REFERENCE
+            'client_id_client' => $REFERENCE,
+            'state_id_state' => 1,
         ]);
         $new_order->setTimeCreation();
         $new_order->setConsecutiveOfAllOrders();
@@ -204,12 +205,12 @@ class Order extends BaseController
                     'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de cada uno de los productos del carrito. <br>Excepción capturada:' .  $e->getMessage()
                 ]);
             }
-            
+
             foreach ($producttoadd['whitout_ingredients'] as $whitout) {
                 $new_whit_out = [
                     'detailorder_id_detailorder' => $id,
                     'recipe_id_recipe' => $mdlRecipe->where('product_id_product', $producttoadd['id_product'])->where('ingredient_id_ingredient', $whitout['id_ingredient'])->first()['id_recipe'],
-                    'discount_hasnot'=>$mdlIngredint->find($whitout['id_ingredient'])['price_ingredient']
+                    'discount_hasnot' => $mdlIngredint->find($whitout['id_ingredient'])['price_ingredient']
                 ];
                 try {
                     $mdlWhitout->insert($new_whit_out);
@@ -221,7 +222,7 @@ class Order extends BaseController
                 }
             }
         }
-
+        //return redirect().route_to('view_load_order',$REFERENCE);
         echo $REFERENCE;
     }
 

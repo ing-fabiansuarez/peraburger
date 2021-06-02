@@ -22,6 +22,7 @@ class OrderModel extends Model
         'consecutive_order',
         'employee_id_employee',
         'domicilio_id_domicilio',
-        'client_id_client'
+        'client_id_client',
+        'state_id_state'
     ]; 
 }

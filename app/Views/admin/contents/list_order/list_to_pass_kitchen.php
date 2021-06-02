@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
+        <h3 class="card-title"> <b> PEDIDOS POR PASAR A COCINA</b></h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -15,16 +15,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                        Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                </tr>
-                
+                <?php foreach ($dailyorders as $order) : ?>
+                    <tr>
+                        <td><?= $order->id_order . '<br>' . $order->client_id_client ?></td>
+                        <td>Internet
+                            Explorer 4.0
+                        </td>
+                        <td>Win 95+</td>
+                        <td> 4</td>
+                        <td>X</td>
+                    </tr>
+                <?php endforeach; ?>
+
             </tbody>
             <tfoot>
                 <tr>

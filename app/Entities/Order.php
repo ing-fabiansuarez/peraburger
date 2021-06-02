@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Models\DetailorderModel;
 use App\Models\OrderModel;
 use CodeIgniter\Entity;
 
@@ -36,5 +37,10 @@ class Order extends Entity
                 $this->attributes['turnmachine_order'] =  $turn;
                 break;
         }
+    }
+
+    public function getListofProducts(){
+        $mdlDetail = new DetailorderModel();
+        return $mdlDetail->getListOrderByReference($this->attributes['id_order']);
     }
 }
