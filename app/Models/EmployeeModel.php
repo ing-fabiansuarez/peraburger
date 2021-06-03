@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Entities\Employee;
+
 use CodeIgniter\Model;
 
 class EmployeeModel extends Model
@@ -10,7 +10,7 @@ class EmployeeModel extends Model
     protected $table      = 'employee';
     protected $primaryKey = 'id_employee';
 
-    protected $returnType     = Employee::class;
+    protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
     protected $allowedFields = [

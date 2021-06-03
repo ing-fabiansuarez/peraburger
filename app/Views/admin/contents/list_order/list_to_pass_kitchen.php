@@ -39,17 +39,17 @@
                             </ul>
                         </td>
                         <td>
-                            <?= $order->hour_order . '<br>' . $order->date_order ?>
+                            <?= $order->hour_order . '<br>' . $order->date_order .'<br><b>' . $order->getNameEmployee().'</b>'?>
                         </td>
-                        <td><?= $order->observations_order ?></td>
-
+                        <td style="max-width: 100px;"><?= $order->observations_order ?></td>
+ 
                         <td class="project-actions text-right">
                             <a class="btn btn-primary btn-sm" href="<?= base_url() . route_to('view_load_order', $order->id_order) ?>">
                                 <i class="fas fa-folder">
                                 </i>
                                 Ver
                             </a>
-                            <a class="btn btn-danger btn-sm" href="#">
+                            <a class="btn btn-danger btn-sm" href="<?= base_url().route_to('chage_state',4,$order->id_order) ?>">
                                 <i class="fas fa-trash">
                                 </i>
                                 Deshabilitar

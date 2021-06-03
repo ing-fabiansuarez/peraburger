@@ -21,7 +21,7 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(false);
+$routes->setAutoRoute(true);
 
 /**
  * --------------------------------------------------------------------
@@ -48,6 +48,9 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 
 	$routes->post('addproduct', 'Order::addProductToListOrder', ['as' => 'addproductlistorder']);
 	$routes->post('deleteproduct', 'Order::deleteProductToListOrder', ['as' => 'deleteproductlistorder']);
+
+	//routes para cambiar de states
+	$routes->get('changestate/(:num)/(:segment)', 'States::updateState/$1/$2', ['as' => 'chage_state']);
 
 	//routes domiciliarios
 	$routes->get('creardomiciliario', 'Domiciliary::viewCreateDomiciliary', ['as' => 'view_domiciliaries']);

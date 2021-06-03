@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
+use App\Models\EmployeeModel;
 use App\Models\OrderModel;
 use CodeIgniter\Entity;
 
@@ -48,5 +49,10 @@ class Order extends Entity
     public function getNameClient(){
         $mdlClient = new ClientModel();
         return $mdlClient->find($this->id_order)['name_client'].'<br>'.$mdlClient->find($this->id_order)['surname_client'];
+    }
+    public function getNameEmployee(){
+        $mdlEmployee = new EmployeeModel();
+       
+        return $mdlEmployee->find($this->attributes['employee_id_employee'])['name_employee'];
     }
 }

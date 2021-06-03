@@ -42,6 +42,22 @@
 
 
 <?= $this->section('content') ?>
+
+<?php if (session()->error) : ?>
+    <div class="col-md-12 alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-ban"></i> <?= session('error.title') ?></h5>
+        <?= session('error.body') ?>
+    </div>
+<?php endif; ?>
+<?php if (session()->msg) :  ?>
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-check"></i> <?= session('msg.title') ?></h5>
+        <?= session('msg.body') ?>
+    </div>
+<?php endif; ?>
+
 <div class="card card-primary card-tabs">
     <div class="card-header p-0 pt-1">
         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
