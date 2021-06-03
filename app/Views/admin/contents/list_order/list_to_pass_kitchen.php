@@ -1,42 +1,141 @@
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title"> <b> PEDIDOS POR PASAR A COCINA</b></h3>
+    <div class="card-header header-list">
+        <h3 class="card-title" style="color: #fff;"> <b> LOCAL</b></h3>
     </div>
     <!-- /.card-header -->
-    <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
+    <div class="card-body body-background">
+        <table id="example1" class="table table-bordered table-striped projects">
             <thead>
                 <tr>
+                    <th>Turno</th>
+                    <th style="width: 10px;">Cant</th>
                     <th>N° Pedido</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Detalle</th>
+                    <th>Hora</th>
+                    <th>Obser.</th>
+                    <th>Acci&oacute;n</th>
+
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($dailyorders as $order) : ?>
+                <?php foreach ($dailyorders as $order) : //dd($dailyorders); 
+                ?>
+
                     <tr>
-                        <td><?= $order->id_order . '<br>' . $order->client_id_client ?></td>
-                        <td>Internet
-                            Explorer 4.0
+                        <td>
+                            <small style="font-size: 50px;"><?= $order->turnmachine_order ?></small>
                         </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
+                        <td>
+                            <?= count($list_products = $order->getListofProducts()) ?>
+                        </td>
+                        <td><?= $order->id_order . '<br><b>' . $order->getNameClient() . '</b>' ?></td>
+                        <td>
+                            <ul class="list-inline">
+                                <?php foreach ($list_products as $item) :  ?>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="<?= base_url() . route_to('img-menu') . '/' . $item['category_id_category'] . '/' . $item['image_product'] ?>">
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </td>
+                        <td>
+                            <?= $order->hour_order . '<br>' . $order->date_order ?>
+                        </td>
+                        <td><?= $order->observations_order ?></td>
+
+                        <td class="project-actions text-right">
+                            <a class="btn btn-primary btn-sm" href="<?= base_url() . route_to('view_load_order', $order->id_order) ?>">
+                                <i class="fas fa-folder">
+                                </i>
+                                Ver
+                            </a>
+                            <a class="btn btn-danger btn-sm" href="#">
+                                <i class="fas fa-trash">
+                                </i>
+                                Deshabilitar
+                            </a>
+
+                            <a class="btn btn-info btn-sm" href="#">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Pasar a Cocina
+                            </a>
+                            <a class="btn btn-info btn-sm" href="#">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Despachar
+                            </a>
+
+                        </td>
                     </tr>
                 <?php endforeach; ?>
 
             </tbody>
-            <tfoot>
+
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<div class="card">
+    <div class="card-header header-list">
+        <h3 class="card-title" style="color: #fff;"> <b> DOMICILIOS</b></h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body body-background">
+        <table id="example2" class="table table-bordered table-striped projects">
+            <thead>
                 <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Turno</th>
+                    <th style="width: 10px;">Cantidad</th>
+                    <th>N° Pedido</th>
+                    <th>Detalle</th>
+                    <th>Obser.</th>
+                    <th>Acci&oacute;n</th>
+
                 </tr>
-            </tfoot>
+            </thead>
+            <tbody>
+                <?php foreach ($dailyorders as $order) : ?>
+
+                    <tr>
+                        <td>
+                            <?= count($list_products = $order->getListofProducts()) ?>
+                        </td>
+                        <td><?= $order->id_order . '<br>' . $order->client_id_client ?></td>
+                        <td>
+                            <ul class="list-inline">
+                                <?php foreach ($list_products as $item) :  ?>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="<?= base_url() . route_to('img-menu') . '/' . $item['category_id_category'] . '/' . $item['image_product'] ?>">
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </td>
+
+                        <td> 4</td>
+                        <td class="project-actions text-right">
+                            <a class="btn btn-primary btn-sm" href="#">
+                                <i class="fas fa-folder">
+                                </i>
+                                View
+                            </a>
+                            <a class="btn btn-info btn-sm" href="#">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Edit
+                            </a>
+                            <a class="btn btn-danger btn-sm" href="#">
+                                <i class="fas fa-trash">
+                                </i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+
+            </tbody>
+
         </table>
     </div>
     <!-- /.card-body -->

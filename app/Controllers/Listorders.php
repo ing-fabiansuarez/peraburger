@@ -14,12 +14,12 @@ class Listorders extends BaseController
         $mdlOrder = new OrderModel();
      
 
-        $dailyOrders = $mdlOrder->where('date_order', $date)->findAll();
+        $dailyOrders = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping',1)->orderBy('turnmachine_order','desc')->findAll();
 
         $lista = array();
 
         return view('admin/contents/list_order/view_main_list_order', [
-            'dailyorders' => dd($mdlOrder->where('date_order', $date)->findAll())
+            'dailyorders' => $dailyOrders
         ]);
     }
 }

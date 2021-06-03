@@ -60,7 +60,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="<?= base_url() . route_to('view_load_order','2021-06-02-1622672054') ?>" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
@@ -68,7 +68,7 @@
                             <small class="badge badge-success right">Listo</small>
                         </p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="<?= base_url() . route_to('view_list_order',date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>

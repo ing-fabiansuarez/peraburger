@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Models\ClientModel;
 use App\Models\DetailorderModel;
 use App\Models\OrderModel;
 use CodeIgniter\Entity;
@@ -42,5 +43,10 @@ class Order extends Entity
     public function getListofProducts(){
         $mdlDetail = new DetailorderModel();
         return $mdlDetail->getListOrderByReference($this->attributes['id_order']);
+    }
+
+    public function getNameClient(){
+        $mdlClient = new ClientModel();
+        return $mdlClient->find($this->id_order)['name_client'].'<br>'.$mdlClient->find($this->id_order)['surname_client'];
     }
 }

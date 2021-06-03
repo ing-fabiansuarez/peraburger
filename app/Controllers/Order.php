@@ -13,6 +13,7 @@ use App\Models\ProductModel;
 use App\Models\RecipeModel;
 use App\Models\TypeshippingModel;
 use App\Models\WhitoutingredientModel;
+use CodeIgniter\HTTP\URI;
 use Exception;
 
 class Order extends BaseController
@@ -222,8 +223,8 @@ class Order extends BaseController
                 }
             }
         }
-        //return redirect().route_to('view_load_order',$REFERENCE);
-        echo $REFERENCE;
+        return redirect()->to(base_url().route_to('view_list_order','2021-06-03'));
+        
     }
 
     public function viewCreateOrderFinish()
