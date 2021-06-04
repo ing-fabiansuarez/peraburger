@@ -50,7 +50,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->post('deleteproduct', 'Order::deleteProductToListOrder', ['as' => 'deleteproductlistorder']);
 
 	//routes para cambiar de states
-	$routes->get('changestate/(:num)/(:segment)', 'States::updateState/$1/$2', ['as' => 'chage_state']);
+	$routes->get('changestate/(:num)/(:segment)', 'States::updateState/$1/$2', ['as' => 'chage_state']); 
 
 	//routes domiciliarios
 	$routes->get('creardomiciliario', 'Domiciliary::viewCreateDomiciliary', ['as' => 'view_domiciliaries']);
@@ -71,7 +71,8 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 
 	//reportes
 	$routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
-	$routes->post('cosina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
+	$routes->post('cocina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
+	$routes->post('etiqueta', 'Reports::printSticker', ['as' => 'print_sticker']);
 });
 
 //routes of auth

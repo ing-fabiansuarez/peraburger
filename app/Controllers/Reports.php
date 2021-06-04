@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
+use App\Models\DomicilioModel;
 use App\Models\OrderModel;
 use App\Models\TypeshippingModel;
 
@@ -97,21 +98,15 @@ class Reports extends BaseController
         $pdf->SetMargins(3, 3, 3);
         //Establecemos el margen inferior
         $pdf->SetAutoPageBreak(true, 5);
-
         $pdf->SetFont('Times', 'B', 9);
 
         // CONTENIDO DE LA PAGINA
 
         $pdf->Image(base_url() . '/public/img/peraburgelogo1.png', 3, 1, 30);
-
-
         $pdf->cell(50, 1, '', 0, 1, 'C');
-
-
         $pdf->SetFont('Times', 'B', 12);
         $pdf->cell(20, 4, 'TURNO:', 0, 0, 'L');
         $pdf->cell(10, 4, $order->turnmachine_order, 0, 0, 'L');
-
         $pdf->cell(39, 4, $mdlType->find($order->typeshipping_id_typeshipping)['name_typeshipping'], 0, 1, 'R');
         $pdf->cell(69, 4, utf8_decode('N° ') . $REF, 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 8);
@@ -150,6 +145,55 @@ class Reports extends BaseController
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
 
 
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->Output();
+    }
+    public function printSticker()
+    {
+        $mdlOrder = new OrderModel();
+        $mdlClient = new ClientModel();
+        $REF = $this->request->getPostGet('reference');
+        $domicilio = $mdlOrder->find($REF)->getDomicilio();
+        $client = $mdlClient->find($REF);
+
+        //Se declara la libreria
+        $pdf = new \FPDF("P", "mm", array(279, 216));
+        $pdf->AddPage();
+        //Margenes del archivo
+        $pdf->SetMargins(0, 0, 0);
+        //Establecemos el margen inferior
+        $pdf->SetAutoPageBreak(true, 0);
+
+        $pdf->SetFont('ZapfDingbats', 'B', 9);
+
+        // CONTENIDO DE LA PAGINA
+        $pdf->cell(50, 10, '', 0, 1, 'C');
+        $pdf->Image(base_url() . '/public/admin/dist/img/others/stikersdomi1.jpeg', 5, 0, 208);
+
+        //dd($domicilio);
+
+        $pdf->SetFont('Helvetica', 'B', 25);
+        $pdf->ln(35);
+        $pdf->cell(85, 10, '', 0, 0, 'L');
+        $pdf->MultiCell(120, 10, utf8_decode($client['name_client'].' '.$client['surname_client']), 0, 'C');
+        $pdf->Ln(3);
+        $pdf->cell(90, 10, '', 0, 0, 'L');
+        $pdf->MultiCell(115, 10, utf8_decode('Dirección:'), 0, 'L');
+        $pdf->Ln(3);
+        $pdf->SetFont('Courier', '', 22);
+        $pdf->cell(95, 10, '', 0, 0, 'L');
+        $pdf->MultiCell(105, 10, utf8_decode($domicilio['address_domicilio']), 'TLR', 'L');
+        $pdf->cell(95, 10, '', 0, 0, 'L');
+        $pdf->MultiCell(105, 10,  utf8_decode('Barrio ' . $domicilio['neighborhood_domicilio']), 'BLR', 'L');
+        $pdf->Ln(8);
+        $pdf->SetFont('Helvetica', 'B', 25);
+        $pdf->cell(90, 10, '', 0, 0, 'L');
+        $pdf->MultiCell(115, 10, utf8_decode('Telefono:'), 0, 'L');
+        $pdf->Ln(3);
+        $pdf->SetFont('Courier', '', 22);
+        $pdf->cell(95, 10, '', 0, 0, 'L');
+        $pdf->MultiCell(105, 10,  utf8_decode($domicilio['whatsapp_domicilio']), 1, 'L');
+        
         $this->response->setHeader('Content-Type', 'application/pdf');
         $pdf->Output();
     }

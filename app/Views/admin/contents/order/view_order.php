@@ -80,7 +80,8 @@
                                                     <i class="fas fa-download"></i> Cocina
                                                 </button>
                                             </form>
-                                            <form action="<?= base_url() ?>" method="post" target="_blank">
+                                            <form action="<?= base_url() . route_to('print_sticker') ?>" method="post" target="_blank">
+                                                <input type="hidden" name="reference" value="<?= $order->id_order ?>">
                                                 <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
                                                     <i class="fas fa-print"></i> Etiqueta
                                                 </button>

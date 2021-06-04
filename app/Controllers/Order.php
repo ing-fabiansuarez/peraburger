@@ -223,7 +223,7 @@ class Order extends BaseController
                 }
             }
         }
-        return redirect()->to(base_url().route_to('view_list_order','2021-06-03'));
+        return redirect()->to(base_url().route_to('view_list_order',date("Y-m-d")));
         
     }
 

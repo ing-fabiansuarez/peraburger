@@ -148,10 +148,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div id="form-typeshipping">
-                            </div> 
-
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
+use App\Models\DomicilioModel;
 use App\Models\EmployeeModel;
 use App\Models\OrderModel;
 use CodeIgniter\Entity;
@@ -54,5 +55,9 @@ class Order extends Entity
         $mdlEmployee = new EmployeeModel();
        
         return $mdlEmployee->find($this->attributes['employee_id_employee'])['name_employee'];
+    }
+    public function getDomicilio(){
+        $mdlDomicilio = new DomicilioModel();
+        return $mdlDomicilio->find($this->attributes['domicilio_id_domicilio']);
     }
 }
