@@ -7,6 +7,11 @@ use App\Models\ProductModel;
 
 class Informes extends BaseController
 {
+    public function generalReport($initialDate, $finalDate){
+    
+        return view('admin/contents/informes/general_report');
+
+    }
 
 
     public function dailyBox($date)

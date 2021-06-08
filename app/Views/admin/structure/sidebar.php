@@ -41,11 +41,19 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('informe_daily_box', date("Y-m-d")) ?>" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Reporte diario
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= base_url().route_to('informe_general_report',date("Y-m-01"),date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Estadisticas
+                            Reporte General
                         </p>
                     </a>
                 </li>
@@ -61,7 +69,7 @@
                     </a>
                 </li>
                 <!-- <li class="nav-item">
-                    <a href="<?= base_url() . route_to('view_load_order','2021-06-02-1622672054') ?>" class="nav-link">
+                    <a href="<?= base_url() . route_to('view_load_order', '2021-06-02-1622672054') ?>" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
                             Pedido Cargado
@@ -70,7 +78,7 @@
                     </a>
                 </li> -->
                 <li class="nav-item">
-                    <a href="<?= base_url() . route_to('view_list_order',date("Y-m-d")) ?>" class="nav-link">
+                    <a href="<?= base_url() . route_to('view_list_order', date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Lista de Pedidos
@@ -88,7 +96,7 @@
                     </a>
                 </li>
 
-             <!--    <li class="nav-header">CLIENTES</li>
+                <!--    <li class="nav-header">CLIENTES</li>
                 <li class="nav-item">
                     <a href="<?= base_url() . route_to('view_createclient') ?>" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
@@ -99,15 +107,7 @@
                     </a>
                 </li> -->
 
-                <li class="nav-header">REPORTES</li>
-                <li class="nav-item">
-                    <a href="<?= base_url() . route_to('informe_daily_box',date("Y-m-d")) ?>" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Reporte diario
-                        </p>
-                    </a>
-                </li>
+
 
 
             </ul>
