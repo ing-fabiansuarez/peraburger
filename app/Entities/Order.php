@@ -7,6 +7,8 @@ use App\Models\DetailorderModel;
 use App\Models\DomicilioModel;
 use App\Models\EmployeeModel;
 use App\Models\OrderModel;
+use App\Models\StateModel;
+use App\Models\TypeshippingModel;
 use CodeIgniter\Entity;
 
 class Order extends Entity
@@ -42,7 +44,7 @@ class Order extends Entity
         }
     }
 
-    public function getListofProducts(){
+    public function getListofProducts(){ 
         $mdlDetail = new DetailorderModel();
         return $mdlDetail->getListOrderByReference($this->attributes['id_order']);
     }
@@ -59,5 +61,26 @@ class Order extends Entity
     public function getDomicilio(){
         $mdlDomicilio = new DomicilioModel();
         return $mdlDomicilio->find($this->attributes['domicilio_id_domicilio']);
+    }
+
+    public function getTotalWthitOutDomicilio(){
+        $adder = 0;
+        $discounts=0;
+        foreach($this->getListofProducts() as $item){
+            $adder+=$item['priceunit_detailorder'];
+            foreach($item['whitout'] as $whitout){
+                $discounts+=$whitout['discount_hasnot'];
+            }
+        }
+        return $adder-$discounts;
+        
+    }
+    public function getTypeofShipping(){
+        $mdl = new TypeshippingModel();
+        return $mdl->find($this->typeshipping_id_typeshipping);
+    }
+    public function getState(){
+        $mdl = new StateModel();
+        return $mdl->find($this->state_id_state);
     }
 }

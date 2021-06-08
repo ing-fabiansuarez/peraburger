@@ -101,10 +101,10 @@
 
                 <li class="nav-header">REPORTES</li>
                 <li class="nav-item">
-                    <a href="<?= base_url() . route_to('view_createclient') ?>" class="nav-link">
+                    <a href="<?= base_url() . route_to('informe_daily_box',date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
-                            Caja Diaria
+                            Reporte diario
                         </p>
                     </a>
                 </li>

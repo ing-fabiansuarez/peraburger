@@ -75,7 +75,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->post('etiqueta', 'Reports::printSticker', ['as' => 'print_sticker']);
 
 	//Informes
-	$routes->get('reportediario/(:segment)', 'Informes::dailyBox/$1', ['as' => 'informe_daily_box']);
+	$routes->get('reportediario/(:segment)', 'Informes::dailyBox/$1', ['as' => 'informe_daily_box']); 
 });
 
 //routes of auth

@@ -3,8 +3,8 @@
         <h3 class="card-title" style="color: #fff;"> <b> LOCAL</b></h3>
     </div>
     <!-- /.card-header -->
-    <div class="card-body body-background">
-        <table id="example1" class="table table-bordered table-striped projects">
+    <div class="card-body body-background table-responsive">
+        <table id="example8" class="table table-hover text-nowrap projects">
             <thead>
                 <tr>
                     <th>Turno</th>
@@ -66,8 +66,8 @@
         <h3 class="card-title" style="color: #fff;"> <b> DOMICILIO</b></h3>
     </div>
     <!-- /.card-header -->
-    <div class="card-body body-background">
-        <table id="example1" class="table table-bordered table-striped projects">
+    <div class="card-body body-background table-responsive">
+        <table id="example7" class="table table-hover text-nowrap projects">
             <thead>
                 <tr>
                     <th>Turno</th>
