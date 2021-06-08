@@ -71,8 +71,11 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 
 	//reportes
 	$routes->post('lista', 'Reports::printOrder', ['as' => 'print_order']);
-	$routes->post('cocina', 'Reports::printKitchen', ['as' => 'print_kitchen']);
+	$routes->get('cocina/(:segment)', 'Reports::printKitchen/$1', ['as' => 'print_kitchen']);
 	$routes->post('etiqueta', 'Reports::printSticker', ['as' => 'print_sticker']);
+
+	//Informes
+	$routes->get('reportediario/(:segment)', 'Informes::dailyBox/$1', ['as' => 'informe_daily_box']);
 });
 
 //routes of auth

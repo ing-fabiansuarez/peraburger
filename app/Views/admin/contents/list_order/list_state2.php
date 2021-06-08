@@ -49,17 +49,7 @@
                                 </i>
                                 Ver
                             </a>
-                            <a class="btn btn-danger btn-sm" href="<?= base_url() . route_to('chage_state', 4, $order->id_order) ?>">
-                                <i class="fas fa-trash">
-                                </i>
-                                Deshabilitar
-                            </a>
-
-                            <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('chage_state', 2, $order->id_order) ?>">
-                                <i class="fas fa-pencil-alt">
-                                </i>
-                                Pasar a Cocina
-                            </a>
+                           
                             <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('chage_state', 3, $order->id_order) ?>">
                                 <i class="fas fa-pencil-alt">
                                 </i>
@@ -127,17 +117,7 @@
                                 </i>
                                 Ver
                             </a>
-                            <a class="btn btn-danger btn-sm" href="<?= base_url() . route_to('chage_state', 4, $order->id_order) ?>">
-                                <i class="fas fa-trash">
-                                </i>
-                                Deshabilitar
-                            </a>
-
-                            <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('chage_state', 2, $order->id_order) ?>">
-                                <i class="fas fa-pencil-alt">
-                                </i>
-                                Pasar a Cocina
-                            </a>
+                           
                             <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('chage_state', 3, $order->id_order) ?>">
                                 <i class="fas fa-pencil-alt">
                                 </i>

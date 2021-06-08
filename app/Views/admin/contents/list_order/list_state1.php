@@ -54,8 +54,8 @@
                                 </i>
                                 Deshabilitar
                             </a>
-
-                            <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('chage_state', 2, $order->id_order) ?>">
+                            
+                            <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('print_kitchen', $order->id_order) ?>">
                                 <i class="fas fa-pencil-alt">
                                 </i>
                                 Pasar a Cocina
@@ -132,8 +132,8 @@
                                 </i>
                                 Deshabilitar
                             </a>
-
-                            <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('chage_state', 2, $order->id_order) ?>">
+                            
+                            <a class="btn btn-info btn-sm" href="<?= base_url() . route_to('print_kitchen', $order->id_order) ?>">
                                 <i class="fas fa-pencil-alt">
                                 </i>
                                 Pasar a Cocina

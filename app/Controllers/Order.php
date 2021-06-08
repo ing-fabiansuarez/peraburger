@@ -24,7 +24,7 @@ class Order extends BaseController
         $mdlOrder = new OrderModel();
         $mdlDetailOrder = new DetailorderModel();
         $mdlTypeshipping = new TypeshippingModel();
-        $mdlDomicilio = new DomicilioModel();
+        $mdlDomicilio = new DomicilioModel(); 
 
 
         return view('admin/contents/order/view_order', [

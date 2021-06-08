@@ -74,18 +74,14 @@
                                                     <i class="fas fa-download"></i> Cliente
                                                 </button>
                                             </form>
-                                            <form action="<?= base_url() . route_to('print_kitchen') ?>" method="post" target="_blank">
-                                                <input type="hidden" name="reference" value="<?= $order->id_order ?>">
-                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
-                                                    <i class="fas fa-download"></i> Cocina
-                                                </button>
-                                            </form>
-                                            <form action="<?= base_url() . route_to('print_sticker') ?>" method="post" target="_blank">
-                                                <input type="hidden" name="reference" value="<?= $order->id_order ?>">
-                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
-                                                    <i class="fas fa-print"></i> Etiqueta
-                                                </button>
-                                            </form>
+                                            <?php if (isset($domi)) { ?>
+                                                <form action="<?= base_url() . route_to('print_sticker') ?>" method="post" target="_blank">
+                                                    <input type="hidden" name="reference" value="<?= $order->id_order ?>">
+                                                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
+                                                        <i class="fas fa-print"></i> Etiqueta
+                                                    </button>
+                                                </form>
+                                            <?php } ?>
                                         </div>
 
                                     </div>
@@ -109,7 +105,7 @@
                                         </thead>
                                         <tbody>
                                             <?php $total = 0;
-                                            foreach ($list_of_products as $item_list) : ?>
+                                            foreach ($list_of_products as $item_list) : //dd($item_list);?>
                                                 <tr>
 
                                                     <td class="text-center">
@@ -134,8 +130,8 @@
                                                         endif; ?>
                                                     </td>
                                                     <td class="float-right">
-                                                        <?= '$ ' . number_format(($item_list['price_product'] * $item_list['quantity_detailorder']) - $discounts) ?>
-                                                        <?php $total = $total + (($item_list['price_product'] * $item_list['quantity_detailorder']) - $discounts) ?>
+                                                        <?= '$ ' . number_format(($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts) ?>
+                                                        <?php $total = $total + (($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts) ?>
                                                     </td>
 
                                                 </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\InfostateModel;
 use App\Models\OrderModel;
 use Exception;
 
@@ -9,9 +10,8 @@ class States extends BaseController
 {
     public function updateState($newState, $reference)
     {
-
-      
         $mdlOrder = new OrderModel();
+        $mdlInfoStates = new InfostateModel();
 
         try {
             $oldState = $mdlOrder->find($reference)->state_id_state;
@@ -36,6 +36,12 @@ class States extends BaseController
                             $mdlOrder->update($reference, [
                                 'state_id_state' => 2
                             ]);
+                            $mdlInfoStates->insert([
+                                'id_infostates' => '',
+                                'state_id_state' => 2,
+                                'order_id_order' => $reference,
+                                'dateupdate_infostate' => date("Y-m-d H:i:s")
+                            ]);
                         } catch (Exception $e) {
                             return redirect()->back()->with('error', [
                                 'title' => 'Alerta!',
@@ -52,6 +58,12 @@ class States extends BaseController
                             $mdlOrder->update($reference, [
                                 'state_id_state' => 3
                             ]);
+                            $mdlInfoStates->insert([
+                                'id_infostates' => '',
+                                'state_id_state' => 3,
+                                'order_id_order' => $reference,
+                                'dateupdate_infostate' => date("Y-m-d H:i:s")
+                            ]);
                         } catch (Exception $e) {
                             return redirect()->back()->with('error', [
                                 'title' => 'Alerta!',
@@ -67,6 +79,12 @@ class States extends BaseController
                         try {
                             $mdlOrder->update($reference, [
                                 'state_id_state' => 4
+                            ]);
+                            $mdlInfoStates->insert([
+                                'id_infostates' => '',
+                                'state_id_state' => 4,
+                                'order_id_order' => $reference,
+                                'dateupdate_infostate' => date("Y-m-d H:i:s")
                             ]);
                         } catch (Exception $e) {
                             return redirect()->back()->with('error', [
@@ -99,6 +117,12 @@ class States extends BaseController
                         try {
                             $mdlOrder->update($reference, [
                                 'state_id_state' => 3
+                            ]);
+                            $mdlInfoStates->insert([
+                                'id_infostates' => '',
+                                'state_id_state' => 3,
+                                'order_id_order' => $reference,
+                                'dateupdate_infostate' => date("Y-m-d H:i:s")
                             ]);
                         } catch (Exception $e) {
                             return redirect()->back()->with('error', [
