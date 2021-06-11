@@ -15,7 +15,7 @@
         <div class="login-html">
             <img src="<?= base_url() ?>/public/img/peraburgelogo1.png" alt="Logo" class="img-fluid" style="width: 100%;">
             
-            <h2>Sistema de Control Interno de PeRa Burger</h2>
+            <h2></h2>
 
             <br>
             <br>

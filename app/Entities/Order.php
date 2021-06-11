@@ -44,43 +44,59 @@ class Order extends Entity
         }
     }
 
-    public function getListofProducts(){ 
+    public function getListofProducts()
+    {
         $mdlDetail = new DetailorderModel();
         return $mdlDetail->getListOrderByReference($this->attributes['id_order']);
     }
 
-    public function getNameClient(){
+    public function getNameClient()
+    {
         $mdlClient = new ClientModel();
-        return $mdlClient->find($this->id_order)['name_client'].'<br>'.$mdlClient->find($this->id_order)['surname_client'];
+        return $mdlClient->find($this->id_order)['name_client'] . '<br>' . $mdlClient->find($this->id_order)['surname_client'];
     }
-    public function getNameEmployee(){
+    public function getNameEmployee()
+    {
         $mdlEmployee = new EmployeeModel();
-       
+
         return $mdlEmployee->find($this->attributes['employee_id_employee'])['name_employee'];
     }
-    public function getDomicilio(){
+    public function getDomicilio()
+    {
         $mdlDomicilio = new DomicilioModel();
         return $mdlDomicilio->find($this->attributes['domicilio_id_domicilio']);
     }
 
-    public function getTotalWthitOutDomicilio(){
+    public function getTotalWthitOutDomicilio()
+    {
         $adder = 0;
-        $discounts=0;
-        foreach($this->getListofProducts() as $item){
-            $adder+=$item['priceunit_detailorder'];
-            foreach($item['whitout'] as $whitout){
-                $discounts+=$whitout['discount_hasnot'];
+        $discounts = 0;
+        foreach ($this->getListofProducts() as $item) {
+            $adder += $item['priceunit_detailorder'];
+            foreach ($item['whitout'] as $whitout) {
+                $discounts += $whitout['discount_hasnot'];
             }
         }
-        return $adder-$discounts;
-        
+        return $adder - $discounts;
     }
-    public function getTypeofShipping(){
+    public function getTypeofShipping()
+    {
         $mdl = new TypeshippingModel();
         return $mdl->find($this->typeshipping_id_typeshipping);
     }
-    public function getState(){
+    public function getState()
+    {
         $mdl = new StateModel();
         return $mdl->find($this->state_id_state);
+    }
+    public function getQuantityOfProducts($id_product)
+    {
+        $contador = 0;
+        foreach ($this->getListofProducts() as $product) {
+            if ($product['product_id_product'] == $id_product) {
+                $contador += (1 * $product['quantity_detailorder']);
+            }
+        }
+        return $contador;
     }
 }
