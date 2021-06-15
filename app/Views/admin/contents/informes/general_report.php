@@ -14,6 +14,67 @@
         var mode = "index";
         var intersect = true;
 
+        var $salesChart = $("#sales-chart");
+        // eslint-disable-next-line no-unused-vars
+        var salesChart = new Chart($salesChart, {
+            type: "line",
+            data: {
+                labels: [<?= $sales_array['cadena_x'] ?>],
+                datasets: [{
+                    backgroundColor: "#d1e2b5",
+                    borderColor: "#76b119",
+                    data: [<?= $sales_array['cadena_y'] ?>],
+                }, ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    mode: mode,
+                    intersect: intersect,
+                },
+                hover: {
+                    mode: mode,
+                    intersect: intersect,
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        // display: false,
+                        gridLines: {
+                            display: true,
+                            lineWidth: "4px",
+                            color: "rgba(0, 0, 0, .2)",
+                            zeroLineColor: "transparent",
+                        },
+                        ticks: $.extend({
+                                beginAtZero: true,
+
+                                // Include a dollar sign in the ticks
+                                callback: function(value) {
+                                    if (value >= 1000) {
+                                        value /= 1000;
+                                        value += "k";
+                                    }
+
+                                    return value;
+                                },
+                            },
+                            ticksStyle
+                        ),
+                    }, ],
+                    xAxes: [{
+                        display: true,
+                        gridLines: {
+                            display: false,
+                        },
+                        ticks: ticksStyle,
+                    }, ],
+                },
+            },
+        });
+
         <?php $contador = 1;
         foreach ($array_to_grafic as $infografic) : ?>
 
@@ -96,61 +157,100 @@
         <br>
         <h1 class="h1reportdaily">REPORTE ENTRE FECHAS</h1>
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">VENTAS</h3>
+                            <a href="javascript:void(0);">Reporte de Ventas</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                                <span class="text-bold text-lg">$18,230.00</span>
+                                <span>Ventas entre fechas: <?=$initial_date .' <b>a</b> '. $final_date?></span>
+                            </p>
+                            <p class="ml-auto d-flex flex-column text-right">
+                                <span class="text-success">
+                                    <i class="fas fa-arrow-up"></i> 33.1%
+                                </span>
+                                <span class="text-muted">Since last month</span>
+                            </p>
+                        </div>
+                        <!-- /.d-flex -->
+
+                        <div class="position-relative mb-4">
+                            <canvas id="sales-chart" height="300"></canvas>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                                Ventas
+                            </span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- /.col -->
             </div>
-            <div class="col-lg-10">
-                <div class="row">
+            <div class="row">
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-10">
 
-                    <?php $contador = 1;
-                    foreach ($array_to_grafic as $infografic) : ?>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header border-0">
-                                    <div class="d-flex justify-content-between">
-                                        <h3 class="card-title"><?= $infografic['name_category'] ?></h3>
-                                        <a href="javascript:void(0);">PeRa Burger</a>
+
+
+                    <div class="row">
+
+                        <?php $contador = 1;
+                        foreach ($array_to_grafic as $infografic) : ?>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header border-0">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title"><?= $infografic['name_category'] ?></h3>
+                                            <a href="javascript:void(0);">PeRa Burger</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <p class="d-flex flex-column">
-                                            <span class="text-bold text-lg">$18,230.00</span>
-                                            <span>Cantidad</span>
-                                        </p>
-                                        <p class="ml-auto d-flex flex-column text-right">
-                                            <span class="text-success">
-                                                <i class="fas fa-arrow-up"></i> 33.1%
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <p class="d-flex flex-column">
+                                                <span class="text-bold text-lg">Cantidad de <?= $infografic['name_category'] . ': ' . $infografic['totalProductsForCategory'] ?></span>
+                                                <span>Cantidad</span>
+                                            </p>
+                                            <p class="ml-auto d-flex flex-column text-right">
+
+                                                <span class="text-muted"><?= $initial_date . ' <b>a</b> ' . $final_date ?></span>
+                                            </p>
+                                        </div>
+                                        <!-- /.d-flex -->
+                                        <div class="position-relative mb-4">
+                                            <canvas id="sales-chart<?= $contador ?>" height="200"></canvas>
+                                        </div>
+
+                                        <div class="d-flex flex-row justify-content-end">
+                                            <span class="mr-2">
+                                                Productos
                                             </span>
-                                            <span class="text-muted"><?= $initial_date . ' <b>a</b> ' . $final_date ?></span>
-                                        </p>
-                                    </div>
-                                    <!-- /.d-flex -->
-                                    <div class="position-relative mb-4">
-                                        <canvas id="sales-chart<?= $contador ?>" height="200"></canvas>
-                                    </div>
-
-                                    <div class="d-flex flex-row justify-content-end">
-                                        <span class="mr-2">
-                                            Productos
-                                        </span>
 
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php $contador += 1;
-                    endforeach; ?>
+                        <?php $contador += 1;
+                        endforeach; ?>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-1">
+                <div class="col-lg-1">
+                </div>
+
+
             </div>
 
 
         </div>
-
-
-    </div>
 
 </section>
 <?= $this->endSection() ?>
