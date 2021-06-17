@@ -168,8 +168,8 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <p class="d-flex flex-column">
-                                <span class="text-bold text-lg">$18,230.00</span>
-                                <span>Ventas entre fechas: <?=$initial_date .' <b>a</b> '. $final_date?></span>
+                                <span class="text-bold text-lg"><?='$ '.number_format($sales_array['totalSalesBetweenDates'])?></span>
+                                <span>Ventas entre fechas: <?= $initial_date . ' <b>a</b> ' . $final_date ?></span>
                             </p>
                             <p class="ml-auto d-flex flex-column text-right">
                                 <span class="text-success">
@@ -186,70 +186,58 @@
 
                         <div class="d-flex flex-row justify-content-end">
                             <span class="mr-2">
-                                Ventas
+                                Ventas - Solo se toman en cuenta los pedidos despachados, no incluye los deshabilitados, ni creados, ni en cocina
                             </span>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- /.col -->
             </div>
-            <div class="row">
-                <div class="col-lg-1">
-                </div>
-                <div class="col-lg-10">
 
 
+        </div>
+        <div class="row">
 
-                    <div class="row">
-
-                        <?php $contador = 1;
-                        foreach ($array_to_grafic as $infografic) : ?>
-                            <div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-header border-0">
-                                        <div class="d-flex justify-content-between">
-                                            <h3 class="card-title"><?= $infografic['name_category'] ?></h3>
-                                            <a href="javascript:void(0);">PeRa Burger</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex">
-                                            <p class="d-flex flex-column">
-                                                <span class="text-bold text-lg">Cantidad de <?= $infografic['name_category'] . ': ' . $infografic['totalProductsForCategory'] ?></span>
-                                                <span>Cantidad</span>
-                                            </p>
-                                            <p class="ml-auto d-flex flex-column text-right">
-
-                                                <span class="text-muted"><?= $initial_date . ' <b>a</b> ' . $final_date ?></span>
-                                            </p>
-                                        </div>
-                                        <!-- /.d-flex -->
-                                        <div class="position-relative mb-4">
-                                            <canvas id="sales-chart<?= $contador ?>" height="200"></canvas>
-                                        </div>
-
-                                        <div class="d-flex flex-row justify-content-end">
-                                            <span class="mr-2">
-                                                Productos
-                                            </span>
-
-
-                                        </div>
-                                    </div>
-                                </div>
+            <?php $contador = 1;
+            
+            foreach ($array_to_grafic as $infografic) : ?>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title"><?= $infografic['name_category'] ?></h3>
+                                <a href="javascript:void(0);">PeRa Burger</a>
                             </div>
-                        <?php $contador += 1;
-                        endforeach; ?>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span class="text-bold text-lg"><?=  'CANTIDAD DE PRODUCTOS VENDIDOS: ' . $infografic['totalProductsForCategory'] ?></span>
+                                    <span>Cantidad</span>
+                                </p>
+                                <p class="ml-auto d-flex flex-column text-right">
+
+                                    <span class="text-muted"><?= $initial_date . ' <b>a</b> ' . $final_date ?></span>
+                                </p>
+                            </div>
+                            <!-- /.d-flex -->
+                            <div class="position-relative mb-4">
+                                <canvas id="sales-chart<?= $contador ?>" height="200"></canvas>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-end">
+                                <span class="mr-2">
+                                    Productos - Solo se toman en cuenta los pedidos despachados, no incluye los deshabilitados, ni creados, ni en cocina
+                                </span>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-1">
-                </div>
-
-
-            </div>
-
-
+            <?php $contador += 1;
+            endforeach; ?>
         </div>
 
 </section>

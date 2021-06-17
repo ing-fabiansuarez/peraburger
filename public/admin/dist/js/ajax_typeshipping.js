@@ -1,5 +1,5 @@
 var getUrl = window.location;
-var base_url = "http://localhost/peraburger";
+var base_url = "https://localhost/peraburger";
 
 //TRAER FORMULARIO PARA CREAR LA ORDEN
 
