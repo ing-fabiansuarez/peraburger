@@ -14,7 +14,8 @@ class States extends BaseController
         $mdlInfoStates = new InfostateModel();
 
         try {
-            $oldState = $mdlOrder->find($reference)->state_id_state;
+            $order = $mdlOrder->find($reference);
+            $oldState = $order->state_id_state;
         } catch (Exception $e) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
@@ -30,7 +31,7 @@ class States extends BaseController
                             'title' => 'Alerta!',
                             'body' => 'El pedido ya se encuentra en estado CREADO.'
                         ]);
-                        break;
+                        break; 
                     case 2:
                         try {
                             $mdlOrder->update($reference, [
@@ -48,7 +49,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->back()->with('msg', [
+                        return redirect()->to( base_url().route_to('view_list_order',2,$order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a COCINA'
                         ]);
@@ -70,7 +71,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->back()->with('msg', [
+                        return redirect()->to(base_url().route_to('view_list_order',3,$order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a DESPACHADO'
                         ]);
@@ -92,7 +93,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->back()->with('msg', [
+                        return redirect()->to(base_url().route_to('view_list_order',4,$order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a DESHABILITADO'
                         ]);
@@ -130,7 +131,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->back()->with('msg', [
+                        return redirect()->to(base_url().route_to('view_list_order',3,$order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a DESPACHADO'
                         ]);

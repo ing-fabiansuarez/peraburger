@@ -9,30 +9,41 @@ class Listorders extends BaseController
 {
 
     //--------------------------------------------------------------------
-    public function view_main($date)
+    public function view_main($state, $date)
     {
-        $mdlOrder = new OrderModel(); 
 
-
-        $dailyOrdersLocalState1 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 2)->where('state_id_state', 1)->orderBy('turnmachine_order', 'desc')->findAll();
-        $dailyOrdersLocalState2 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 2)->where('state_id_state', 2)->orderBy('turnmachine_order', 'desc')->findAll();
-        $dailyOrdersLocalState3 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 2)->where('state_id_state', 3)->orderBy('turnmachine_order', 'desc')->findAll();
-        $dailyOrdersLocalState4 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 2)->where('state_id_state', 4)->orderBy('turnmachine_order', 'desc')->findAll();
-
-        $dailyOrdersDomicilioState1 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 1)->where('state_id_state', 1)->orderBy('turnmachine_order', 'desc')->findAll();
-        $dailyOrdersDomicilioState2 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 1)->where('state_id_state', 2)->orderBy('turnmachine_order', 'desc')->findAll();
-        $dailyOrdersDomicilioState3 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 1)->where('state_id_state', 3)->orderBy('turnmachine_order', 'desc')->findAll();
-        $dailyOrdersDomicilioState4 = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 1)->where('state_id_state', 4)->orderBy('turnmachine_order', 'desc')->findAll();
-
-        return view('admin/contents/list_order/view_main_list_order', [
-            'dailyOrdersLocalState1' => $dailyOrdersLocalState1,
-            'dailyOrdersLocalState2' => $dailyOrdersLocalState2,
-            'dailyOrdersLocalState3' => $dailyOrdersLocalState3,
-            'dailyOrdersLocalState4' => $dailyOrdersLocalState4,
-            'dailyOrdersDomicilioState1' => $dailyOrdersDomicilioState1,
-            'dailyOrdersDomicilioState2' => $dailyOrdersDomicilioState2,
-            'dailyOrdersDomicilioState3' => $dailyOrdersDomicilioState3,
-            'dailyOrdersDomicilioState4' => $dailyOrdersDomicilioState4,
-        ]);
+        $mdlOrder = new OrderModel();
+        $dailyOrdersLocal = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 2)->where('state_id_state', $state)->orderBy('hour_order', 'desc')->findAll();
+        $dailyOrdersDomicilio = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 1)->where('state_id_state', $state)->orderBy('hour_order', 'desc')->findAll();
+        switch ($state) {
+            case 1:
+                return view('admin/contents/list_order/view_main_state1', [
+                    'date' => $date,
+                    'dailyOrdersLocal' => $dailyOrdersLocal,
+                    'dailyOrdersDomicilio' => $dailyOrdersDomicilio
+                ]);
+                break;
+            case 2:
+                return view('admin/contents/list_order/view_main_state2', [
+                    'date' => $date,
+                    'dailyOrdersLocal' => $dailyOrdersLocal,
+                    'dailyOrdersDomicilio' => $dailyOrdersDomicilio
+                ]);
+                break;
+            case 3:
+                return view('admin/contents/list_order/view_main_state3', [
+                    'date' => $date,
+                    'dailyOrdersLocal' => $dailyOrdersLocal,
+                    'dailyOrdersDomicilio' => $dailyOrdersDomicilio
+                ]);
+                break;
+            case 4:
+                return view('admin/contents/list_order/view_main_state4', [
+                    'date' => $date,
+                    'dailyOrdersLocal' => $dailyOrdersLocal,
+                    'dailyOrdersDomicilio' => $dailyOrdersDomicilio
+                ]);
+                break;
+        }
     }
 }
