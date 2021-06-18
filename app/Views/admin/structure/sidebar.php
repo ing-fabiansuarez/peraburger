@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="<?=base_url()?>" class="brand-link">
         <img src="<?= base_url() ?>/public/img/peraburgelogo1.png" alt="Logo" class="img-fluid" style="opacity: .8">
     </a>
 
@@ -9,10 +9,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?= base_url() ?>/public/admin/dist/img/employees/avatar_man.png" class="img-circle elevation-2" alt="Image">
+                <img src="<?=base_url()?>/public/admin/dist/img/employees/<?=session()->image_employee?>" class="img-circle elevation-2" alt="Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Fabian Suarez</a>
+                <a href="#" class="d-block"><?=session()->name_employee?></a>
             </div>
         </div>
 
