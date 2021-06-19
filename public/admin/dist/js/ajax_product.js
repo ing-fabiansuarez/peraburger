@@ -10,8 +10,10 @@ $(document).ready(function () {
   });
   $("#products-select").change(function () {
     reloadingredients();
+    reloadadditions();
   });
 });
+
 function reloadproducts() {
   $.ajax({
     type: "post",
@@ -20,6 +22,7 @@ function reloadproducts() {
     success: function (r) {
       $("#products-select").html(r);
       reloadingredients();
+      reloadadditions();
     },
   });
 }
@@ -33,6 +36,19 @@ function reloadingredients() {
     data: "product=" + $("#products-select").val(),
     success: function (r) {
       $("#ingredients-div").html(r);
+    },
+  });
+}
+
+//TRAER ADICIONES DESDE LA BASE DE DATOS
+
+function reloadadditions() {
+  $.ajax({
+    type: "post",
+    url: base_url + "/additionsofproduct",
+    data: "product=" + $("#products-select").val(),
+    success: function (r) {
+      $("#additions-div").html(r);
     },
   });
 }

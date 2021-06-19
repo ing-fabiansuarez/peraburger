@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AdditionproductModel;
 use App\Models\DomiciliaryModel;
 use App\Models\ProductModel;
 use App\Models\RecipeModel;
@@ -31,13 +32,34 @@ class Ajax extends BaseController
 			$cadena = "<select class='custom-select' name='ingredients-select' required>
 			";
 			foreach ($ingredients as $ingredient) {
-				$cadena = $cadena . '<option value="' . $ingredient['id_ingredient'] . '">' . $ingredient['name_ingredient'] . '</option>';
+				$cadena = $cadena . '<option value="' . $ingredient['id_ingredient'] . '">' . $ingredient['name_ingredient'] .' - $ '.number_format($ingredient['price_ingredient']). '</option>';
+			}
+
+			echo $cadena . "</select>";
+			return true; 
+		}
+	}
+
+	public function ajaxAdditionsProduct()
+	{
+		if (empty($product = $this->request->getPostGet('product'))) {
+			echo "no pudo acceder";
+			return false;
+		} else {
+			$modelAdditionsProduct = new AdditionproductModel();
+			$additions = $modelAdditionsProduct->getAdditionsOfProduct($product);
+
+			$cadena = "<select class='custom-select' name='additions-select' required>
+			";
+			foreach ($additions as $addition) {
+				$cadena = $cadena . '<option value="' . $addition['id_addition'] . '">' . $addition['name_addition'] . ' + $ '.number_format($addition['price_addition']). '</option>';
 			}
 
 			echo $cadena . "</select>";
 			return true;
 		}
 	}
+
 	public function ajaxFormTypeShipping()
 	{
 		$mdlDomi = new DomiciliaryModel();
@@ -76,11 +98,11 @@ class Ajax extends BaseController
 						<label>Domiciliario</label>
 						<select name='domi' class='form-control' required>
 						";
-						foreach($domiciliaries as $domiciliary){
-							$cadena1.= "<option value='".$domiciliary['id_domiciliary']."'>".$domiciliary['name_domiciliary'].' '.$domiciliary['surname_domiciliary']."</option>";
-						}
+		foreach ($domiciliaries as $domiciliary) {
+			$cadena1 .= "<option value='" . $domiciliary['id_domiciliary'] . "'>" . $domiciliary['name_domiciliary'] . ' ' . $domiciliary['surname_domiciliary'] . "</option>";
+		}
 
-			$cadena1 .="
+		$cadena1 .= "
 						</select>
 					</div>
 				</div>

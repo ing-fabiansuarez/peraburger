@@ -4,7 +4,7 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('admin/structure/main_admin_view');
+		return view('admin/contents/view_home');
 	}
 	
 	//--------------------------------------------------------------------

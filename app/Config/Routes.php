@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->group('/',['filter'=>'auth'], function ($routes) {
+
 	$routes->get('', 'Home::index', ['as' => 'home_system']);
 
 	//routes clientes
@@ -64,7 +65,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->post('productofcategory', 'Ajax::ajaxProductOfCategory');
 	$routes->post('ingredientsofproduct', 'Ajax::ajaxProductRecipe');
 	$routes->get('formtypeshipping', 'Ajax::ajaxFormTypeShipping');
-
+	$routes->post('additionsofproduct', 'Ajax::ajaxAdditionsProduct');
 
 	//routes of pictures
 	$routes->add('/public/admin/dist/img/menu', '', ['as' => 'img-menu']);
@@ -77,6 +78,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	//Informes
 	$routes->get('reportediario/(:segment)', 'Informes::dailyBox/$1', ['as' => 'informe_daily_box']); 
 	$routes->get('reportediario/(:segment)/(:segment)', 'Informes::generalReport/$1/$2', ['as' => 'informe_general_report']); 
+
 });
 
 //routes of auth

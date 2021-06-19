@@ -93,6 +93,15 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label>Adiciones</label>
+                                <div class="select2-purple">
+                                    <select name='aditions-div[]' id='additions-div' class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label>Cantidad</label>
                                 <div class="col-sm-12">
@@ -130,6 +139,21 @@
                     </div>
                     <div class="card-body padding-0">
                         <?php if (empty($list_order)) { ?>
+
+                            <div class="card-body table-responsive p-0" style="height: 59vh;">
+                                <br>
+                                <div class="container">
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <h5><i class="icon fas fa-info"></i> Alerta!</h5>
+                                        Selecciona un producto para crear un pedido.
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
 
                         <?php } else { ?>
                             <div class="card-body table-responsive p-0" style="height: 59vh;">
