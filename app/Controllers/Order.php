@@ -24,7 +24,7 @@ class Order extends BaseController
         $mdlOrder = new OrderModel();
         $mdlDetailOrder = new DetailorderModel();
         $mdlTypeshipping = new TypeshippingModel();
-        $mdlDomicilio = new DomicilioModel(); 
+        $mdlDomicilio = new DomicilioModel();
 
 
         return view('admin/contents/order/view_order', [
@@ -207,6 +207,24 @@ class Order extends BaseController
                 ]);
             }
 
+            //se guardan cada uno de los ingredientes que se quieren que no esten en el detalle de la orden
+            foreach ($producttoadd['whitout_ingredients'] as $whitout) {
+                $new_whit_out = [
+                    'detailorder_id_detailorder' => $id,
+                    'recipe_id_recipe' => $mdlRecipe->where('product_id_product', $producttoadd['id_product'])->where('ingredient_id_ingredient', $whitout['id_ingredient'])->first()['id_recipe'],
+                    'discount_hasnot' => $mdlIngredint->find($whitout['id_ingredient'])['price_ingredient']
+                ];
+                try {
+                    $mdlWhitout->insert($new_whit_out);
+                } catch (Exception $e) {
+                    return redirect()->back()->with('error', [
+                        'title' => 'Alerta!',
+                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de los ingredientes que el cliente no quiere. <br>Excepción capturada:' .  $e->getMessage()
+                    ]);
+                }
+            }
+
+            //Se guardan cada uno de las adiciones correspondientes al detalle de la orden
             foreach ($producttoadd['whitout_ingredients'] as $whitout) {
                 $new_whit_out = [
                     'detailorder_id_detailorder' => $id,
@@ -223,8 +241,7 @@ class Order extends BaseController
                 }
             }
         }
-        return redirect()->to(base_url().route_to('view_list_order',1,date("Y-m-d")));
-        
+        return redirect()->to(base_url() . route_to('view_list_order', 1, date("Y-m-d")));
     }
 
     public function viewCreateOrderFinish()
@@ -270,8 +287,11 @@ class Order extends BaseController
         if (!$whitout_ingredients = $this->request->getPostGet('ingredients-div')) {
             $whitout_ingredients = array();
         }
-        d($this->request->getPostGet());
-        d($whitout_ingredients);
+        if (!$whit_additions = $this->request->getPostGet('additions-div')) {
+            $whit_additions = array();
+        }
+        /* d($this->request->getPostGet());
+        d($whitout_ingredients); */
         $quantity = $this->request->getPostGet('quantity');
         $item = time() . '-';
         $newItem = [
@@ -279,7 +299,8 @@ class Order extends BaseController
                 'id' => $item,
                 'product'  => $product,
                 'quantity'     => $quantity,
-                'whitout_ingredients'     => $whitout_ingredients
+                'whitout_ingredients'     => $whitout_ingredients,
+                'whit_additions' => $whit_additions
             ]
         ];
         if (isset($_SESSION['list_order'])) {
@@ -287,6 +308,7 @@ class Order extends BaseController
         } else {
             $this->session->set('list_order', $newItem);
         }
+        /* dd($_SESSION['list_order']); */
         return redirect()->route('view_createorder');
     }
 
