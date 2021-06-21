@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class WhitadditionModel extends Model
+class WithadditionModel extends Model
 {
     protected $table      = 'detailorder_has_product_additions';
     protected $primaryKey = 'detailorder_id_detailorder';
@@ -18,7 +18,7 @@ class WhitadditionModel extends Model
         'price_more_additions'
     ];
 
-    public function getIngredients($id_detailorder)//Retorna toda la informacion de ingredientes que no deben ir en la  receta.
+    public function getIngredients($id_detailorder) //Retorna toda la informacion de ingredientes que no deben ir en la  receta.
     {
         return ($this->db->table('detailorder_hasnot_recipe')
             ->select('*')

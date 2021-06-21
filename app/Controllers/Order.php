@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Entities\Order as EntitiesOrder;
+use App\Models\AdditionModel;
+use App\Models\AdditionproductModel;
 use App\Models\CategoryModel;
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
@@ -12,7 +14,9 @@ use App\Models\OrderModel;
 use App\Models\ProductModel;
 use App\Models\RecipeModel;
 use App\Models\TypeshippingModel;
+use App\Models\WhitadditionModel;
 use App\Models\WhitoutingredientModel;
+use App\Models\WithadditionModel;
 use CodeIgniter\HTTP\URI;
 use Exception;
 
@@ -185,6 +189,9 @@ class Order extends BaseController
         $mdlRecipe = new RecipeModel();
         $mdlWhitout = new WhitoutingredientModel();
         $mdlIngredint = new IngredientModel();
+        $mdlAdditionProduct = new AdditionproductModel();
+        $mdlAddition = new AdditionModel();
+        $mdlWithAddition = new WithadditionModel();
 
         $allproducts = $mdlProducts->getInfoProductsListOrder($_SESSION['list_order']);
         //d($allproducts);
@@ -219,24 +226,24 @@ class Order extends BaseController
                 } catch (Exception $e) {
                     return redirect()->back()->with('error', [
                         'title' => 'Alerta!',
-                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de los ingredientes que el cliente no quiere. <br>Excepción capturada:' .  $e->getMessage()
+                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de los ingredientes. <br>Excepción capturada:' .  $e->getMessage()
                     ]);
                 }
             }
 
-            //Se guardan cada uno de las adiciones correspondientes al detalle de la orden
-            foreach ($producttoadd['whitout_ingredients'] as $whitout) {
-                $new_whit_out = [
+            //Se guardan cada uno de las adiciones correspondientes al detalles
+            foreach ($producttoadd['whit_additions'] as $addition) {
+                $new_addition = [
                     'detailorder_id_detailorder' => $id,
-                    'recipe_id_recipe' => $mdlRecipe->where('product_id_product', $producttoadd['id_product'])->where('ingredient_id_ingredient', $whitout['id_ingredient'])->first()['id_recipe'],
-                    'discount_hasnot' => $mdlIngredint->find($whitout['id_ingredient'])['price_ingredient']
+                    'product_additions_id_product_additions' => $mdlAdditionProduct->where('product_id_product', $producttoadd['id_product'])->where('addition_id_addition', $addition['id_addition'])->first()['id_product_additions'],
+                    'price_more_additions' => $mdlAddition->find($addition['id_addition'])['price_addition']
                 ];
                 try {
-                    $mdlWhitout->insert($new_whit_out);
+                    $mdlWithAddition->insert($new_addition);
                 } catch (Exception $e) {
                     return redirect()->back()->with('error', [
                         'title' => 'Alerta!',
-                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de los ingredientes que el cliente no quiere. <br>Excepción capturada:' .  $e->getMessage()
+                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion de las Adiciones. <br>Excepción capturada:' .  $e->getMessage()
                     ]);
                 }
             }

@@ -12,9 +12,11 @@ class AdditionproductModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        
+    ];
 
-    public function getAdditionsOfProduct( $product)
+    public function getAdditionsOfProduct($product)
     {
         return $this->db->table('product_additions')
             ->select('*')
