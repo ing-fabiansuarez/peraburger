@@ -99,7 +99,7 @@
                     <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-store"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Local - <?= $info['quantityOrdersLocal']?></span>
+                        <span class="info-box-text">Local - <?= $info['quantityOrdersLocal'] ?></span>
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersLocal']) ?></span>
 
                     </div>
@@ -111,7 +111,7 @@
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-motorcycle"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Domicilios - <?= $info['quantityOrdersDomis']?></span>
+                        <span class="info-box-text">Domicilios - <?= $info['quantityOrdersDomis'] ?></span>
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersDomis']) ?></span>
                     </div>
                     <!-- /.info-box-content -->
@@ -121,7 +121,7 @@
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-trash-alt"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Deshabilitados - <?= $info['quantityOrdersDisabled']?></span>
+                        <span class="info-box-text">Deshabilitados - <?= $info['quantityOrdersDisabled'] ?></span>
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersDisabled']) ?></span>
                     </div>
                     <!-- /.info-box-content -->
@@ -154,8 +154,9 @@
                         </thead>
                         <tbody>
                             <?php foreach ($list_orders as $order) : ?>
+
                                 <tr>
-                                    <td><?= '<b>' . $order->id_order . '</b><br>' . $order->getNameClient() ?></td>
+                                    <td><a href="<?= base_url() . route_to('view_load_order', $order->id_order) ?>"><?= '<b>' . $order->id_order . '</b><br>' . $order->getNameClient() ?></a></td>
                                     <td>
                                         <table class="table table-hover">
                                             <tbody>
@@ -222,6 +223,8 @@
                                         <?= $order->consecutive_order ?>
                                     </td>
                                 </tr>
+
+
                             <?php endforeach; ?>
 
                         </tbody>

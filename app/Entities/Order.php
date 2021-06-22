@@ -9,6 +9,8 @@ use App\Models\EmployeeModel;
 use App\Models\OrderModel;
 use App\Models\StateModel;
 use App\Models\TypeshippingModel;
+use App\Models\WhitoutingredientModel;
+use App\Models\WithadditionModel;
 use CodeIgniter\Entity;
 
 class Order extends Entity
@@ -73,7 +75,7 @@ class Order extends Entity
         $discounts = 0;
         $surcharges = 0;
         foreach ($this->getListofProducts() as $item) {
-            $adder += $item['priceunit_detailorder']*$item['quantity_detailorder'];
+            $adder += $item['priceunit_detailorder'] * $item['quantity_detailorder'];
             //sin ingredientes
             foreach ($item['whitout'] as $whitout) {
                 $discounts += ($whitout['discount_hasnot'] * $item['quantity_detailorder']);
@@ -85,6 +87,31 @@ class Order extends Entity
         }
         return $adder - $discounts + $surcharges;
     }
+    public function getPricesOfDetail($id_detail_order)
+    { //retorna un array con el recargo, los descuentos y el total del detalle del pedido
+        $mdlWithout = new WhitoutingredientModel();
+        $mdlWith = new WithadditionModel();
+        $mdlDetail = new DetailorderModel();
+        $detail = $mdlDetail->find($id_detail_order);
+        $discounts = 0;
+        $surcharges = 0;
+        //descuentos
+        foreach ($mdlWithout->getIngredients($id_detail_order) as $without) {
+            /* d($mdlWithout->getIngredients($id_detail_order)); */
+            $discounts += ($without['discount_hasnot'] * $detail['quantity_detailorder']);
+        }
+        //recargos
+        foreach ($mdlWith->getAdditions($id_detail_order) as $With) {
+            /* d($mdlWith->getAdditions($id_detail_order)); */
+            $surcharges += ($With['price_more_additions'] * $detail['quantity_detailorder']);
+        }
+        return [
+            'discounts' => $discounts,
+            'surcharges' => $surcharges,
+            'total' => ($detail['priceunit_detailorder'] * $detail['quantity_detailorder']) + $surcharges - $discounts
+        ];
+    }
+
     public function getTypeofShipping()
     {
         $mdl = new TypeshippingModel();

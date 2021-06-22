@@ -33,7 +33,7 @@ class DetailorderModel extends Model
         $newListOfOrder = array();
         foreach ($listOfOrder as $item) {
             $newItem = array();
-            $without_ingredients = $mdlWhiout->getIngredients($item['id_detailorder']); 
+            $without_ingredients = $mdlWhiout->getIngredients($item['id_detailorder']);
             $with_additions = $mdlWith->getAdditions($item['id_detailorder']);
             $newItem = array_merge($item, ['whitout' => $without_ingredients, 'with' => $with_additions]);
             array_push($newListOfOrder, $newItem);

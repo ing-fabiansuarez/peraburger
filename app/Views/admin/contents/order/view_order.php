@@ -20,8 +20,8 @@
                     <?= session('error.body') ?>
                 </div>
             <?php endif ?>
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
 
                 <div class="card card-success shadow-sm">
                     <div class="card-header">
@@ -121,33 +121,24 @@
                                                     </td>
                                                     <td>
                                                         <strong><?= $item_list['name_product'] ?></strong><br>
-                                                        <?php
+                                                        <?php //dd($item_list);
                                                         if (empty($item_list['whitout'])) :
-                                                            $discounts = 0;
-                                                        else : $discounts = 0;
+                                                        else :
                                                             foreach ($item_list['whitout'] as $without) :
-                                                                $discounts = $discounts + ($without['discount_hasnot'] * $item_list['quantity_detailorder']);
-                                                        ?>
-
-                                                                Sin <?= $without['name_ingredient'] . ' - $ ' . number_format($without['discount_hasnot']) . '(C/U)<br>' ?>
-
-                                                        <?php endforeach;
-                                                        endif; ?>
-                                                        <?php
+                                                                echo $without['name_ingredient'] . ' - $ ' . number_format($without['discount_hasnot']) . '(C/U)<br>';
+                                                            endforeach;
+                                                        endif;
                                                         if (empty($item_list['with'])) :
-                                                            $surcharges = 0;
-                                                        else : $surcharges = 0;
+                                                        else :
                                                             echo '<b>Adiciones:</b><br>';
                                                             foreach ($item_list['with'] as $with) :
-                                                                $surcharges = $surcharges + ($with['price_more_additions'] * $item_list['quantity_detailorder']);
                                                                 echo $with['name_addition'] . ' - $ ' . number_format($with['price_more_additions']) . '(C/U)<br>';
                                                             endforeach;
                                                         endif; ?>
 
                                                     </td>
                                                     <td class="float-right">
-                                                        <?= '$ ' . number_format(($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts + $surcharges) ?>
-                                                        <?php $total = $total + (($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts) + $surcharges ?>
+                                                        <?= '$ ' . number_format($order->getPricesOfDetail($item_list['id_detailorder'])['total']) ?>
                                                     </td>
 
                                                 </tr>
@@ -178,10 +169,7 @@
 
             </div>
 
-            <div class="col-md-7">
-
-
-            </div>
+            
 
         </div>
     </div>

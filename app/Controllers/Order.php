@@ -30,7 +30,6 @@ class Order extends BaseController
         $mdlTypeshipping = new TypeshippingModel();
         $mdlDomicilio = new DomicilioModel();
 
-
         return view('admin/contents/order/view_order', [
             'order' => $order = $mdlOrder->find($REF),
             'list_of_products' => $order->getListofProducts(),  
@@ -248,6 +247,7 @@ class Order extends BaseController
                 }
             }
         }
+        session()->remove('list_order');
         return redirect()->to(base_url() . route_to('view_list_order', 1, date("Y-m-d")));
     }
 
