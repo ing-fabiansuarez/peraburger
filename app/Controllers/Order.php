@@ -32,7 +32,7 @@ class Order extends BaseController
 
         return view('admin/contents/order/view_order', [
             'order' => $order = $mdlOrder->find($REF),
-            'list_of_products' => $order->getListofProducts(),  
+            'list_of_products' => $order->getListofProducts(),
             'client' => $mdlClient->find($order->client_id_client),
             'typeshipping' => $mdlTypeshipping->find($order->typeshipping_id_typeshipping),
             'domi' => $mdlDomicilio->find($REF)
@@ -58,7 +58,8 @@ class Order extends BaseController
         }
 
         $employee = session()->cedula_employee;
-        $REFERENCE = date("Y-m-d") . '-' . time();
+        /* $REFERENCE = date("Y-m-d") . '-' . time(); */
+        $REFERENCE = time();
         $name = $this->request->getPostGet('name');
         $surname = $this->request->getPostGet('surname');
         $observations_order = $this->request->getPostGet('observation');

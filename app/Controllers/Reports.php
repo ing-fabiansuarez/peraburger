@@ -16,13 +16,17 @@ class Reports extends BaseController
 {
     public function printOrder()
     {
-        $mdlDetailOrder = new DetailorderModel();
-        $mdlClient = new ClientModel();
         $REF = $this->request->getPostGet('reference');
-        $list_of_products = $mdlDetailOrder->getListOrderByReference($REF);
+
+        //modelos
+        $mdlOrder = new OrderModel();
+        $mdlClient = new ClientModel();
+
+        $order = $mdlOrder->find($REF);
 
         //Se declara la libreria
-        $pdf = new \FPDF("P", "mm", array(75, 150));
+        $pdf = new PDF_AutoPrint("P", "mm", array(80, 297));
+        /* $pdf = new \FPDF("P", "mm", array(75, 150)); */
         $pdf->AddPage();
 
         //Margenes del archivo
@@ -30,42 +34,39 @@ class Reports extends BaseController
         //Establecemos el margen inferior
         $pdf->SetAutoPageBreak(true, 5);
 
-        $pdf->SetFont('Times', 'B', 9);
+        $pdf->SetFont('Times', 'B', 10);
 
         // CONTENIDO DE LA PAGINA
         $pdf->cell(50, 10, '', 0, 1, 'C');
-        $pdf->Image(base_url() . '/public/img/peraburgelogo1.png', 13, 1, 50);
+        $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 13, 1, 50);
         $pdf->cell(69, 4, 'NIT: 901478708-6', 0, 1, 'C');
         $pdf->cell(69, 4, 'CL 5 4 31 BRR CENTRO', 0, 1, 'C');
         $pdf->cell(69, 4, 'Pamplona - Norte de Santander', 0, 1, 'C');
         $pdf->cell(69, 4, 'Agente Responsable de Impuesto al Consumo', 0, 1, 'C');
-        $pdf->cell(69, 4, utf8_decode('N° ') . $REF, 0, 1, 'C');
         $pdf->cell(69, 4, '', 0, 1, 'C');
+        $pdf->MultiCell(69, 4, utf8_decode('N° de orden: ' . $REF), 0, 'L');
+
+        
         $client = $mdlClient->find($REF);
-        $pdf->SetFont('Times', 'B', 8);
-        $pdf->cell(69, 4, utf8_decode('Señ@r: ') . $client['name_client'] . ' ' . $client['surname_client'], 0, 1, 'L');
-        $pdf->SetFont('Times', 'B', 9);
-        $pdf->cell(69, 4, '', 0, 1, 'C');
-        $pdf->cell(10, 4, 'Cant.', 'BT', 0, 'C');
-        $pdf->cell(39, 4, utf8_decode('Descripción'), 'BT', 0, 'C');
-        $pdf->cell(20, 4, utf8_decode('Precio'), 'BT', 1, 'C');
+        $pdf->MultiCell(69, 5, utf8_decode('Cliente: ' . $client['name_client'] . ' ' . $client['surname_client']), 0, 'L');
 
-        $total = 0;
-        foreach ($list_of_products as $item_list) {
-            $discount = 0;
-            foreach ($item_list['whitout'] as $whitout) {
-                $discount += ($whitout['price_ingredient'] * $item_list['quantity_detailorder']);
-                $total -=  ($whitout['price_ingredient'] * $item_list['quantity_detailorder']);
-            }
+        $pdf->SetFont('Times', 'B', 10);
+        $pdf->cell(69, 6, '', 0, 1, 'C');
+        $pdf->cell(10, 6, 'Cant.', 1, 0, 'C');
+        $pdf->cell(39, 6, utf8_decode('Descripción'), 1, 0, 'C');
+        $pdf->cell(20, 6, utf8_decode('Precio'), 1, 1, 'C');
 
-            $pdf->cell(10, 4, $item_list['quantity_detailorder'], 0, 0, 'C');
-            $pdf->cell(39, 4,  $item_list['name_product'], 0, 0, 'L');
-            $pdf->cell(20, 4, '$ ' . (($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discount), 0, 1, 'R');
-            $total += ($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']);
+        $pdf->SetWidths(array(10, 39, 20));
+        $pdf->SetAligns(array('L', 'L', 'R'));
+
+        foreach ($order->getListofProducts() as $item_list) {
+            $priceDetail = $order->getPricesOfDetail($item_list['id_detailorder']);
+            $pdf->Row(array($item_list['quantity_detailorder'], utf8_decode($item_list['name_product']), '$ ' . number_format($priceDetail['total'])));
         }
+
         $pdf->cell(10, 4, '', 'T', 0, 'C');
-        $pdf->cell(39, 4, utf8_decode('TOTAL'), 'T', 0, 'C');
-        $pdf->cell(20, 4, '$ ' . number_format($total), 'T', 1, 'R');
+        $pdf->cell(39, 8, utf8_decode('TOTAL'), 'T', 0, 'C');
+        $pdf->cell(20, 8, '$ ' . number_format($order->getTotalWthitOutDomicilio()), 'T', 1, 'R');
 
         $pdf->cell(10, 4, '', 0, 1, 'C');
         $pdf->cell(39, 4, '', 0, 1, 'C');
@@ -73,8 +74,9 @@ class Reports extends BaseController
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
 
-
+        $pdf->cell(34, 15, '.', 0, 1, 'R');
         $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->AutoPrint(true);
         $pdf->Output();
     }
 
@@ -145,7 +147,7 @@ class Reports extends BaseController
         $pdf->SetAutoPageBreak(true, 5);
         $pdf->SetFont('Times', 'B', 9);
         // CONTENIDO DE LA PAGINA
-        $pdf->Image(base_url() . '/public/img/peraburgelogo1.png', 3, 1, 30);
+        $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 3, 1, 30);
         $pdf->cell(50, 1, '', 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 12);
         $pdf->cell(69, 4, 'FORMATO DE COCINA', 'B', 1, 'C');
@@ -183,6 +185,7 @@ class Reports extends BaseController
         }
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
+
         $this->response->setHeader('Content-Type', 'application/pdf');
         $pdf->AutoPrint(true);
         $pdf->Output();
@@ -202,7 +205,7 @@ class Reports extends BaseController
         $client = $mdlClient->find($REF);
 
         //Se declara la libreria
-        $pdf = new \FPDF("P", "mm", array(279, 216));
+        $pdf = new PDF_AutoPrint("P", "mm", array(80, 297));
         $pdf->AddPage();
         //Margenes del archivo
         $pdf->SetMargins(0, 0, 0);
@@ -212,34 +215,34 @@ class Reports extends BaseController
         $pdf->SetFont('ZapfDingbats', 'B', 9);
 
         // CONTENIDO DE LA PAGINA
-        $pdf->cell(50, 10, '', 0, 1, 'C');
-        $pdf->Image(base_url() . '/public/admin/dist/img/others/stikersdomi1.jpeg', 5, 0, 208);
+
+        $pdf->Image(base_url('', 'http') . '/public/admin/dist/img/others/stikersdomi1.jpeg', 3, 0, 70);
 
         //dd($domicilio);
 
-        $pdf->SetFont('Helvetica', 'B', 25);
-        $pdf->ln(35);
-        $pdf->cell(85, 10, '', 0, 0, 'L');
-        $pdf->MultiCell(120, 10, utf8_decode($client['name_client'] . ' ' . $client['surname_client']), 0, 'C');
-        $pdf->Ln(3);
-        $pdf->cell(90, 10, '', 0, 0, 'L');
-        $pdf->MultiCell(115, 10, utf8_decode('Dirección:'), 0, 'L');
-        $pdf->Ln(3);
-        $pdf->SetFont('Arial', '', 22);
-        $pdf->cell(95, 10, '', 0, 0, 'L');
-        $pdf->MultiCell(105, 10, utf8_decode($domicilio['address_domicilio']), 'TLR', 'L');
-        $pdf->cell(95, 10, '', 0, 0, 'L');
-        $pdf->MultiCell(105, 10,  utf8_decode('Barrio ' . $domicilio['neighborhood_domicilio']), 'BLR', 'L');
-        $pdf->Ln(8);
-        $pdf->SetFont('Helvetica', 'B', 25);
-        $pdf->cell(90, 10, '', 0, 0, 'L');
-        $pdf->MultiCell(115, 10, utf8_decode('Telefono:'), 0, 'L');
-        $pdf->Ln(3);
-        $pdf->SetFont('Arial', '', 22);
-        $pdf->cell(95, 10, '', 0, 0, 'L');
-        $pdf->MultiCell(105, 10,  utf8_decode($domicilio['whatsapp_domicilio']), 1, 'L');
+        $pdf->SetFont('Helvetica', 'B', 9);
+        $pdf->ln(6);
+        $pdf->cell(30, 1, '', 0, 0, 'L');
+        $pdf->MultiCell(40, 5, utf8_decode($client['name_client'] . ' ' . $client['surname_client']), 1, 'C');
+        $pdf->Ln(2);
+        $pdf->cell(30, 1, '', 0, 0, 'L');
+        $pdf->MultiCell(40, 5, utf8_decode('Dirección:'), 0, 'L');
+
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->cell(30, 1, '', 0, 0, 'L');
+        $pdf->MultiCell(40, 5, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
+
+        $pdf->Ln(2);
+        $pdf->SetFont('Helvetica', 'B', 9);
+        $pdf->cell(30, 1, '', 0, 0, 'L');
+        $pdf->MultiCell(40, 5, utf8_decode('Telefono:'), 0, 'L');
+
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->cell(30, 1, '', 0, 0, 'L');
+        $pdf->MultiCell(40, 5,  utf8_decode($domicilio['whatsapp_domicilio']), 0, 'L');
 
         $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->AutoPrint(true);
         $pdf->Output();
     }
 }
@@ -304,5 +307,98 @@ class PDF_AutoPrint extends PDF_JavaScript
         $script .= "pp.printerName = '\\\\\\\\" . $server . "\\\\" . $printer . "';";
         $script .= "print(pp);";
         $this->IncludeJS($script);
+    }
+    var $widths;
+    var $aligns;
+
+    function SetWidths($w)
+    {
+        //Set the array of column widths
+        $this->widths = $w;
+    }
+
+    function SetAligns($a)
+    {
+        //Set the array of column alignments
+        $this->aligns = $a;
+    }
+
+    function Row($data)
+    {
+        //Calculate the height of the row
+        $nb = 0;
+        for ($i = 0; $i < count($data); $i++)
+            $nb = max($nb, $this->NbLines($this->widths[$i], $data[$i]));
+        $h = 5 * $nb;
+        //Issue a page break first if needed
+        $this->CheckPageBreak($h);
+        //Draw the cells of the row
+        for ($i = 0; $i < count($data); $i++) {
+            $w = $this->widths[$i];
+            $a = isset($this->aligns[$i]) ? $this->aligns[$i] : 'L';
+            //Save the current position
+            $x = $this->GetX();
+            $y = $this->GetY();
+            //Draw the border
+            $this->Rect($x, $y, $w, $h);
+            //Print the text
+            $this->MultiCell($w, 5, $data[$i], 0, $a);
+            //Put the position to the right of the cell
+            $this->SetXY($x + $w, $y);
+        }
+        //Go to the next line
+        $this->Ln($h);
+    }
+
+    function CheckPageBreak($h)
+    {
+        //If the height h would cause an overflow, add a new page immediately
+        if ($this->GetY() + $h > $this->PageBreakTrigger)
+            $this->AddPage($this->CurOrientation);
+    }
+
+    function NbLines($w, $txt)
+    {
+        //Computes the number of lines a MultiCell of width w will take
+        $cw = &$this->CurrentFont['cw'];
+        if ($w == 0)
+            $w = $this->w - $this->rMargin - $this->x;
+        $wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+        $s = str_replace("\r", '', $txt);
+        $nb = strlen($s);
+        if ($nb > 0 and $s[$nb - 1] == "\n")
+            $nb--;
+        $sep = -1;
+        $i = 0;
+        $j = 0;
+        $l = 0;
+        $nl = 1;
+        while ($i < $nb) {
+            $c = $s[$i];
+            if ($c == "\n") {
+                $i++;
+                $sep = -1;
+                $j = $i;
+                $l = 0;
+                $nl++;
+                continue;
+            }
+            if ($c == ' ')
+                $sep = $i;
+            $l += $cw[$c];
+            if ($l > $wmax) {
+                if ($sep == -1) {
+                    if ($i == $j)
+                        $i++;
+                } else
+                    $i = $sep + 1;
+                $sep = -1;
+                $j = $i;
+                $l = 0;
+                $nl++;
+            } else
+                $i++;
+        }
+        return $nl;
     }
 }
