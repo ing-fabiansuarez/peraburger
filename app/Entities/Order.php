@@ -71,13 +71,19 @@ class Order extends Entity
     {
         $adder = 0;
         $discounts = 0;
+        $surcharges = 0;
         foreach ($this->getListofProducts() as $item) {
-            $adder += $item['priceunit_detailorder'];
+            $adder += $item['priceunit_detailorder']*$item['quantity_detailorder'];
+            //sin ingredientes
             foreach ($item['whitout'] as $whitout) {
-                $discounts += $whitout['discount_hasnot'];
+                $discounts += ($whitout['discount_hasnot'] * $item['quantity_detailorder']);
+            }
+            //adiciones
+            foreach ($item['with'] as $with) {
+                $surcharges += ($with['price_more_additions'] * $item['quantity_detailorder']);
             }
         }
-        return $adder - $discounts;
+        return $adder - $discounts + $surcharges;
     }
     public function getTypeofShipping()
     {

@@ -18,13 +18,13 @@ class WithadditionModel extends Model
         'price_more_additions'
     ];
 
-    public function getIngredients($id_detailorder) //Retorna toda la informacion de ingredientes que no deben ir en la  receta.
+    public function getAdditions($id_detailorder) //Retorna toda la informacion de Adiciones para ese detalle de orden
     {
-        return ($this->db->table('detailorder_hasnot_recipe')
+        return ($this->db->table('detailorder_has_product_additions')
             ->select('*')
-            ->join('recipe', 'detailorder_hasnot_recipe.recipe_id_recipe = recipe.id_recipe')
-            ->join('ingredient', '(recipe.ingredient_id_ingredient = ingredient.id_ingredient)')
-            ->where('detailorder_hasnot_recipe.detailorder_id_detailorder', $id_detailorder)
+            ->join('product_additions', 'detailorder_has_product_additions.product_additions_id_product_additions = product_additions.id_product_additions')
+            ->join('addition', '(product_additions.addition_id_addition = addition.id_addition)')
+            ->where('detailorder_has_product_additions.detailorder_id_detailorder', $id_detailorder)
             ->get()->getResultArray());
     }
 }

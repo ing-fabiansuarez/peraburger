@@ -26,9 +26,10 @@
                         $discounts = 0;
                     else : $discounts = 0;
                         foreach ($item_list['whitout_ingredients'] as $without) :
-                            $discounts = $discounts + $without['price_ingredient'];
+
+                            $discounts = $discounts + ($without['price_ingredient'] * $item_list['quantity']);
                     ?>
-                            Sin <?= $without['name_ingredient'] . ' - $ ' . number_format($without['price_ingredient']) . '<br>' ?>
+                            Sin <?= $without['name_ingredient'] . ' - $ ' . number_format($without['price_ingredient']) . '(C/U)<br>' ?>
 
                     <?php endforeach;
                     endif; ?>
@@ -38,9 +39,9 @@
                     else : $surcharges = 0;
                         echo '<b>Adiciones:</b> <br>';
                         foreach ($item_list['whit_additions'] as $addition) :
-                            $surcharges = $surcharges + $addition['price_addition'];
+                            $surcharges = $surcharges + ($addition['price_addition'] * $item_list['quantity']);
                     ?>
-                            <?= $addition['name_addition'] . ' + $ ' . number_format($addition['price_addition']) . '<br>' ?>
+                            <?= $addition['name_addition'] . ' + $ ' . number_format($addition['price_addition']) . '(C/U)<br>' ?>
 
                     <?php endforeach;
                     endif; ?>

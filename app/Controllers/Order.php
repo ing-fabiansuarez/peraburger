@@ -33,7 +33,7 @@ class Order extends BaseController
 
         return view('admin/contents/order/view_order', [
             'order' => $order = $mdlOrder->find($REF),
-            'list_of_products' => $mdlDetailOrder->getListOrderByReference($REF),
+            'list_of_products' => $order->getListofProducts(),  
             'client' => $mdlClient->find($order->client_id_client),
             'typeshipping' => $mdlTypeshipping->find($order->typeshipping_id_typeshipping),
             'domi' => $mdlDomicilio->find($REF)

@@ -25,7 +25,7 @@
 
                 <div class="card card-success shadow-sm">
                     <div class="card-header">
-                        <h3 class="card-title"><?= $order->id_order . '<br>' . $client['name_client'] . ' ' . $client['surname_client'] ?><br>DESPACHADO</h3>
+                        <h3 class="card-title"><?= $order->id_order . '<br>' . $client['name_client'] . ' ' . $client['surname_client'] ?><br><?= $order->getState()['name_state'] ?></h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -86,10 +86,14 @@
 
                                     </div>
                                 </div>
-
-
-
-
+                                <div class="card card-dark shadow-sm">
+                                    <div class="card-header">
+                                        Observaciones:
+                                    </div>
+                                    <div class="card-body">
+                                        <?= $order->observations_order ?>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-8 ">
                                 <div class="card-body table-responsive p-0">
@@ -105,7 +109,8 @@
                                         </thead>
                                         <tbody>
                                             <?php $total = 0;
-                                            foreach ($list_of_products as $item_list) : //dd($item_list);?>
+                                            foreach ($list_of_products as $item_list) :
+                                            ?>
                                                 <tr>
 
                                                     <td class="text-center">
@@ -121,17 +126,28 @@
                                                             $discounts = 0;
                                                         else : $discounts = 0;
                                                             foreach ($item_list['whitout'] as $without) :
-                                                                $discounts = $discounts + $without['price_ingredient'];
+                                                                $discounts = $discounts + ($without['discount_hasnot'] * $item_list['quantity_detailorder']);
                                                         ?>
 
-                                                                Sin <?= $without['name_ingredient'] . ' - $ ' . number_format($without['price_ingredient']) . '<br>' ?>
+                                                                Sin <?= $without['name_ingredient'] . ' - $ ' . number_format($without['discount_hasnot']) . '(C/U)<br>' ?>
 
                                                         <?php endforeach;
                                                         endif; ?>
+                                                        <?php
+                                                        if (empty($item_list['with'])) :
+                                                            $surcharges = 0;
+                                                        else : $surcharges = 0;
+                                                            echo '<b>Adiciones:</b><br>';
+                                                            foreach ($item_list['with'] as $with) :
+                                                                $surcharges = $surcharges + ($with['price_more_additions'] * $item_list['quantity_detailorder']);
+                                                                echo $with['name_addition'] . ' - $ ' . number_format($with['price_more_additions']) . '(C/U)<br>';
+                                                            endforeach;
+                                                        endif; ?>
+
                                                     </td>
                                                     <td class="float-right">
-                                                        <?= '$ ' . number_format(($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts) ?>
-                                                        <?php $total = $total + (($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts) ?>
+                                                        <?= '$ ' . number_format(($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts + $surcharges) ?>
+                                                        <?php $total = $total + (($item_list['priceunit_detailorder'] * $item_list['quantity_detailorder']) - $discounts) + $surcharges ?>
                                                     </td>
 
                                                 </tr>
@@ -145,7 +161,7 @@
                                                 <td>
                                                 </td>
                                                 <td class="float-right">
-                                                    <strong> <?= '$ ' . number_format($total) ?></strong>
+                                                    <strong> <?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) ?></strong>
                                                 </td>
 
                                             </tr>

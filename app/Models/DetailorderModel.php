@@ -23,6 +23,7 @@ class DetailorderModel extends Model
     public function getListOrderByReference($reference)
     {
         $mdlWhiout = new WhitoutingredientModel();
+        $mdlWith = new WithadditionModel();
         $listOfOrder = $this->db->table('detailorder d')
             ->select('*')
             ->join('product p', 'd.product_id_product = p.id_product')
@@ -32,8 +33,9 @@ class DetailorderModel extends Model
         $newListOfOrder = array();
         foreach ($listOfOrder as $item) {
             $newItem = array();
-            $without_ingredients = $mdlWhiout->getIngredients($item['id_detailorder']);
-            $newItem = array_merge($item, ['whitout' => $without_ingredients]);
+            $without_ingredients = $mdlWhiout->getIngredients($item['id_detailorder']); 
+            $with_additions = $mdlWith->getAdditions($item['id_detailorder']);
+            $newItem = array_merge($item, ['whitout' => $without_ingredients, 'with' => $with_additions]);
             array_push($newListOfOrder, $newItem);
         }
         return $newListOfOrder;
