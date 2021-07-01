@@ -15,7 +15,7 @@ class Ajax extends BaseController
 		$categories = $modelProduct->where('category_id_category', $this->request->getPostGet('category'))->orderBy('name_product', 'ASC')->findAll();
 		$cadena = "";
 		foreach ($categories as $category) {
-			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] . '</option>';
+			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] .' - '. number_format($category['price_product']) .' ('.utf8_decode($category['description_product']). ')</option>';
 		}
 		echo $cadena . "";
 		return true;
@@ -32,11 +32,11 @@ class Ajax extends BaseController
 			$cadena = "<select class='custom-select' name='ingredients-select' required>
 			";
 			foreach ($ingredients as $ingredient) {
-				$cadena = $cadena . '<option value="' . $ingredient['id_ingredient'] . '">' . $ingredient['name_ingredient'] .' - $ '.number_format($ingredient['price_ingredient']). '</option>';
+				$cadena = $cadena . '<option value="' . $ingredient['id_ingredient'] . '">' . $ingredient['name_ingredient'] . ' - $ ' . number_format($ingredient['price_ingredient']) . '</option>';
 			}
 
 			echo $cadena . "</select>";
-			return true; 
+			return true;
 		}
 	}
 
@@ -52,7 +52,7 @@ class Ajax extends BaseController
 			$cadena = "<select class='custom-select' name='additions-select' required>
 			";
 			foreach ($additions as $addition) {
-				$cadena = $cadena . '<option value="' . $addition['id_addition'] . '">' . $addition['name_addition'] . ' + $ '.number_format($addition['price_addition']). '</option>';
+				$cadena = $cadena . '<option value="' . $addition['id_addition'] . '">' . $addition['name_addition'] . ' + $ ' . number_format($addition['price_addition']) . '</option>';
 			}
 
 			echo $cadena . "</select>";

@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="<?=base_url()?>" class="brand-link">
+    <a href="<?= base_url() ?>" class="brand-link">
         <img src="<?= base_url() ?>/public/img/peraburgelogo1.png" alt="Logo" class="img-fluid" style="opacity: .8">
     </a>
 
@@ -9,10 +9,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?=base_url()?>/public/admin/dist/img/employees/<?=session()->image_employee?>" class="img-circle elevation-2" alt="Image">
+                <img src="<?= base_url() ?>/public/admin/dist/img/employees/<?= session()->image_employee ?>" class="img-circle elevation-2" alt="Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?=session()->name_employee?></a>
+                <a href="#" class="d-block"><?= session()->name_employee ?></a>
             </div>
         </div>
 
@@ -41,22 +41,6 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="<?= base_url() . route_to('informe_daily_box', date("Y-m-d")) ?>" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Reporte diario
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= base_url().route_to('informe_general_report',date("Y-m-01"),date("Y-m-d")) ?>" class="nav-link">
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>
-                            Reporte General
-                        </p>
-                    </a>
-                </li>
                 <li class="nav-header">PEDIDOS</li>
                 <li class="nav-item">
                     <a href="<?= base_url() . route_to('view_createorder') ?>" class="nav-link">
@@ -78,7 +62,7 @@
                     </a>
                 </li> -->
                 <li class="nav-item">
-                    <a href="<?= base_url() . route_to('view_list_order',1, date("Y-m-d")) ?>" class="nav-link">
+                    <a href="<?= base_url() . route_to('view_list_order', 1, date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Lista de Pedidos
@@ -106,7 +90,23 @@
                         </p>
                     </a>
                 </li> -->
-
+                <li class="nav-header">REPORTES</li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('informe_daily_box', date("Y-m-d")) ?>" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Reporte diario
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('informe_general_report', date("Y-m-01"), date("Y-m-d")) ?>" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Reporte General
+                        </p>
+                    </a>
+                </li>
 
 
 

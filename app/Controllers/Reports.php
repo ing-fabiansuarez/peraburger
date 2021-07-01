@@ -4,12 +4,10 @@ namespace App\Controllers;
 
 use App\Models\ClientModel;
 use App\Models\DetailorderModel;
-use App\Models\DomicilioModel;
 use App\Models\InfostateModel;
 use App\Models\OrderModel;
 use App\Models\TypeshippingModel;
 use Exception;
-use FFI;
 use FPDF;
 
 class Reports extends BaseController
@@ -46,7 +44,7 @@ class Reports extends BaseController
         $pdf->cell(69, 4, '', 0, 1, 'C');
         $pdf->MultiCell(69, 4, utf8_decode('N° de orden: ' . $REF), 0, 'L');
 
-        
+
         $client = $mdlClient->find($REF);
         $pdf->MultiCell(69, 5, utf8_decode('Cliente: ' . $client['name_client'] . ' ' . $client['surname_client']), 0, 'L');
 
@@ -97,7 +95,6 @@ class Reports extends BaseController
         $list_of_products = $mdlDetailOrder->getListOrderByReference($REF);
         $order = $mdlOrder->find($REF);
 
-        //pasar el estado de creado a la cocina
         try {
             $oldState = $order->state_id_state;
         } catch (Exception $e) {
@@ -145,26 +142,24 @@ class Reports extends BaseController
         $pdf->SetMargins(3, 3, 3);
         //Establecemos el margen inferior
         $pdf->SetAutoPageBreak(true, 5);
-        $pdf->SetFont('Times', 'B', 9);
+        $pdf->SetFont('Helvetica', 'B', 12);
         // CONTENIDO DE LA PAGINA
-        $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 3, 1, 30);
-        $pdf->cell(50, 1, '', 0, 1, 'C');
-        $pdf->SetFont('Times', 'B', 12);
-        $pdf->cell(69, 4, 'FORMATO DE COCINA', 'B', 1, 'C');
-        $pdf->Ln(2);
-        $pdf->cell(20, 4, 'TURNO:', 0, 0, 'L');
-        $pdf->cell(10, 4, $order->turnmachine_order, 0, 0, 'L');
-        $pdf->cell(39, 4, $mdlType->find($order->typeshipping_id_typeshipping)['name_typeshipping'], 0, 1, 'R');
-        $pdf->Ln(2);
-        $pdf->SetFont('Times', 'B', 9);
-        $pdf->cell(69, 4, utf8_decode('N° ') . $REF, 0, 1, 'L');
-        $pdf->SetFont('Times', 'B', 9);
-        $pdf->Ln(1);
-        $pdf->MultiCell(69, 4, utf8_decode('CLIENTE: ') . $client['name_client'] . ' ' . $client['surname_client'], 0, 'L');
-        $pdf->Ln(2);
-        $pdf->cell(10, 4, 'Cant.', 'BT', 0, 'C');
-        $pdf->cell(39, 4, utf8_decode('Descripción'), 'BT', 0, 'C');
-        $pdf->cell(20, 4, utf8_decode('Hecho'), 'BT', 1, 'C');
+        $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 3, 0, 30);
+
+        $pdf->cell(50, 0, '', 0, 1, 'C');
+        $pdf->cell(20, 6, 'TURNO:', 'LT', 0, 'L');
+        $pdf->cell(10, 6, $order->turnmachine_order, 'T', 0, 'L');
+        $pdf->cell(39, 6, $mdlType->find($order->typeshipping_id_typeshipping)['name_typeshipping'], 'TR', 1, 'R');
+        $pdf->SetFont('Helvetica', 'B', 12);
+        $pdf->cell(30, 6, 'COCINA', 'BL', 0, 'L');
+        $pdf->cell(39, 6, utf8_decode('Orden: ') . $REF, 'BR', 1, 'R');
+        $pdf->MultiCell(69, 6, utf8_decode('Cliente: ') . $client['name_client'] . ' ' . $client['surname_client'], 'LRB', 'L');
+
+
+        $pdf->ln(10);
+        $pdf->cell(11, 6, 'Cant.', 'LRBT', 0, 'C');
+        $pdf->cell(58, 6, utf8_decode('Descripción'), 1, 1, 'C');
+
         foreach ($list_of_products as $item_list) {
             $pdf->SetFont('Times', 'B', 9);
             $pdf->cell(10, 4, $item_list['quantity_detailorder'], 0, 0, 'C');
@@ -195,6 +190,39 @@ class Reports extends BaseController
         FIN DEL CONTENIDO 
         **************************************************************************************
         ************************************************************************************** */
+
+        //pasar el estado de creado a la cocina
+        /* try {
+            $oldState = $order->state_id_state;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', [
+                'title' => 'Alerta!',
+                'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
+            ]);
+        }
+        if ($oldState == 1) {
+            try {
+                $mdlOrder->update($order->id_order, [
+                    'state_id_state' => 2
+                ]);
+                $mdlInfoStates->insert([
+                    'id_infostates' => '',
+                    'state_id_state' => 2,
+                    'order_id_order' => $order->id_order,
+                    'dateupdate_infostate' => date("Y-m-d H:i:s")
+                ]);
+            } catch (Exception $e) {
+                return redirect()->back()->with('error', [
+                    'title' => 'Alerta!',
+                    'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
+                ]);
+            }
+        } else {
+            return redirect()->back()->with('error', [
+                'title' => 'Alerta!',
+                'body' => 'No se pudo pasar a la cocina ya que tiene un estado defirente a CREADO'
+            ]);
+        } */
     }
     public function printSticker()
     {

@@ -46,6 +46,7 @@
                         <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) ?></td>
 
                         <td class="project-actions text-right">
+
                             <a class="btn btn-primary btn-sm" href="<?= base_url() . route_to('view_load_order', $order->id_order) ?>">
                                 <i class="fas fa-folder">
                                 </i>
@@ -73,6 +74,14 @@
                                 </a>
                             <?php endif; ?>
 
+                        </td>
+                        <td>
+                            <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
+                                <input type="hidden" name="reference" value="<?= $order->id_order ?>">
+                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
+                                    <i class="fas fa-download"></i>Imprimir
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
