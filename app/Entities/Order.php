@@ -132,4 +132,15 @@ class Order extends Entity
         }
         return $contador;
     }
+    public function hasSticker()
+    {
+        if ($this->typeshipping_id_typeshipping == 1) {
+            if ($this->domicilio_id_domicilio != 1 && $this->domicilio_id_domicilio != 2) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
 }

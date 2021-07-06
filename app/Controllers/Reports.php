@@ -15,25 +15,33 @@ class Reports extends BaseController
     public function printOrder()
     {
         $REF = $this->request->getPostGet('reference');
+        $mdlOrder = new OrderModel();
+        $order = $mdlOrder->find($REF);
+        //Se declara la libreria
+        $pdf = new PDF_AutoPrint("P", "mm", array(80, 297));
+        $this->contentCustomer($REF, $pdf); //pagina de la hoja del cliente
+        $this->contentKitchen($REF, $pdf); //pagina de la hoja que pasa a cocina
+        if ($order->hasSticker()) {
+            $this->contentSticker($REF, $pdf); //pagina para el Stikers
+        }
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->AutoPrint(true);
+        $pdf->Output();
+    }
 
+    public function contentCustomer($REF, $pdf)
+    {
         //modelos
         $mdlOrder = new OrderModel();
         $mdlClient = new ClientModel();
-
         $order = $mdlOrder->find($REF);
-
-        //Se declara la libreria
-        $pdf = new PDF_AutoPrint("P", "mm", array(80, 297));
         /* $pdf = new \FPDF("P", "mm", array(75, 150)); */
         $pdf->AddPage();
-
         //Margenes del archivo
         $pdf->SetMargins(3, 3, 3);
         //Establecemos el margen inferior
         $pdf->SetAutoPageBreak(true, 5);
-
         $pdf->SetFont('Times', 'B', 10);
-
         // CONTENIDO DE LA PAGINA
         $pdf->cell(50, 10, '', 0, 1, 'C');
         $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 13, 1, 50);
@@ -43,17 +51,13 @@ class Reports extends BaseController
         $pdf->cell(69, 4, 'Agente Responsable de Impuesto al Consumo', 0, 1, 'C');
         $pdf->cell(69, 4, '', 0, 1, 'C');
         $pdf->MultiCell(69, 4, utf8_decode('N° de orden: ' . $REF), 0, 'L');
-
-
         $client = $mdlClient->find($REF);
         $pdf->MultiCell(69, 5, utf8_decode('Cliente: ' . $client['name_client'] . ' ' . $client['surname_client']), 0, 'L');
-
         $pdf->SetFont('Times', 'B', 10);
         $pdf->cell(69, 6, '', 0, 1, 'C');
         $pdf->cell(10, 6, 'Cant.', 1, 0, 'C');
         $pdf->cell(39, 6, utf8_decode('Descripción'), 1, 0, 'C');
         $pdf->cell(20, 6, utf8_decode('Precio'), 1, 1, 'C');
-
         $pdf->SetWidths(array(10, 39, 20));
         $pdf->SetAligns(array('L', 'L', 'R'));
 
@@ -65,39 +69,26 @@ class Reports extends BaseController
         $pdf->cell(10, 4, '', 'T', 0, 'C');
         $pdf->cell(39, 8, utf8_decode('TOTAL'), 'T', 0, 'C');
         $pdf->cell(20, 8, '$ ' . number_format($order->getTotalWthitOutDomicilio()), 'T', 1, 'R');
-
         $pdf->cell(10, 4, '', 0, 1, 'C');
         $pdf->cell(39, 4, '', 0, 1, 'C');
-
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
-
         $pdf->cell(34, 15, '.', 0, 1, 'R');
-
-       
-        $this->printKitchen($REF,$pdf);
-
-        $this->response->setHeader('Content-Type', 'application/pdf');
-        $pdf->AutoPrint(true);
-        $pdf->Output();
     }
 
-    public function printKitchen($REF,$pdf)
+    public function contentKitchen($REF, $pdf)
     {
         //atributo del formularo
         //$REF = $this->request->getPostGet('reference');
-
         //declaracion de los modelos
         $mdlDetailOrder = new DetailorderModel();
         $mdlClient = new ClientModel();
         $mdlOrder = new OrderModel();
         $mdlType = new TypeshippingModel();
-
         //uso de los modelos
         $client = $mdlClient->find($REF);
         $list_of_products = $mdlDetailOrder->getListOrderByReference($REF);
         $order = $mdlOrder->find($REF);
-
         /* *************************************************************************************
         *************************************************************************************
         CONTENIDO DEL PDF
@@ -111,7 +102,6 @@ class Reports extends BaseController
         $pdf->SetFont('Helvetica', 'B', 12);
         // CONTENIDO DE LA PAGINA
         $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 3, 0, 30);
-       
         $pdf->cell(50, 8, '', 0, 1, 'C');
         $pdf->cell(20, 6, 'TURNO:', 'LT', 0, 'L');
         $pdf->cell(10, 6, $order->turnmachine_order, 'T', 0, 'L');
@@ -120,85 +110,91 @@ class Reports extends BaseController
         $pdf->cell(30, 6, 'COCINA', 'BL', 0, 'L');
         $pdf->cell(39, 6, utf8_decode('Orden: ') . $REF, 'BR', 1, 'R');
         $pdf->MultiCell(69, 6, utf8_decode('Cliente: ') . $client['name_client'] . ' ' . $client['surname_client'], 'LRB', 'L');
-
-
-        $pdf->ln(10);
+        $pdf->ln(5);
+        $pdf->cell(69, 6, 'FORMATO DE COCINA', 1, 1, 'C');
+        $pdf->ln(3);
         $pdf->cell(11, 6, 'Cant.', 'LRBT', 0, 'C');
         $pdf->cell(58, 6, utf8_decode('Descripción'), 1, 1, 'C');
-
         foreach ($list_of_products as $item_list) {
-            $pdf->SetFont('Times', 'B', 9);
-            $pdf->cell(10, 4, $item_list['quantity_detailorder'], 0, 0, 'C');
-            $pdf->cell(39, 4,  $item_list['name_product'], 'R', 1, 'L');
-
+            $pdf->SetFont('Times', 'B', 10);
+            $pdf->cell(11, 7, $item_list['quantity_detailorder'], 'LR', 0, 'C');
+            $pdf->cell(58, 7,  $item_list['name_product'], 1, 1, 'L');
+            $pdf->SetFont('Times', '', 10);
             foreach ($item_list['whitout'] as $whitout) {
-                $pdf->SetFont('Times', '', 8);
-
-                $pdf->cell(49, 4, 'Sin ' . $whitout['name_ingredient'], 'R', 1, 'R');
+                $pdf->cell(11, 5, '', 'LR', 0, 'R');
+                $pdf->cell(58, 5, 'Sin ' . $whitout['name_ingredient'], 'RL', 1, 'R');
             }
-            $pdf->cell(49, 2, '', 'TR', 0, 'R');
-            $pdf->cell(20, 2, '', 'T', 1, 'R');
+            $pdf->SetFont('Times', '', 10);
+            $pdf->cell(11, 0, '', 0, 0, 'R');
+            $pdf->cell(58, 0, '', 1, 1, 'R');
+            foreach ($item_list['with'] as $with) {
+                $pdf->cell(11, 5, '', 'LR', 0, 'R');
+                $pdf->cell(58, 5, utf8_decode('Con Adición ' . $with['name_addition']), 'RL', 1, 'R');
+            }
+            $pdf->cell(69, 0, '', 1, 1, 'R');
         }
         if ($order->observations_order != '') {
-            $pdf->cell(69, 4, utf8_decode('OBSERVACIÓN: '), 'TLR', 1, 'L');
-            $pdf->MultiCell(69, 4, utf8_decode($order->observations_order), 'BLR', 'L');
+            $pdf->SetFont('Times', 'B', 10);
+            $pdf->cell(69, 7, utf8_decode('OBSERVACIÓN: '), 'TLR', 1, 'L');
+            $pdf->SetFont('Times', '', 10);
+            $pdf->MultiCell(69, 6, utf8_decode($order->observations_order), 'BLR', 'L');
             $pdf->cell(69, 4, ' ', 0, 1, 'R');
         }
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
-
 
         /* *************************************************************************************
         *************************************************************************************
         FIN DEL CONTENIDO 
         **************************************************************************************
         ************************************************************************************** */
-
     }
-    public function printSticker()
+    public function contentSticker($REF, $pdf)
     {
         $mdlOrder = new OrderModel();
         $mdlClient = new ClientModel();
-        $REF = $this->request->getPostGet('reference');
+
         $domicilio = $mdlOrder->find($REF)->getDomicilio();
         $client = $mdlClient->find($REF);
-
-        //Se declara la libreria
-        $pdf = new PDF_AutoPrint("P", "mm", array(80, 297));
         $pdf->AddPage();
         //Margenes del archivo
         $pdf->SetMargins(0, 0, 0);
         //Establecemos el margen inferior
         $pdf->SetAutoPageBreak(true, 0);
-
         $pdf->SetFont('ZapfDingbats', 'B', 9);
-
         // CONTENIDO DE LA PAGINA
-
         $pdf->Image(base_url('', 'http') . '/public/admin/dist/img/others/stikersdomi1.jpeg', 3, 0, 70);
-
         //dd($domicilio);
-
         $pdf->SetFont('Helvetica', 'B', 9);
-        $pdf->ln(6);
+        $pdf->ln(14);
         $pdf->cell(30, 1, '', 0, 0, 'L');
         $pdf->MultiCell(40, 5, utf8_decode($client['name_client'] . ' ' . $client['surname_client']), 1, 'C');
-        $pdf->Ln(2);
+
         $pdf->cell(30, 1, '', 0, 0, 'L');
         $pdf->MultiCell(40, 5, utf8_decode('Dirección:'), 0, 'L');
 
         $pdf->SetFont('Arial', '', 9);
         $pdf->cell(30, 1, '', 0, 0, 'L');
-        $pdf->MultiCell(40, 5, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
+        $pdf->MultiCell(40, 4, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
 
-        $pdf->Ln(2);
+
         $pdf->SetFont('Helvetica', 'B', 9);
         $pdf->cell(30, 1, '', 0, 0, 'L');
         $pdf->MultiCell(40, 5, utf8_decode('Telefono:'), 0, 'L');
 
         $pdf->SetFont('Arial', '', 9);
         $pdf->cell(30, 1, '', 0, 0, 'L');
-        $pdf->MultiCell(40, 5,  utf8_decode($domicilio['whatsapp_domicilio']), 0, 'L');
+        $pdf->MultiCell(40, 4,  utf8_decode($domicilio['whatsapp_domicilio']), 0, 'L');
+
+        if ($domicilio['observation_domicilio'] != '') {
+            $pdf->SetFont('Helvetica', 'B', 9);
+            $pdf->cell(30, 1, '', 0, 0, 'L');
+            $pdf->MultiCell(40, 5, utf8_decode('Observación:'), 0, 'L');
+
+            $pdf->SetFont('Arial', '', 9);
+            $pdf->cell(30, 1, '', 0, 0, 'L');
+            $pdf->MultiCell(40, 4,  utf8_decode($domicilio['observation_domicilio']), 0, 'L');
+        }
 
         $this->response->setHeader('Content-Type', 'application/pdf');
         $pdf->AutoPrint(true);
