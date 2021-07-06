@@ -32,18 +32,18 @@
             <li class="pt-2 px-3">
                 <h3 class="card-title">ESTADOS</h3>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="<?= base_url() . route_to('view_list_order', 1, $date) ?>">Por pasar a la cocina</a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url() . route_to('view_list_order', 2, $date) ?>">Preparaci&oacute;n</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Despachado</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="<?= base_url() . route_to('view_list_order', 4, $date) ?>">Deshabilitado</a>
-            </li>
+            </li> -->
 
 
         </ul>

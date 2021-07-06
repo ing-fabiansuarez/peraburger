@@ -165,8 +165,9 @@ class Order extends BaseController
             'employee_id_employee' => $employee,
             'domicilio_id_domicilio' => $domicilio,
             'client_id_client' => $REFERENCE,
-            'state_id_state' => 1,
+            'state_id_state' => 2,
         ]);
+
         $new_order->setTimeCreation();
         $new_order->setConsecutiveOfAllOrders();
         $new_order->setDarlyTurn();
@@ -249,7 +250,7 @@ class Order extends BaseController
             }
         }
         session()->remove('list_order');
-        return redirect()->to(base_url() . route_to('view_list_order', 1, date("Y-m-d")));
+        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")));
     }
 
     public function viewCreateOrderFinish()
