@@ -73,12 +73,16 @@ class Reports extends BaseController
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
 
         $pdf->cell(34, 15, '.', 0, 1, 'R');
+
+       
+        $this->printKitchen($REF,$pdf);
+
         $this->response->setHeader('Content-Type', 'application/pdf');
         $pdf->AutoPrint(true);
         $pdf->Output();
     }
 
-    public function printKitchen($REF)
+    public function printKitchen($REF,$pdf)
     {
         //atributo del formularo
         //$REF = $this->request->getPostGet('reference');
@@ -88,55 +92,17 @@ class Reports extends BaseController
         $mdlClient = new ClientModel();
         $mdlOrder = new OrderModel();
         $mdlType = new TypeshippingModel();
-        $mdlInfoStates = new InfostateModel();
 
         //uso de los modelos
         $client = $mdlClient->find($REF);
         $list_of_products = $mdlDetailOrder->getListOrderByReference($REF);
         $order = $mdlOrder->find($REF);
 
-        try {
-            $oldState = $order->state_id_state;
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', [
-                'title' => 'Alerta!',
-                'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
-            ]);
-        }
-        if ($oldState == 1) {
-            try {
-                $mdlOrder->update($order->id_order, [
-                    'state_id_state' => 2
-                ]);
-                $mdlInfoStates->insert([
-                    'id_infostates' => '',
-                    'state_id_state' => 2,
-                    'order_id_order' => $order->id_order,
-                    'dateupdate_infostate' => date("Y-m-d H:i:s")
-                ]);
-            } catch (Exception $e) {
-                return redirect()->back()->with('error', [
-                    'title' => 'Alerta!',
-                    'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
-                ]);
-            }
-        } else {
-            return redirect()->back()->with('error', [
-                'title' => 'Alerta!',
-                'body' => 'No se pudo pasar a la cocina ya que tiene un estado defirente a CREADO'
-            ]);
-        }
-
-
         /* *************************************************************************************
         *************************************************************************************
         CONTENIDO DEL PDF
         **************************************************************************************
         ************************************************************************************** */
-
-        //Se declara la libreria
-        $pdf = new PDF_AutoPrint("P", "mm", array(75, 150));
-        //$pdf = new \FPDF("P", "mm", array(75, 150));
         $pdf->AddPage();
         //Margenes del archivo
         $pdf->SetMargins(3, 3, 3);
@@ -145,8 +111,8 @@ class Reports extends BaseController
         $pdf->SetFont('Helvetica', 'B', 12);
         // CONTENIDO DE LA PAGINA
         $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 3, 0, 30);
-
-        $pdf->cell(50, 0, '', 0, 1, 'C');
+       
+        $pdf->cell(50, 8, '', 0, 1, 'C');
         $pdf->cell(20, 6, 'TURNO:', 'LT', 0, 'L');
         $pdf->cell(10, 6, $order->turnmachine_order, 'T', 0, 'L');
         $pdf->cell(39, 6, $mdlType->find($order->typeshipping_id_typeshipping)['name_typeshipping'], 'TR', 1, 'R');
@@ -181,9 +147,6 @@ class Reports extends BaseController
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
 
-        $this->response->setHeader('Content-Type', 'application/pdf');
-        $pdf->AutoPrint(true);
-        $pdf->Output();
 
         /* *************************************************************************************
         *************************************************************************************
@@ -191,38 +154,6 @@ class Reports extends BaseController
         **************************************************************************************
         ************************************************************************************** */
 
-        //pasar el estado de creado a la cocina
-        /* try {
-            $oldState = $order->state_id_state;
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', [
-                'title' => 'Alerta!',
-                'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
-            ]);
-        }
-        if ($oldState == 1) {
-            try {
-                $mdlOrder->update($order->id_order, [
-                    'state_id_state' => 2
-                ]);
-                $mdlInfoStates->insert([
-                    'id_infostates' => '',
-                    'state_id_state' => 2,
-                    'order_id_order' => $order->id_order,
-                    'dateupdate_infostate' => date("Y-m-d H:i:s")
-                ]);
-            } catch (Exception $e) {
-                return redirect()->back()->with('error', [
-                    'title' => 'Alerta!',
-                    'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
-                ]);
-            }
-        } else {
-            return redirect()->back()->with('error', [
-                'title' => 'Alerta!',
-                'body' => 'No se pudo pasar a la cocina ya que tiene un estado defirente a CREADO'
-            ]);
-        } */
     }
     public function printSticker()
     {

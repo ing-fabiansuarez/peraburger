@@ -62,7 +62,7 @@
                     </a>
                 </li> -->
                 <li class="nav-item">
-                    <a href="<?= base_url() . route_to('view_list_order', 1, date("Y-m-d")) ?>" class="nav-link">
+                    <a href="<?= base_url() . route_to('view_list_order', 2, date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Lista de Pedidos
