@@ -33,7 +33,7 @@ class Order extends Entity
         $this->attributes['darlyturn_order'] = (count($mdl->where('date_order', $this->attributes['date_order'])->findAll()) + 1);
         return $this;
     }
-    public function setTurnMachine($turn = null)
+    public function setTurnMachine()
     {
         $mdl = new OrderModel();
         switch ($this->attributes['typeshipping_id_typeshipping']) {
@@ -41,7 +41,7 @@ class Order extends Entity
                 $this->attributes['turnmachine_order'] =  (count($mdl->where('date_order', $this->attributes['date_order'])->where('typeshipping_id_typeshipping', 1)->findAll())) + 1;
                 break;
             case 2:
-                $this->attributes['turnmachine_order'] =  $turn;
+                $this->attributes['turnmachine_order'] =  ((count($mdl->where('date_order', $this->attributes['date_order'])->where('typeshipping_id_typeshipping', 2)->findAll())) % 15) + 1;
                 break;
         }
     }

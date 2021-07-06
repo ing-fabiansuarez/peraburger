@@ -61,9 +61,8 @@ class Order extends BaseController
         /* $REFERENCE = date("Y-m-d") . '-' . time(); */
         $REFERENCE = time();
         $name = $this->request->getPostGet('name');
-        $surname = $this->request->getPostGet('surname');
+        $surname = '';
         $observations_order = $this->request->getPostGet('observation');
-
 
         switch ($typeshipping_id_typeshipping) {
             case 1:
@@ -89,8 +88,8 @@ class Order extends BaseController
                 $domiciliario = $this->request->getPostGet('domi');
                 $price_domi = $this->request->getPostGet('price_domi');
                 $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
-                $turn_machine = null;
                 $domicilio = $REFERENCE;
+                $obs_domi = $this->request->getPostGet('observation');
 
                 $new_domicilio = [
                     'id_domicilio' => $REFERENCE,
@@ -98,7 +97,8 @@ class Order extends BaseController
                     'neighborhood_domicilio' => $barrio,
                     'domiciliary_id_domiciliary' => $domiciliario,
                     'price_domicilio' => $price_domi,
-                    'whatsapp_domicilio' => $whatsapp_domicilio
+                    'whatsapp_domicilio' => $whatsapp_domicilio,
+                    'observation_domicilio' => $obs_domi
                 ];
 
                 $mdlDomicilio = new DomicilioModel();
@@ -118,7 +118,6 @@ class Order extends BaseController
                     [
                         'typeshipping' => 'required',
                         'name' => 'required',
-                        'turn_machine' => 'required|is_natural',
                     ]
                 )) {
                     return redirect()->back()->with('error', [
@@ -126,7 +125,7 @@ class Order extends BaseController
                         'body' => 'Tuvimos problemas al recibir los datos del pedido.'
                     ]);
                 }
-                $turn_machine = $this->request->getPostGet('turn_machine');
+
                 $domicilio = 1;
 
                 break;
@@ -171,7 +170,7 @@ class Order extends BaseController
         $new_order->setTimeCreation();
         $new_order->setConsecutiveOfAllOrders();
         $new_order->setDarlyTurn();
-        $new_order->setTurnMachine($turn_machine);
+        $new_order->setTurnMachine();
 
         $mdlOrder = new OrderModel();
         try {

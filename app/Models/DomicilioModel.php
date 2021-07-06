@@ -16,6 +16,7 @@ class DomicilioModel extends Model
         'neighborhood_domicilio',
         'domiciliary_id_domiciliary',
         'price_domicilio',
-        'whatsapp_domicilio'
+        'whatsapp_domicilio',
+        'observation_domicilio'
     ];
 }

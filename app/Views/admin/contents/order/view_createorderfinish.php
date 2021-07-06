@@ -74,8 +74,8 @@
                                     <div class="form-group">
                                         <label>Tipo</label>
                                         <select name="typeshipping" id="typeshipping" class="form-control">
-                                            <option value="1">Domicilio</option>
                                             <option value="2">Local</option>
+                                            <option value="1">Domicilio</option>
                                         </select>
                                     </div>
                                 </div>

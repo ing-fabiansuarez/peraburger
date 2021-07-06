@@ -127,10 +127,16 @@ class Ajax extends BaseController
 					</div>
 				
 				</div>
-				<div class='col-sm-8'>
+				<div class='col-sm-6'>
 					<div class='form-group'>
 						<label>Observaci&oacute;n</label>
 						<textarea name='observation' class='form-control' rows='2' placeholder='Observaciones adicionales ...'></textarea>
+					</div>
+				</div>
+				<div class='col-sm-6'>
+					<div class='form-group'>
+						<label>Observaci&oacute;n Domicilio</label>
+						<textarea name='obs_domi' class='form-control' rows='3' placeholder='Observaciones Domicilio ...'></textarea>
 					</div>
 				</div>
 			</div>
@@ -161,31 +167,16 @@ class Ajax extends BaseController
 
 		$cadena2 =
 			"<div class='row'>
-			<div class='col-sm-6'>
-				<div class='form-group'>
-					<label>Nombre *</label>
-					<input name='name' type='text' class='form-control' placeholder='Nombre *' required>
-				</div>
-			</div>
-			<div class='col-sm-6'>
-				<div class='form-group'>
-					<label>Apellido</label>
-					<input name='surname' type='text' class='form-control' placeholder='Apellido'>
-				</div>
-			</div>
-			</div>
-			<div class='row'>
-				<div class='col-sm-4'>
+				<div class='col-sm-6'>
 					<div class='form-group'>
-						<label>Turno *</label>
-						<input name='turn_machine' type='number' class='form-control' placeholder='Turno' required>
+						<label>Nombre *</label>
+						<input name='name' type='text' class='form-control' placeholder='Nombre *' required>
 					</div>
 				</div>
-
-				<div class='col-sm-8'>
+				<div class='col-sm-6'>
 					<div class='form-group'>
-						<label>Observaci&oacute;n</label>
-						<textarea name='observation' class='form-control' rows='3' placeholder='Observaciones adicionales ...'></textarea>
+						<label>Observaci&oacute;n Cocina</label>
+						<textarea name='observation' class='form-control' rows='3' placeholder='Observaciones cocina ...'></textarea>
 					</div>
 				</div>
 			</div>
