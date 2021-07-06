@@ -15,7 +15,7 @@ class Ajax extends BaseController
 		$categories = $modelProduct->where('category_id_category', $this->request->getPostGet('category'))->orderBy('name_product', 'ASC')->findAll();
 		$cadena = "";
 		foreach ($categories as $category) {
-			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] .' - '. number_format($category['price_product']) .' ('.utf8_decode($category['description_product']). ')</option>';
+			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] . ' - ' . number_format($category['price_product']) . ' (' . utf8_decode($category['description_product']) . ')</option>';
 		}
 		echo $cadena . "";
 		return true;
@@ -75,22 +75,28 @@ class Ajax extends BaseController
 				</div>
 				<div class='col-sm-4'>
 					<div class='form-group'>
-						<label>Apellido</label>
-						<input name='surname' type='text' class='form-control' placeholder='Apellido'>
+						<label>Direcci&oacute;n</label>
+						<input name='adress' type='text' class='form-control' placeholder='Dirección'>
 					</div>
 				</div>
+				<div class='col-sm-4'>
+					<div class='form-group'>
+						<label>Barrio</label>
+						<input name='barrio' type='text' class='form-control' placeholder='Barrio'>
+					</div>
+				</div>
+				
 			</div>
 			<div class='row'>
-				<div class='col-sm-3'>
+				<div class='col-sm-4'>
 					<div class='form-group'>
-						<label>Direcci&oacute;n *</label>
-						<input name='adress' type='text' class='form-control' placeholder='Dirección *' required>
-					</div>
-				</div>
-				<div class='col-sm-3'>
-					<div class='form-group'>
-						<label>Barrio *</label>
-						<input name='barrio' type='text' class='form-control' placeholder='Barrio *' required>
+						<label>WhatsApp</label>
+						<div class='input-group'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-phone'></i></span>
+							</div>
+							<input name='whatsapp' type='number' class='form-control'>
+						</div>
 					</div>
 				</div>
 				<div class='col-sm-3'>
@@ -106,31 +112,12 @@ class Ajax extends BaseController
 						</select>
 					</div>
 				</div>
-				<div class='col-sm-3'>
-					<div class='form-group'>
-						<label>Valor *</label>
-						<input name='price_domi' type='number' class='form-control' placeholder='Valor domi*' required>
-					</div>
-				</div>
 			</div>
 			<div class='row'>
-				<div class='col-sm-4'>
-					<div class='form-group'>
-						<label>WhatsApp *</label>
-
-						<div class='input-group'>
-							<div class='input-group-prepend'>
-								<span class='input-group-text'><i class='fas fa-phone'></i></span>
-							</div>
-							<input name='whatsapp' type='number' class='form-control' required>
-						</div>
-					</div>
-				
-				</div>
 				<div class='col-sm-6'>
 					<div class='form-group'>
-						<label>Observaci&oacute;n</label>
-						<textarea name='observation' class='form-control' rows='2' placeholder='Observaciones adicionales ...'></textarea>
+						<label>Observaci&oacute;n Cocina</label>
+						<textarea name='observation' class='form-control' rows='3' placeholder='Observaciones adicionales ...'></textarea>
 					</div>
 				</div>
 				<div class='col-sm-6'>
@@ -139,6 +126,8 @@ class Ajax extends BaseController
 						<textarea name='obs_domi' class='form-control' rows='3' placeholder='Observaciones Domicilio ...'></textarea>
 					</div>
 				</div>
+
+				
 			</div>
 			<div class='text-center'>
 				<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>

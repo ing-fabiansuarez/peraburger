@@ -41,6 +41,7 @@ class Order extends BaseController
 
     public function createOrder()
     {
+        $domicilio = 0;
         if (empty($_SESSION['list_order'])) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
@@ -70,11 +71,7 @@ class Order extends BaseController
                     [
                         'typeshipping' => 'required',
                         'name' => 'required',
-                        'adress' => 'required',
-                        'barrio' => 'required',
-                        'domi' => 'required|is_natural',
-                        'price_domi' => 'required|decimal',
-                        'whatsapp' => 'required|is_natural'
+
                     ]
                 )) {
                     return redirect()->back()->with('error', [
@@ -86,33 +83,39 @@ class Order extends BaseController
                 $adress = $this->request->getPostGet('adress');
                 $barrio = $this->request->getPostGet('barrio');
                 $domiciliario = $this->request->getPostGet('domi');
-                $price_domi = $this->request->getPostGet('price_domi');
+                $price_domi = 0;
                 $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
-                $domicilio = $REFERENCE;
                 $obs_domi = $this->request->getPostGet('observation');
 
-                $new_domicilio = [
-                    'id_domicilio' => $REFERENCE,
-                    'address_domicilio' => $adress,
-                    'neighborhood_domicilio' => $barrio,
-                    'domiciliary_id_domiciliary' => $domiciliario,
-                    'price_domicilio' => $price_domi,
-                    'whatsapp_domicilio' => $whatsapp_domicilio,
-                    'observation_domicilio' => $obs_domi
-                ];
 
-                $mdlDomicilio = new DomicilioModel();
+                if (($adress == '') || ($barrio == '') || ($domiciliario == '') || ($whatsapp_domicilio == '')) {
+                    $domicilio = 2;
+                } else {
+                    $new_domicilio = [
+                        'id_domicilio' => $REFERENCE,
+                        'address_domicilio' => $adress,
+                        'neighborhood_domicilio' => $barrio,
+                        'domiciliary_id_domiciliary' => $domiciliario,
+                        'price_domicilio' => $price_domi,
+                        'whatsapp_domicilio' => $whatsapp_domicilio,
+                        'observation_domicilio' => $obs_domi
+                    ];
 
-                try {
-                    $mdlDomicilio->insert($new_domicilio);
-                } catch (Exception $e) {
-                    return redirect()->back()->with('error', [
-                        'title' => 'Alerta!',
-                        'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion del domicilio. <br>Excepción capturada:' .  $e->getMessage()
-                    ]);
+                    $mdlDomicilio = new DomicilioModel();
+                    $domicilio = $REFERENCE;
+                    try {
+                        
+                        $mdlDomicilio->insert($new_domicilio);
+                           
+                    } catch (Exception $e) {
+                        return redirect()->back()->with('error', [
+                            'title' => 'Alerta!',
+                            'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion del domicilio. <br>Excepción capturada:' .  $e->getMessage()
+                        ]);
+                    }
                 }
+                
                 break;
-
             case 2:
                 if (!$this->validate(
                     [
@@ -129,6 +132,7 @@ class Order extends BaseController
                 $domicilio = 1;
 
                 break;
+
             default:
                 return redirect()->back()->with('error', [
                     'title' => 'Alerta!',
@@ -151,6 +155,7 @@ class Order extends BaseController
                 'body' => 'Ocurrio un error con el modelo, al tratar de insertar El cliente. <br>Excepción capturada:' .  $e->getMessage()
             ]);
         }
+     
 
         $new_order = new EntitiesOrder([
             'id_order' => $REFERENCE,
