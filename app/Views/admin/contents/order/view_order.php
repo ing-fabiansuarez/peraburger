@@ -41,10 +41,9 @@
                                         TURNO: <b><?= $order->turnmachine_order ?></b><br>
                                     </div>
                                     <div class="card-body">
-
-                                        <b>Fecha:</b> <?= $order->date_order . ' ' . $order->hour_order ?> <br>
-                                        <b>Tipo de envio:</b> <?= $typeshipping['name_typeshipping'] ?>
-
+                                        <b>Fecha:</b> <?= $order->date_order . ' ' . $order->hour_order ?> 
+                                        <br><b>Tipo de envio:</b> <?= $typeshipping['name_typeshipping'] ?>
+                                        <br><b>Creado por:</b> <?= $order->getNameEmployee()?>
                                     </div>
                                 </div>
                                 <?php if (isset($domi)) { ?>
@@ -57,7 +56,8 @@
                                             <b>Direcci&oacute;n:</b> <?= $domi['address_domicilio'] ?> <br>
                                             <b>Barrio:</b> <?= $domi['neighborhood_domicilio'] ?><br>
                                             <b>Precio:</b> <?= $domi['price_domicilio'] ?><br>
-                                            <b>WhatsApp:</b> <?= $domi['whatsapp_domicilio'] ?>
+                                            <b>WhatsApp:</b> <?= $domi['whatsapp_domicilio'] ?><br>
+                                            <b>Observacion de Domicilio:</b> <?= $domi['observation_domicilio'] ?>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -91,7 +91,7 @@
                                         Observaciones:
                                     </div>
                                     <div class="card-body">
-                                        <?= $order->observations_order ?>
+                                       <b>Observaciones de Cocina: </b> <?= $order->observations_order ?>
                                     </div>
                                 </div>
                             </div>

@@ -85,8 +85,7 @@ class Order extends BaseController
                 $domiciliario = $this->request->getPostGet('domi');
                 $price_domi = 0;
                 $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
-                $obs_domi = $this->request->getPostGet('observation');
-
+                $obs_domi = $this->request->getPostGet('obs_domi');
 
                 if (($adress == '') || ($barrio == '') || ($domiciliario == '') || ($whatsapp_domicilio == '')) {
                     $domicilio = 2;
@@ -128,11 +127,9 @@ class Order extends BaseController
                         'body' => 'Tuvimos problemas al recibir los datos del pedido.'
                     ]);
                 }
-
                 $domicilio = 1;
 
                 break;
-
             default:
                 return redirect()->back()->with('error', [
                     'title' => 'Alerta!',
