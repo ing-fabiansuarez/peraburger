@@ -7,6 +7,7 @@ use App\Models\DetailorderModel;
 use App\Models\DomicilioModel;
 use App\Models\EmployeeModel;
 use App\Models\OrderModel;
+use App\Models\PrintModel;
 use App\Models\StateModel;
 use App\Models\TypeshippingModel;
 use App\Models\WhitoutingredientModel;
@@ -142,5 +143,13 @@ class Order extends Entity
             }
         }
         return false;
+    }
+    public function isPrint(){
+        $mdlPrint = new PrintModel();
+        if(!$mdlPrint->where('order_id_order',$this->id_order)->first()){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

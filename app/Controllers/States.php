@@ -31,7 +31,7 @@ class States extends BaseController
                             'title' => 'Alerta!',
                             'body' => 'El pedido ya se encuentra en estado CREADO.'
                         ]);
-                        break; 
+                        break;
                     case 2:
                         try {
                             $mdlOrder->update($reference, [
@@ -49,7 +49,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->to( base_url().route_to('view_list_order',2,$order->date_order))->with('msg', [
+                        return redirect()->to(base_url() . route_to('view_list_order', 2, $order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a COCINA'
                         ]);
@@ -71,7 +71,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->to(base_url().route_to('view_list_order',3,$order->date_order))->with('msg', [
+                        return redirect()->to(base_url() . route_to('view_list_order', 3, $order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a DESPACHADO'
                         ]);
@@ -93,7 +93,7 @@ class States extends BaseController
                                 'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
                             ]);
                         }
-                        return redirect()->to(base_url().route_to('view_list_order',4,$order->date_order))->with('msg', [
+                        return redirect()->to(base_url() . route_to('view_list_order', 4, $order->date_order))->with('msg', [
                             'title' => 'Orden cambio de estado!',
                             'body' => 'El estado paso a DESHABILITADO'
                         ]);
@@ -115,26 +115,34 @@ class States extends BaseController
                         ]);
                         break;
                     case 3:
-                        try {
-                            $mdlOrder->update($reference, [
-                                'state_id_state' => 3
+                        if ($order->isPrint()) {
+                            try {
+                                $mdlOrder->update($reference, [
+                                    'state_id_state' => 3
+                                ]);
+                                $mdlInfoStates->insert([
+                                    'id_infostates' => '',
+                                    'state_id_state' => 3,
+                                    'order_id_order' => $reference,
+                                    'dateupdate_infostate' => date("Y-m-d H:i:s")
+                                ]);
+                            } catch (Exception $e) {
+                                return redirect()->back()->with('error', [
+                                    'title' => 'Alerta!',
+                                    'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
+                                ]);
+                            }
+                            return redirect()->to(base_url() . route_to('view_list_order', 3, $order->date_order).'?refOrderToHighlight='.$order->id_order)->with('msg', [
+                                'title' => 'Orden cambio de estado!',
+                                'body' => 'El estado paso a DESPACHADO'
                             ]);
-                            $mdlInfoStates->insert([
-                                'id_infostates' => '',
-                                'state_id_state' => 3,
-                                'order_id_order' => $reference,
-                                'dateupdate_infostate' => date("Y-m-d H:i:s")
-                            ]);
-                        } catch (Exception $e) {
+                        } else {
                             return redirect()->back()->with('error', [
                                 'title' => 'Alerta!',
-                                'body' => 'Problemas con la base de datos. <br> Error: ' . $e->getMessage()
+                                'body' => 'DEBES IMPRIMIR LA ORDEN PRIMERO ANTES DE DESPACHARLA'
                             ]);
                         }
-                        return redirect()->to(base_url().route_to('view_list_order',3,$order->date_order))->with('msg', [
-                            'title' => 'Orden cambio de estado!',
-                            'body' => 'El estado paso a DESPACHADO'
-                        ]);
+
                         break;
                     case 4:
                         return redirect()->back()->with('error', [

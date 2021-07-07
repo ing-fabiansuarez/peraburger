@@ -6,6 +6,7 @@ use App\Models\ClientModel;
 use App\Models\DetailorderModel;
 use App\Models\InfostateModel;
 use App\Models\OrderModel;
+use App\Models\PrintModel;
 use App\Models\TypeshippingModel;
 use Exception;
 use FPDF;
@@ -16,6 +17,7 @@ class Reports extends BaseController
     {
         $REF = $this->request->getPostGet('reference');
         $mdlOrder = new OrderModel();
+        $mdlPrint = new PrintModel();
         $order = $mdlOrder->find($REF);
         //Se declara la libreria
         $pdf = new PDF_AutoPrint("P", "mm", array(80, 297));
@@ -24,6 +26,25 @@ class Reports extends BaseController
         if ($order->hasSticker()) {
             $this->contentSticker($REF, $pdf); //pagina para el Stikers
         }
+        if($order->isPrint()){
+            return "ESTA ORDEN YA ESTABA IMPRESA";
+        }
+
+        try {
+            $mdlPrint->insert(
+                [
+                    'order_id_order' => $order->id_order,
+                    'hour_print' => date("Y-m-d H:i:s"),
+                    'print_by_id_empoyee' => session()->cedula_employee,
+                ]
+            );
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', [
+                'title' => 'Alerta!',
+                'body' => 'Ocurrio un error con el modelo, al tratar de insertar La Impresion. <br>Excepción capturada:' .  $e->getMessage()
+            ]);
+        }
+
         $this->response->setHeader('Content-Type', 'application/pdf');
         $pdf->AutoPrint(true);
         $pdf->Output();
