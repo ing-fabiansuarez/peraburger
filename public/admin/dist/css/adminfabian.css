@@ -131,5 +131,5 @@ a:hover {
   left: calc(50% - 20px);
 }
 .bg-impreso {
-  background-color: #76b119;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }

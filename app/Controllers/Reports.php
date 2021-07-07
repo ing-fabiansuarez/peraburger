@@ -109,7 +109,7 @@ class Reports extends BaseController
         $pdf->SetFont('Helvetica', 'B', 12);
         $pdf->cell(30, 6, 'COCINA', 'BL', 0, 'L');
         $pdf->cell(39, 6, utf8_decode('Orden: ') . $REF, 'BR', 1, 'R');
-        $pdf->MultiCell(69, 6, utf8_decode('Cliente: ') . $client['name_client'] . ' ' . $client['surname_client'], 'LRB', 'L');
+        $pdf->MultiCell(69, 6, utf8_decode('Cliente: ' . $client['name_client'] . ' ' . $client['surname_client']), 'LRB', 'L');
         $pdf->ln(5);
         $pdf->cell(69, 6, 'FORMATO DE COCINA', 1, 1, 'C');
         $pdf->ln(3);

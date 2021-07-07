@@ -251,7 +251,7 @@ class Order extends BaseController
             }
         }
         session()->remove('list_order');
-        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")));
+        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")).'?refOrderToHighlight='.$REFERENCE);
     }
 
     public function viewCreateOrderFinish()
