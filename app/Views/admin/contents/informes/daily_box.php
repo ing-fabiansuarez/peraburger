@@ -68,7 +68,7 @@
             </div>
         <?php endif;  ?>
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-12">
                 <div class="small-box bg-success">
                     <div class="inner">
                         <h3><sup style="font-size: 20px">$</sup> <?= number_format($info['totalSales']) ?></h3>
@@ -81,7 +81,7 @@
 
                 </div>
             </div>
-            <div class="col-md-5">
+            <!-- <div class="col-md-5">
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3><sup style="font-size: 20px">$</sup> <?= number_format($info['totalDomis']) ?></h3>
@@ -91,10 +91,10 @@
                         <i class="ion ion-stats-bars"></i>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-store"></i></span>
 
@@ -103,10 +103,10 @@
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersLocal']) ?></span>
 
                     </div>
-                    <!-- /.info-box-content -->
+
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-motorcycle"></i></span>
 
@@ -114,18 +114,18 @@
                         <span class="info-box-text">Domicilios - <?= $info['quantityOrdersDomis'] ?></span>
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersDomis']) ?></span>
                     </div>
-                    <!-- /.info-box-content -->
+
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="info-box mb-3">
+                <!--   <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-trash-alt"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Deshabilitados - <?= $info['quantityOrdersDisabled'] ?></span>
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersDisabled']) ?></span>
                     </div>
-                    <!-- /.info-box-content -->
-                </div>
+                  
+                </div> -->
             </div>
         </div>
 
