@@ -77,7 +77,8 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 
 	//Informes
 	$routes->get('reportediario/(:segment)', 'Informes::dailyBox/$1', ['as' => 'informe_daily_box']); 
-	$routes->get('reportediario/(:segment)/(:segment)', 'Informes::generalReport/$1/$2', ['as' => 'informe_general_report']); 
+	$routes->get('reportediario/(:segment)/(:segment)', 'Informes::generalReport/$1/$2', ['as' => 'informe_general_report']);
+	$routes->post('validaterangedate','Informes::validateFormRangeDate',['as'=>'validateformdaterange']);
 
 });
 

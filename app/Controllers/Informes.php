@@ -144,4 +144,19 @@ class Informes extends BaseController
 
         return $dailyArray;
     }
+
+    public function validateFormRangeDate()
+    {
+        $arraydates = explode(' - ', $this->request->getPost('dates'));
+        $startDateArray = explode('/', $arraydates[0]);
+        $finishDateArray = explode('/', $arraydates[1]);
+        if (count($startDateArray) != 3 || count($finishDateArray) != 3) {
+            return "FECHAS NO TIENEN UN FORMATO CORRECTO";
+        }
+        if (!(checkdate((int)$startDateArray[1], (int)$startDateArray[2], (int)$startDateArray[0]) && checkdate((int)$finishDateArray[1], (int)$finishDateArray[2], (int)$finishDateArray[0]))) {
+            return "FECHAS NO TIENEN UN FORMATO CORRECTO";
+        }
+        //:...........................................
+        return redirect()->to(base_url() . route_to('informe_general_report', $startDateArray[0] . '-' . $startDateArray[1] . '-' . $startDateArray[2], $finishDateArray[0] . '-' . $finishDateArray[1] . '-' . $finishDateArray[2]));
+    }
 }

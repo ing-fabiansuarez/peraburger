@@ -1,10 +1,34 @@
 <?= $this->extend('admin/structure/main_admin_view') ?>
 <?= $this->section('title') ?> - Reporte General<?= $this->endSection() ?>
 <?= $this->section('js') ?>
+<!-- RENGE DATE -->
+<!-- Select2 -->
+<script src="<?= base_url() ?>/public/admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="<?= base_url() ?>/public/admin/plugins/moment/moment.min.js"></script>
+<script src="<?= base_url() ?>/public/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="<?= base_url() ?>/public/admin/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="<?= base_url() ?>/public/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
 <script src="<?= base_url() ?>/public/admin/plugins/chart.js/Chart.min.js"></script>
 <script>
     $(function() {
+        //Date range picker
+        $('#reservation').daterangepicker({
+            locale: {
+                format: 'YYYY/MM/DD'
+            }
+        })
+    })
+</script>
+<script>
+    $(function() {
+       
         "use strict";
+        
 
         var ticksStyle = {
             fontColor: "#495057",
@@ -147,6 +171,8 @@
 
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
+<!-- daterange picker -->
+<link rel="stylesheet" href="<?= base_url() ?>/public/admin/plugins/daterangepicker/daterangepicker.css">
 
 <?= $this->endSection() ?>
 
@@ -156,6 +182,27 @@
     <div class="container-fluid">
         <br>
         <h1 class="h1reportdaily">REPORTE ENTRE FECHAS</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form action="<?= base_url() . route_to('validateformdaterange') ?>" method="post">
+                    <div class="form-group">
+                        <label>Rango de fechas:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                            <input name="dates" type="text" class="form-control float-right" id="reservation" value="2021/07/20 - 2021/08/25">
+
+                            <input type="submit" value="Buscar">
+
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -168,7 +215,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <p class="d-flex flex-column">
-                                <span class="text-bold text-lg"><?='$ '.number_format($sales_array['totalSalesBetweenDates'])?></span>
+                                <span class="text-bold text-lg"><?= '$ ' . number_format($sales_array['totalSalesBetweenDates']) ?></span>
                                 <span>Ventas entre fechas: <?= $initial_date . ' <b>a</b> ' . $final_date ?></span>
                             </p>
                             <p class="ml-auto d-flex flex-column text-right">
@@ -200,7 +247,7 @@
         <div class="row">
 
             <?php $contador = 1;
-            
+
             foreach ($array_to_grafic as $infografic) : ?>
                 <div class="col-lg-12">
                     <div class="card">
@@ -213,7 +260,7 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
-                                    <span class="text-bold text-lg"><?=  'CANTIDAD DE PRODUCTOS VENDIDOS: ' . $infografic['totalProductsForCategory'] ?></span>
+                                    <span class="text-bold text-lg"><?= 'CANTIDAD DE PRODUCTOS VENDIDOS: ' . $infografic['totalProductsForCategory'] ?></span>
                                     <span>Cantidad</span>
                                 </p>
                                 <p class="ml-auto d-flex flex-column text-right">
