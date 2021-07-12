@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\CategoryModel;
+use App\Models\EmployeeModel;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
 
@@ -35,6 +36,8 @@ class Informes extends BaseController
         $quantityOrdersDomis = 0;
         $quantityOrdersDisabled = 0;
 
+
+
         foreach ($list_orders as $order) {
             if ($order->state_id_state == 3) {
                 $totalSales += $order->getTotalWthitOutDomicilio();
@@ -53,6 +56,31 @@ class Informes extends BaseController
             }
         }
 
+        //Consulta de reportes por cliente
+        $mdlEmployee = new EmployeeModel();
+        $employees = $mdlEmployee->find();
+        $arrayEmployees = array();
+
+        foreach ($employees as $employee) {
+            $sales = [
+                'domi' => 0,
+                'local' => 0,
+                'total' => 0,
+            ];
+            foreach ($list_orders as $order) {
+                if ($order->state_id_state == 3) {
+                    if ($order->employee_id_employee == $employee['id_employee']) {
+                        $sales['total'] += $order->getTotalWthitOutDomicilio();
+                        if ($order->typeshipping_id_typeshipping == 1) {
+                            $sales['domi'] += $order->getTotalWthitOutDomicilio();
+                        } else if ($order->typeshipping_id_typeshipping == 2) {
+                            $sales['local'] += $order->getTotalWthitOutDomicilio();
+                        }
+                    }
+                }
+            }
+            array_push($arrayEmployees, array_merge($employee, $sales));
+        }
         return view('admin/contents/informes/daily_box', [
             'list_orders' => $list_orders,
             'all_products' => $mdlProducts->where('category_id_category', 1)->findAll(),
@@ -65,7 +93,9 @@ class Informes extends BaseController
                 'quantityOrdersLocal' =>   $quantityOrdersLocal,
                 'quantityOrdersDomis' =>   $quantityOrdersDomis,
                 'quantityOrdersDisabled' => $quantityOrdersDisabled,
-            ]
+            ],
+            'date' => $date,
+            'arrayEmployees' => $arrayEmployees,
         ]);
     }
 
@@ -158,5 +188,11 @@ class Informes extends BaseController
         }
         //:...........................................
         return redirect()->to(base_url() . route_to('informe_general_report', $startDateArray[0] . '-' . $startDateArray[1] . '-' . $startDateArray[2], $finishDateArray[0] . '-' . $finishDateArray[1] . '-' . $finishDateArray[2]));
+    }
+
+    public function validateFormDate()
+    {
+        $date = $this->request->getPost('date');
+        return redirect()->to(base_url() . route_to('informe_daily_box', $date));
     }
 }

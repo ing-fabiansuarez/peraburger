@@ -49,8 +49,6 @@
 
 <section class="content">
     <div class="container-fluid">
-
-
         <br>
         <h1 class="h1reportdaily">REPORTE DIARIO</h1>
         <?php if (session()->error) : ?>
@@ -67,6 +65,31 @@
                 <?= session('msg.body') ?>
             </div>
         <?php endif;  ?>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2><?= $date ?></h2>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Fecha:</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="<?= base_url() . route_to('validate_date') ?>" method="post">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input name="date" value="<?= $date ?>" type="date" class="form-control" placeholder="Fecha">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-secondary">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="small-box bg-success">
@@ -105,16 +128,43 @@
                     </div>
 
                 </div>
-            </div>
-            <div class="col-md-6">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-motorcycle"></i></span>
-
                     <div class="info-box-content">
                         <span class="info-box-text">Domicilios - <?= $info['quantityOrdersDomis'] ?></span>
                         <span class="info-box-number">$ <?= number_format($info['moneyOrdersDomis']) ?></span>
                     </div>
-
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Ventas por Trabajor:</h3>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Cedula</th>
+                                    <th>Nombre</th>
+                                    <th>Ventas Local</th>
+                                    <th>Ventas Domicilio</th>
+                                    <th>Ventas Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($arrayEmployees as $employee) : ?>
+                                    <tr>
+                                        <td><?= $employee['id_employee'] ?></td>
+                                        <td><?= utf8_decode($employee['name_employee'] . ' ' . $employee['surname_employee']) ?></td>
+                                        <td><?= '$ ' . number_format($employee['local']) ?></td>
+                                        <td><?= '$ ' . number_format($employee['domi']) ?></td>
+                                        <td><?= '$ ' . number_format($employee['total']) ?></td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -129,12 +179,10 @@
             </div>
         </div>
 
-
-
         <div class="row">
             <div class="card" style="width: 100%;">
                 <div class="card-header header-list">
-                    <h3 class="card-title" style="color: #fff;"> <b> LOCAL</b></h3>
+                    <h3 class="card-title" style="color: #fff;"> <b> LISTA DE PEDIDOS</b></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body body-background">

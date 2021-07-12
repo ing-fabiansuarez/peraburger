@@ -21,7 +21,7 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false);
 
 /**
  * --------------------------------------------------------------------
@@ -79,6 +79,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->get('reportediario/(:segment)', 'Informes::dailyBox/$1', ['as' => 'informe_daily_box']); 
 	$routes->get('reportediario/(:segment)/(:segment)', 'Informes::generalReport/$1/$2', ['as' => 'informe_general_report']);
 	$routes->post('validaterangedate','Informes::validateFormRangeDate',['as'=>'validateformdaterange']);
+	$routes->post('validatedate','Informes::validateFormDate',['as'=>'validate_date']);
 
 });
 
