@@ -26,9 +26,9 @@ class Reports extends BaseController
         if ($order->hasSticker()) {
             $this->contentSticker($REF, $pdf); //pagina para el Stikers
         }
-        if($order->isPrint()){
+        /*  if($order->isPrint()){
             return "ESTA ORDEN YA ESTABA IMPRESA";
-        }
+        } */
 
         try {
             $mdlPrint->insert(
@@ -83,19 +83,21 @@ class Reports extends BaseController
         $pdf->SetWidths(array(10, 39, 20));
         $pdf->SetAligns(array('L', 'L', 'R'));
 
+        $high = 90;
+
         foreach ($order->getListofProducts() as $item_list) {
             $priceDetail = $order->getPricesOfDetail($item_list['id_detailorder']);
-            $pdf->Row(array($item_list['quantity_detailorder'], utf8_decode($item_list['name_product']), '$ ' . number_format($priceDetail['total'])));
+            $high += $pdf->Row(array($item_list['quantity_detailorder'], utf8_decode($item_list['name_product']), '$ ' . number_format($priceDetail['total'])));
         }
 
         $pdf->cell(10, 4, '', 'T', 0, 'C');
         $pdf->cell(39, 8, utf8_decode('TOTAL'), 'T', 0, 'C');
         $pdf->cell(20, 8, '$ ' . number_format($order->getTotalWthitOutDomicilio()), 'T', 1, 'R');
         $pdf->cell(10, 4, '', 0, 1, 'C');
-        $pdf->cell(39, 4, '', 0, 1, 'C');
+       
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
-        $pdf->cell(34, 15, '.', 0, 1, 'R');
+        $pdf->Image(base_url('', 'http') . '/public/img/cree_en_ti.jpg', 25, $high, 20);
     }
 
     public function contentKitchen($REF, $pdf)
@@ -329,6 +331,7 @@ class PDF_AutoPrint extends PDF_JavaScript
         }
         //Go to the next line
         $this->Ln($h);
+        return $h;
     }
 
     function CheckPageBreak($h)
