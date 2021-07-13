@@ -130,7 +130,7 @@ class Ajax extends BaseController
 				
 			</div>
 			<div class='text-center'>
-				<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
+				<button id='pago_con' type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
 					CREAR PEDIDO
 				</button>
 			</div>

@@ -81,6 +81,10 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->post('validaterangedate','Informes::validateFormRangeDate',['as'=>'validateformdaterange']);
 	$routes->post('validatedate','Informes::validateFormDate',['as'=>'validate_date']);
 
+	//cotizador
+	$routes->get('carne', 'Quote::viewMeat', ['as' => 'quote_meat']); 
+
+
 });
 
 //routes of auth

@@ -70,6 +70,16 @@
                     </a>
                 </li>
 
+                <li class="nav-header">COTIZADOR</li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('quote_meat') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Carne
+                        </p>
+                    </a>
+                </li>
+
                 <li class="nav-header">DOMICILIARIO</li>
                 <li class="nav-item">
                     <a href="<?= base_url() . route_to('view_domiciliaries') ?>" class="nav-link">

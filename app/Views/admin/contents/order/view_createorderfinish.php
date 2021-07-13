@@ -2,6 +2,7 @@
 <?= $this->section('title') ?> - Nuevo Pedido<?= $this->endSection() ?>
 <?= $this->section('js') ?>
 <script src="<?= base_url() ?>/public/admin/dist/js/ajax_typeshipping.js"></script>
+
 <?= $this->endSection() ?>
 
 
@@ -79,6 +80,12 @@
                                         </select>
                                     </div>
                                 </div>
+                                <!-- <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Pago con</label>
+                                        <input id="input_pago_con" name="pago_con" type="number" class="form-control" placeholder="valor">
+                                    </div>
+                                </div> -->
                             </div>
                             <div id="form-typeshipping">
                             </div>
