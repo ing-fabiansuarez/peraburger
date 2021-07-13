@@ -20,6 +20,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($dailyOrdersLocal as $order) : //dd($dailyorders); 
+                        // $order->durationTime();
                     ?>
 
                         <tr <?php if ($refOrder == $order->id_order) : ?> class="bg-impreso" <?php endif ?>>
@@ -83,7 +84,7 @@
 
                             </td>
                             <td>
-                                <?php if ($order->isPrint()==false) : ?>
+                                <?php if ($order->isPrint() == false) : ?>
                                     <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
                                         <input type="hidden" name="reference" value="<?= $order->id_order ?>">
                                         <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
@@ -184,12 +185,14 @@
 
                             </td>
                             <td>
-                                <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
-                                    <input type="hidden" name="reference" value="<?= $order->id_order ?>">
-                                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
-                                        <i class="fas fa-download"></i>Imprimir
-                                    </button>
-                                </form>
+                                <?php if ($order->isPrint() == false) : ?>
+                                    <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
+                                        <input type="hidden" name="reference" value="<?= $order->id_order ?>">
+                                        <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
+                                            <i class="fas fa-download"></i>Imprimir
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

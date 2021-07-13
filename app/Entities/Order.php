@@ -138,18 +138,32 @@ class Order extends Entity
         if ($this->typeshipping_id_typeshipping == 1) {
             if ($this->domicilio_id_domicilio != 1 && $this->domicilio_id_domicilio != 2) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
         return false;
     }
-    public function isPrint(){
+    public function isPrint()
+    {
         $mdlPrint = new PrintModel();
-        if(!$mdlPrint->where('order_id_order',$this->id_order)->first()){
+        if (!$mdlPrint->where('order_id_order', $this->id_order)->first()) {
             return false;
-        }else{
+        } else {
             return true;
         }
+    }
+    public function durationTime()
+    {
+        $mdlOrder = new OrderModel();
+        dd(
+            $mdlOrder->db->table('detailorder')
+                ->select('*')
+                ->join('order', 'order.id_order = detailorder.order_id_order')
+                ->where('order.date_order', $this->date_order)
+                ->where('order.state_id_state', 2)
+                ->orderBy('order.hour_order', 'asc')
+                ->get()->getResultArray()
+        );
     }
 }
