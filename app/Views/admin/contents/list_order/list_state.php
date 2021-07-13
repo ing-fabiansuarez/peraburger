@@ -67,7 +67,7 @@
                                 </table>
                             </td>
                             <td>
-                                <?= $order->hour_order . '<br>' . $order->date_order . '<br><b>' . '</b>' ?>
+                                <?= $order->hour_order . '<br>' . $order->date_order . '<br>' . $order->getNameEmployee() ?>
                             </td>
                             <td style="max-width: 100px;"><?= $order->observations_order ?></td>
                             <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) ?></td>
@@ -168,7 +168,7 @@
                                 </table>
                             </td>
                             <td>
-                                <?= $order->hour_order . '<br>' . $order->date_order . '<br><b>' . '</b>' ?>
+                                <?= $order->hour_order . '<br>' . $order->date_order . '<br>' . $order->getNameEmployee() ?>
                             </td>
                             <td style="max-width: 100px;"><?= $order->observations_order ?></td>
                             <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) ?></td>
