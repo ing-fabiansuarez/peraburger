@@ -66,15 +66,25 @@ class Reports extends BaseController
         // CONTENIDO DE LA PAGINA
         $pdf->cell(50, 10, '', 0, 1, 'C');
         $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 13, 1, 50);
+        $pdf->cell(69, 4, 'FACTURA DE VENTA', 0, 1, 'C');
+        $pdf->cell(69, 4, utf8_decode('N° 5'), 0, 1, 'C');
+        $pdf->SetFont('Times', 'B', 8);
+        $pdf->cell(69, 4, 'KATHE CREATIVA SAS', 0, 1, 'C');
+        $pdf->SetFont('Times', 'B', 10);
         $pdf->cell(69, 4, 'NIT: 901478708-6', 0, 1, 'C');
+        $pdf->cell(69, 4, 'Agente Responsable de Impuesto al Consumo', 0, 1, 'C');
         $pdf->cell(69, 4, 'Calle 8 # 6-67', 0, 1, 'C');
         $pdf->cell(69, 4, 'Pamplona - Norte de Santander', 0, 1, 'C');
-        $pdf->cell(69, 4, 'Agente Responsable de Impuesto al Consumo', 0, 1, 'C');
-        $pdf->cell(69, 4, 'Cel: 3229023640', 0, 1, 'C');
+              
+        $pdf->cell(69, 4, 'Consumidor final', 0, 1, 'C');
+        $pdf->cell(69, 4, utf8_decode('Identificación: 222222222'), 0, 1, 'C');
+        
+        $pdf->cell(69, 4, '------------------------------------------------', 0, 1, 'C');
         $pdf->cell(69, 4, '', 0, 1, 'C');
         $pdf->MultiCell(69, 4, utf8_decode('N° de orden: ' . $REF), 0, 'L');
         $client = $mdlClient->find($REF);
         $pdf->MultiCell(69, 5, utf8_decode('PeRa Amig@: ' . $client['name_client'] . ' ' . $client['surname_client']), 0, 'L');
+
         $pdf->SetFont('Times', 'B', 10);
         $pdf->cell(69, 6, '', 0, 1, 'C');
         $pdf->cell(10, 6, 'Cant.', 1, 0, 'C');
@@ -83,7 +93,7 @@ class Reports extends BaseController
         $pdf->SetWidths(array(10, 39, 20));
         $pdf->SetAligns(array('L', 'L', 'R'));
 
-        $high = 90;
+        $high = 125;
 
         foreach ($order->getListofProducts() as $item_list) {
             $priceDetail = $order->getPricesOfDetail($item_list['id_detailorder']);
@@ -94,7 +104,10 @@ class Reports extends BaseController
         $pdf->cell(39, 8, utf8_decode('TOTAL'), 'T', 0, 'C');
         $pdf->cell(20, 8, '$ ' . number_format($order->getTotalWthitOutDomicilio()), 'T', 1, 'R');
         $pdf->cell(10, 4, '', 0, 1, 'C');
-       
+        $pdf->cell(69, 4, '------------------------------------------------', 0, 1, 'C');
+        $pdf->SetFont('Times', 'B', 9);
+        $pdf->MultiCell(69, 4, utf8_decode('Resolución DIAN N° 18764013534966 con prefijo K desde 1 hasta 2000 con vigencia desde 21/05/2021 hasta 20/05/2022'), 0, 'C');
+        $pdf->cell(10, 4, '', 0, 1, 'C');
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
         $pdf->Image(base_url('', 'http') . '/public/img/cree_en_ti.jpg', 25, $high, 20);
