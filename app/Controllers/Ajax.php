@@ -12,7 +12,7 @@ class Ajax extends BaseController
 	public function ajaxProductOfCategory()
 	{
 		$modelProduct = new ProductModel();
-		$categories = $modelProduct->where('category_id_category', $this->request->getPostGet('category'))->orderBy('name_product', 'ASC')->findAll();
+		$categories = $modelProduct->where('category_id_category', $this->request->getPostGet('category'))->orderBy('price_product', 'ASC')->findAll();
 		$cadena = "";
 		foreach ($categories as $category) {
 			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] . ' - ' . number_format($category['price_product']) . ' (' . utf8_decode($category['description_product']) . ')</option>';
