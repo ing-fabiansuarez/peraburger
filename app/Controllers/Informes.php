@@ -5,12 +5,18 @@ namespace App\Controllers;
 use App\Models\CategoryModel;
 use App\Models\EmployeeModel;
 use App\Models\OrderModel;
+use App\Models\PermissionModel;
 use App\Models\ProductModel;
 
 class Informes extends BaseController
 {
     public function generalReport($initialDate, $finalDate)
     {
+        $mdlPermission = new PermissionModel();
+        if (!$mdlPermission->hasPermission(4)) {
+            return view('permission/donthavepermission');
+        }
+
         return view('admin/contents/informes/general_report', [
             'array_to_grafic' => $this->generateReportQuantitiesCategories($initialDate, $finalDate),
             'initial_date' => $initialDate,
@@ -22,6 +28,12 @@ class Informes extends BaseController
 
     public function dailyBox($date)
     {
+        $mdlPermission = new PermissionModel();
+        if ($date != date("Y-m-d")) {
+            if (!$mdlPermission->hasPermission(3)) {
+                return view('permission/donthavepermission');
+            }
+        }
         $mdlOrder = new OrderModel();
         $mdlProducts = new ProductModel();
 
@@ -102,7 +114,6 @@ class Informes extends BaseController
     public function generateReportQuantitiesCategories($initialDate, $finalDate)
     {
 
-        $mdlCategory = new CategoryModel();
         $mdlProducts = new ProductModel();
         $mdlOrder = new OrderModel();
 

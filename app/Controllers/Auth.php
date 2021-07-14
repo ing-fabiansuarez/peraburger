@@ -29,8 +29,8 @@ class Auth extends BaseController
         $user = trim($this->request->getPost('user'));
         $password = trim($this->request->getPost('password'));
         $modelEmployee = new EmployeeModel();
-        if (!$employee = $modelEmployee->getEmployeeLogin('id_employee', $user)) {
-            return redirect()->back()->with('msg', ['body' => 'Este usuario no se encuentra registrado en el sistema'])->withInput();
+        if (!$employee = $modelEmployee->getEmployeeLogin('id_employee', $user)) { 
+            return redirect()->back()->with('msg', ['body' => 'Este usuario no se encuentra registrado en el sistema o esta deshabilitado'])->withInput();
         }
         if (md5($password) != $employee->password_employee) {
             return redirect()->back()->with('msg', ['body' => 'Credeciales invalidas para ' . $employee->name_employee])->withInput();

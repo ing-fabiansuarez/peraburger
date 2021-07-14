@@ -133,3 +133,6 @@ a:hover {
 .bg-impreso {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
+.bg-info {
+  background-color: #76b119!important;
+}
