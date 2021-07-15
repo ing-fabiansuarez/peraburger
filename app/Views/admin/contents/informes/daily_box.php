@@ -156,7 +156,7 @@
                                 <?php foreach ($arrayEmployees as $employee) : ?>
                                     <tr>
                                         <td><?= $employee['id_employee'] ?></td>
-                                        <td><?= utf8_decode($employee['name_employee'] . ' ' . $employee['surname_employee']) ?></td>
+                                        <td><?= $employee['name_employee'] . ' ' . $employee['surname_employee'] ?></td>
                                         <td><?= '$ ' . number_format($employee['local']) ?></td>
                                         <td><?= '$ ' . number_format($employee['domi']) ?></td>
                                         <td><?= '$ ' . number_format($employee['total']) ?></td>

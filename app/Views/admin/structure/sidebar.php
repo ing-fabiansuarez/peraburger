@@ -119,6 +119,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-header"></li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('view_domiciliaries') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Crear Domiciliario
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

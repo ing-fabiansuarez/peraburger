@@ -48,8 +48,6 @@ class Informes extends BaseController
         $quantityOrdersDomis = 0;
         $quantityOrdersDisabled = 0;
 
-
-
         foreach ($list_orders as $order) {
             if ($order->state_id_state == 3) {
                 $totalSales += $order->getTotalWthitOutDomicilio();

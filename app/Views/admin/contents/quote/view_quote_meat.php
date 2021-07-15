@@ -38,14 +38,14 @@
                                     <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">CARNE CHATA</span>
-                                        <span class="info-box-number"><?= number_format((($num_burgers * 7.5) / 58), 3) . ' Kgs' ?></span>
+                                        <span class="info-box-number"><?= number_format((($num_burgers * 7.5) / 58), 2,) . ' Kgs' ?></span>
                                     </div>
                                 </div>
                                 <div class="info-box">
                                     <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">CARNE MORILLO</span>
-                                        <span class="info-box-number"><?= number_format((($num_burgers * 2.5) / 58), 3) . ' Kgs' ?></span>
+                                        <span class="info-box-number"><?= number_format((($num_burgers * 2.5) / 58), 2) . ' Kgs' ?></span>
                                     </div>
                                 </div>
                             </div>

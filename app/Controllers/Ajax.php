@@ -15,7 +15,7 @@ class Ajax extends BaseController
 		$categories = $modelProduct->where('category_id_category', $this->request->getPostGet('category'))->orderBy('price_product', 'ASC')->findAll();
 		$cadena = "";
 		foreach ($categories as $category) {
-			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] . ' - ' . number_format($category['price_product']) . ' (' . utf8_decode($category['description_product']) . ')</option>';
+			$cadena = $cadena . '<option value="' . $category['id_product'] . '">' . $category['name_product'] . ' - ' . number_format($category['price_product']) . ' (' . $category['description_product'] . ')</option>';
 		}
 		echo $cadena . "";
 		return true;

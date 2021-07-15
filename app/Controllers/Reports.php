@@ -67,7 +67,7 @@ class Reports extends BaseController
         $pdf->cell(50, 10, '', 0, 1, 'C');
         $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 13, 1, 50);
         $pdf->cell(69, 4, 'FACTURA DE VENTA', 0, 1, 'C');
-        $pdf->cell(69, 4, utf8_decode('N° 5'), 0, 1, 'C');
+        $pdf->cell(69, 4, utf8_decode('N° ' . $order->consecutive_order), 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 8);
         $pdf->cell(69, 4, 'KATHE CREATIVA SAS', 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 10);
@@ -75,10 +75,10 @@ class Reports extends BaseController
         $pdf->cell(69, 4, 'Agente Responsable de Impuesto al Consumo', 0, 1, 'C');
         $pdf->cell(69, 4, 'Calle 8 # 6-67', 0, 1, 'C');
         $pdf->cell(69, 4, 'Pamplona - Norte de Santander', 0, 1, 'C');
-              
+
         $pdf->cell(69, 4, 'Consumidor final', 0, 1, 'C');
         $pdf->cell(69, 4, utf8_decode('Identificación: 222222222'), 0, 1, 'C');
-        
+
         $pdf->cell(69, 4, '------------------------------------------------', 0, 1, 'C');
         $pdf->cell(69, 4, '', 0, 1, 'C');
         $pdf->MultiCell(69, 4, utf8_decode('N° de orden: ' . $REF), 0, 'L');
