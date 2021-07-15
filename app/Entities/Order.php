@@ -42,7 +42,11 @@ class Order extends Entity
                 $this->attributes['turnmachine_order'] =  (count($mdl->where('date_order', $this->attributes['date_order'])->where('typeshipping_id_typeshipping', 1)->findAll())) + 1;
                 break;
             case 2:
-                $this->attributes['turnmachine_order'] =  ((count($mdl->where('date_order', $this->attributes['date_order'])->where('typeshipping_id_typeshipping', 2)->findAll())) % 15) + 1;
+                /* (codigo del turno normal es este y se borra el restao del case 2)$this->attributes['turnmachine_order'] =  ((count($mdl->where('date_order', $this->attributes['date_order'])->where('typeshipping_id_typeshipping', 2)->findAll())) % 15) + 1; */
+                $this->attributes['turnmachine_order'] =  ((count($mdl->where('date_order', $this->attributes['date_order'])->where('typeshipping_id_typeshipping', 2)->findAll())) % 14) + 1;
+                if ($this->attributes['turnmachine_order'] == 14) {
+                    $this->attributes['turnmachine_order'] = 15;
+                }
                 break;
         }
     }
