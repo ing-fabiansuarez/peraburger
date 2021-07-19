@@ -102,7 +102,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url() . route_to('informe_general_report', date("Y-m-01"), date("Y-m-d")) ?>" class="nav-link">
+                    <a href="<?= base_url() . route_to('informe_general_report', date("Y-m-d"), date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Reporte General
