@@ -61,58 +61,36 @@ class Ajax extends BaseController
 	}
 
 	public function ajaxFormTypeShipping()
-	{
-		$mdlDomi = new DomiciliaryModel();
-		$domiciliaries = $mdlDomi->findAll();
+	{	
 		$cadena1 =
 			"<div class='row'>
 				
-				<div class='col-sm-4'>
+				<div class='col-sm-6'>
 					<div class='form-group'>
 						<label>Nombre *</label>
 						<input name='name' type='text' class='form-control' placeholder='Nombre *' required>
 					</div>
 				</div>
-				<div class='col-sm-4'>
+				<div class='col-sm-6'>
+					<div class='form-group'>
+						<label>Celular *</label>
+						<input name='whatsapp' type='text' class='form-control' placeholder='Celular*' required>
+					</div>
+				</div>
+				<div class='col-sm-6'>
 					<div class='form-group'>
 						<label>Direcci&oacute;n</label>
-						<input name='adress' type='text' class='form-control' placeholder='Dirección'>
+						<input name='adress' type='text' class='form-control' placeholder='Dirección' required>
 					</div>
 				</div>
-				<div class='col-sm-4'>
+				<div class='col-sm-6'>
 					<div class='form-group'>
 						<label>Barrio</label>
-						<input name='barrio' type='text' class='form-control' placeholder='Barrio'>
-					</div>
-				</div>
-				
-			</div>
-			<div class='row'>
-				<div class='col-sm-4'>
-					<div class='form-group'>
-						<label>WhatsApp</label>
-						<div class='input-group'>
-							<div class='input-group-prepend'>
-								<span class='input-group-text'><i class='fas fa-phone'></i></span>
-							</div>
-							<input name='whatsapp' type='number' class='form-control'>
-						</div>
-					</div>
-				</div>
-				<div class='col-sm-3'>
-					<div class='form-group'>
-						<label>Domiciliario</label>
-						<select name='domi' class='form-control' required>
-						";
-		foreach ($domiciliaries as $domiciliary) {
-			$cadena1 .= "<option value='" . $domiciliary['id_domiciliary'] . "'>" . $domiciliary['name_domiciliary'] . ' ' . $domiciliary['surname_domiciliary'] . "</option>";
-		}
-
-		$cadena1 .= "
-						</select>
+						<input name='barrio' type='text' class='form-control' placeholder='Barrio' required>
 					</div>
 				</div>
 			</div>
+			
 			<div class='row'>
 				<div class='col-sm-6'>
 					<div class='form-group'>
@@ -126,8 +104,6 @@ class Ajax extends BaseController
 						<textarea name='obs_domi' class='form-control' rows='3' placeholder='Observaciones Domicilio ...'></textarea>
 					</div>
 				</div>
-
-				
 			</div>
 			<div class='text-center'>
 				<button id='pago_con' type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
@@ -194,12 +170,61 @@ class Ajax extends BaseController
 				</div>
 			</div>";
 
+		$cadena3 =
+			"<div class='row'>
+				<div class='col-sm-6'>
+					<div class='form-group'>
+						<label>Nombre *</label>
+						<input name='name' type='text' class='form-control' placeholder='Nombre *' required>
+					</div>
+				</div>
+				<div class='col-sm-6'>
+					<div class='form-group'>
+						<label>Celular *</label>
+						<input name='whatsapp' type='number' class='form-control' placeholder='Celular *' required>
+					</div>
+				</div>
+				<div class='col-sm-6'>
+					<div class='form-group'>
+						<label>Observaci&oacute;n Cocina</label>
+						<textarea name='observation' class='form-control' rows='3' placeholder='Observaciones cocina ...'></textarea>
+					</div>
+				</div>
+			</div>
+			<div class='text-center'>
+				<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
+					CREAR PEDIDO
+				</button>
+			</div>
+			<div class='modal fade' id='modal-default'>
+				<div class='modal-dialog'>
+					<div class='modal-content'>
+						<div class='modal-header'>
+							<h4 class='modal-title'>Deseas crear el nuevo pedido?</h4>
+							<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+								<span aria-hidden='true'>&times;</span>
+							</button>
+						</div>
+						<div class='modal-body'>
+							<p><strong>Se creara el nuevo pedido</strong></p>
+						</div>
+						<div class='modal-footer justify-content-between'>
+							<button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+							<button type='submit' class='btn btn-primary'>Si, crear</button>
+						</div>
+					</div>
+				</div>
+			</div>";
+
 		switch ($this->request->getPostGet('type')) {
 			case 1:
 				echo $cadena1;
 				break;
 			case 2:
 				echo $cadena2;
+				break;
+			case 3:
+				echo $cadena3;
 				break;
 		}
 

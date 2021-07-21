@@ -149,6 +149,9 @@ class Reports extends BaseController
         $pdf->cell(30, 6, '', 'LB', 0, 'L');
         $pdf->cell(39, 6, utf8_decode('Orden: ') . $REF, 'BR', 1, 'R');
         $pdf->MultiCell(69, 6, utf8_decode('Cliente: ' . $client['name_client'] . ' ' . $client['surname_client']), 'LRB', 'L');
+        if ($order->typeshipping_id_typeshipping == 1) {
+            $pdf->MultiCell(69, 6, 'Tel: ' . $order->getDomicilio()['whatsapp_domicilio'], 'LRB', 'L');
+        }
         $pdf->ln(5);
         $pdf->SetFont('Helvetica', 'B', 20);
         $pdf->cell(69, 7, 'COCINA', 1, 1, 'C');
@@ -194,8 +197,8 @@ class Reports extends BaseController
     {
         $mdlOrder = new OrderModel();
         $mdlClient = new ClientModel();
-
-        $domicilio = $mdlOrder->find($REF)->getDomicilio();
+        $order = $mdlOrder->find($REF);
+        $domicilio = $order->getDomicilio();
         $client = $mdlClient->find($REF);
         $pdf->AddPage();
         //Margenes del archivo
@@ -210,13 +213,20 @@ class Reports extends BaseController
         $pdf->ln(14);
         $pdf->cell(30, 1, '', 0, 0, 'L');
         $pdf->MultiCell(40, 5, utf8_decode($client['name_client'] . ' ' . $client['surname_client']), 1, 'C');
+        $pdf->cell(30, 5, '', 0, 0, 'L');
+        
+        if ($order->typeshipping_id_typeshipping == 1) {
+            
+            $pdf->SetFont('Helvetica', '', 9);
+            $pdf->MultiCell(40, 8, utf8_decode('PARA LLEVAR'), 0, 'L');
+        } else {
+            
+            $pdf->MultiCell(40, 5, utf8_decode('Dirección:'), 0, 'L');
 
-        $pdf->cell(30, 1, '', 0, 0, 'L');
-        $pdf->MultiCell(40, 5, utf8_decode('Dirección:'), 0, 'L');
-
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->cell(30, 1, '', 0, 0, 'L');
-        $pdf->MultiCell(40, 4, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
+            $pdf->SetFont('Arial', '', 9);
+            $pdf->cell(30, 1, '', 0, 0, 'L');
+            $pdf->MultiCell(40, 4, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
+        }
 
 
         $pdf->SetFont('Helvetica', 'B', 9);

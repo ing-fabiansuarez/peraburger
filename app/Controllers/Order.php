@@ -65,79 +65,68 @@ class Order extends BaseController
         $surname = '';
         $observations_order = $this->request->getPostGet('observation');
 
-        switch ($typeshipping_id_typeshipping) {
-            case 1:
-                if (!$this->validate(
-                    [
-                        'typeshipping' => 'required',
-                        'name' => 'required',
-
-                    ]
-                )) {
-                    return redirect()->back()->with('error', [
-                        'title' => 'Alerta!',
-                        'body' => 'Tuvimos problemas al recibir los datos del pedido.'
-                    ]);
-                }
-
-                $adress = $this->request->getPostGet('adress');
-                $barrio = $this->request->getPostGet('barrio');
-                $domiciliario = $this->request->getPostGet('domi');
-                $price_domi = 0;
-                $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
-                $obs_domi = $this->request->getPostGet('obs_domi');
-
-                if (($adress == '') || ($barrio == '') || ($domiciliario == '') || ($whatsapp_domicilio == '')) {
-                    $domicilio = 2;
-                } else {
-                    $new_domicilio = [
-                        'id_domicilio' => $REFERENCE,
-                        'address_domicilio' => $adress,
-                        'neighborhood_domicilio' => $barrio,
-                        'domiciliary_id_domiciliary' => $domiciliario,
-                        'price_domicilio' => $price_domi,
-                        'whatsapp_domicilio' => $whatsapp_domicilio,
-                        'observation_domicilio' => $obs_domi
-                    ];
-
-                    $mdlDomicilio = new DomicilioModel();
-                    $domicilio = $REFERENCE;
-                    try {
-                        
-                        $mdlDomicilio->insert($new_domicilio);
-                           
-                    } catch (Exception $e) {
-                        return redirect()->back()->with('error', [
-                            'title' => 'Alerta!',
-                            'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion del domicilio. <br>Excepción capturada:' .  $e->getMessage()
-                        ]);
-                    }
-                }
-                
-                break;
-            case 2:
-                if (!$this->validate(
-                    [
-                        'typeshipping' => 'required',
-                        'name' => 'required',
-                    ]
-                )) {
-                    return redirect()->back()->with('error', [
-                        'title' => 'Alerta!',
-                        'body' => 'Tuvimos problemas al recibir los datos del pedido.'
-                    ]);
-                }
-                $domicilio = 1;
-
-                break;
-            default:
+        if ($typeshipping_id_typeshipping == 1 || $typeshipping_id_typeshipping == 3) {
+            if (!$this->validate(
+                [
+                    'typeshipping' => 'required',
+                    'name' => 'required',
+                    'whatsapp' => 'required',
+                ]
+            )) {
                 return redirect()->back()->with('error', [
                     'title' => 'Alerta!',
-                    'body' => 'El tipo de envio no esta programado.'
+                    'body' => 'Tuvimos problemas al recibir los datos del pedido.'
                 ]);
-                break;
-        }
+            }
+            if (!$adress = $this->request->getPostGet('adress')) {
+                $adress = '';
+            }
+            if (!$barrio = $this->request->getPostGet('barrio')) {
+                $barrio = '';
+            }
+            $domiciliario = 1;
+            $price_domi = 0;
+            $whatsapp_domicilio = $this->request->getPostGet('whatsapp');
+            if (!$obs_domi = $this->request->getPostGet('obs_domi')) {
+                $obs_domi = '';
+            }
 
+            $new_domicilio = [
+                'id_domicilio' => $REFERENCE,
+                'address_domicilio' => $adress,
+                'neighborhood_domicilio' => $barrio,
+                'domiciliary_id_domiciliary' => $domiciliario,
+                'price_domicilio' => $price_domi,
+                'whatsapp_domicilio' => $whatsapp_domicilio,
+                'observation_domicilio' => $obs_domi
+            ];
+
+            $mdlDomicilio = new DomicilioModel();
+            $domicilio = $REFERENCE;
+            try {
+                $mdlDomicilio->insert($new_domicilio);
+            } catch (Exception $e) {
+                return redirect()->back()->with('error', [
+                    'title' => 'Alerta!',
+                    'body' => 'Ocurrio un error con el modelo, al tratar de insertar la informacion del domicilio. <br>Excepción capturada:' .  $e->getMessage()
+                ]);
+            }
+            $typeshipping_id_typeshipping = 1;
+        } else if ($typeshipping_id_typeshipping == 2) {
+            if (!$this->validate(
+                [
+                    'typeshipping' => 'required',
+                    'name' => 'required',
+                ]
+            )) {
+                return redirect()->back()->with('error', [
+                    'title' => 'Alerta!',
+                    'body' => 'Tuvimos problemas al recibir los datos del pedido.'
+                ]);
+            }
+            $domicilio = 1;
+        }
+        
         $mdlClient = new ClientModel();
 
         try {
@@ -152,7 +141,6 @@ class Order extends BaseController
                 'body' => 'Ocurrio un error con el modelo, al tratar de insertar El cliente. <br>Excepción capturada:' .  $e->getMessage()
             ]);
         }
-     
 
         $new_order = new EntitiesOrder([
             'id_order' => $REFERENCE,
@@ -251,7 +239,7 @@ class Order extends BaseController
             }
         }
         session()->remove('list_order');
-        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")).'?refOrderToHighlight='.$REFERENCE);
+        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")) . '?refOrderToHighlight=' . $REFERENCE);
     }
 
     public function viewCreateOrderFinish()

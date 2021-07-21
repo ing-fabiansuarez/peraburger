@@ -76,7 +76,8 @@
                                         <label>Tipo</label>
                                         <select name="typeshipping" id="typeshipping" class="form-control">
                                             <option value="2">Local</option>
-                                            <option value="1">Domicilio</option>
+                                            <option value="3">Esperan para llevan - Domicilio sin dirección</option>
+                                            <option value="1">Domicilio con dirección</option>
                                         </select>
                                     </div>
                                 </div>
