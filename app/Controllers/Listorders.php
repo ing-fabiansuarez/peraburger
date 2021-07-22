@@ -14,6 +14,9 @@ class Listorders extends BaseController
         if (!$refOrderToHighlight = $this->request->getPostGet('refOrderToHighlight')) {
             $refOrderToHighlight = null;
         }
+        if (!$pago_con = $this->request->getPostGet('pago_con')) {
+            $pago_con = 0;
+        }
         $mdlOrder = new OrderModel();
         $dailyOrdersLocal = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 2)->where('state_id_state', $state)->orderBy('hour_order', 'asc')->findAll();
         $dailyOrdersDomicilio = $mdlOrder->where('date_order', $date)->where('typeshipping_id_typeshipping', 1)->where('state_id_state', $state)->orderBy('hour_order', 'asc')->findAll();
@@ -23,7 +26,8 @@ class Listorders extends BaseController
                     'date' => $date,
                     'dailyOrdersLocal' => $dailyOrdersLocal,
                     'dailyOrdersDomicilio' => $dailyOrdersDomicilio,
-                    'refOrder' => $refOrderToHighlight
+                    'refOrder' => $refOrderToHighlight,
+                    'pago_con'=>$pago_con
                 ]);
                 break;
             case 2:
@@ -31,7 +35,8 @@ class Listorders extends BaseController
                     'date' => $date,
                     'dailyOrdersLocal' => $dailyOrdersLocal,
                     'dailyOrdersDomicilio' => $dailyOrdersDomicilio,
-                    'refOrder' => $refOrderToHighlight
+                    'refOrder' => $refOrderToHighlight,
+                    'pago_con'=>$pago_con
                 ]);
                 break;
             case 3:
@@ -39,7 +44,8 @@ class Listorders extends BaseController
                     'date' => $date,
                     'dailyOrdersLocal' => $dailyOrdersLocal,
                     'dailyOrdersDomicilio' => $dailyOrdersDomicilio,
-                    'refOrder' => $refOrderToHighlight
+                    'refOrder' => $refOrderToHighlight,
+                    'pago_con'=>$pago_con
                 ]);
                 break;
             case 4:
@@ -47,7 +53,8 @@ class Listorders extends BaseController
                     'date' => $date,
                     'dailyOrdersLocal' => $dailyOrdersLocal,
                     'dailyOrdersDomicilio' => $dailyOrdersDomicilio,
-                    'refOrder' => $refOrderToHighlight
+                    'refOrder' => $refOrderToHighlight,
+                    'pago_con'=>$pago_con
                 ]);
                 break;
         }

@@ -70,8 +70,11 @@
                                 <?= $order->hour_order . '<br>' . $order->date_order . '<br>' . $order->getNameEmployee() ?>
                             </td>
                             <td style="max-width: 100px;"><?= $order->observations_order ?></td>
-                            <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) ?></td>
-
+                            <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) . '<br>';
+                                if ($refOrder == $order->id_order && $order->state_id_state == 2) :
+                                    echo 'PAGO CON $ ' . number_format($pago_con) . '<br>VUELTOS $ ' . number_format($pago_con - $order->getTotalWthitOutDomicilio());
+                                endif; ?>
+                            </td>
                             <td class="project-actions text-right">
 
                                 <?php if ($order->state_id_state == 1 or $order->state_id_state == 2) : ?>
@@ -85,7 +88,7 @@
                             </td>
                             <td>
                                 <?php if ($order->isPrint() == false) : ?>
-                                    <form action="<?= base_url() . route_to('print_order') ?>" method="post" >
+                                    <form action="<?= base_url() . route_to('print_order') ?>" method="post">
                                         <input type="hidden" name="reference" value="<?= $order->id_order ?>">
                                         <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
                                             <i class="fas fa-download"></i>Imprimir
@@ -171,8 +174,11 @@
                                 <?= $order->hour_order . '<br>' . $order->date_order . '<br>' . $order->getNameEmployee() ?>
                             </td>
                             <td style="max-width: 100px;"><?= $order->observations_order ?></td>
-                            <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) ?></td>
-
+                            <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) . '<br>';
+                                if ($refOrder == $order->id_order && $order->state_id_state == 2) :
+                                    echo 'PAGO CON $ ' . number_format($pago_con) . '<br>VUELTOS $ ' . number_format($pago_con - $order->getTotalWthitOutDomicilio());
+                                endif; ?>
+                            </td>
                             <td class="project-actions text-right">
 
                                 <?php if ($order->state_id_state == 1 or $order->state_id_state == 2) : ?>

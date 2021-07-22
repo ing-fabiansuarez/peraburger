@@ -49,10 +49,6 @@
                                 </button>
                             </div>
                         </a>
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -81,12 +77,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Pago con</label>
-                                        <input id="input_pago_con" name="pago_con" type="number" class="form-control" placeholder="valor">
-                                    </div>
-                                </div> -->
                             </div>
                             <div id="form-typeshipping">
                             </div>

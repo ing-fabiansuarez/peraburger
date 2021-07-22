@@ -105,10 +105,20 @@ class Ajax extends BaseController
 					</div>
 				</div>
 			</div>
-			<div class='text-center'>
-				<button id='pago_con' type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
-					CREAR PEDIDO
-				</button>
+			<div class='row'>
+				<div class='col-sm-3'>
+					<div class='form-group'>
+					
+						<input name='pago_con' type='number' class='form-control' placeholder='Paga con *'>
+					</div>
+				</div>
+				<div class='col-sm-6'>
+				
+					<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
+						CREAR PEDIDO
+					</button>
+				
+				</div>
 			</div>
 			<div class='modal fade' id='modal-default'>
 				<div class='modal-dialog'>
@@ -145,11 +155,22 @@ class Ajax extends BaseController
 					</div>
 				</div>
 			</div>
-			<div class='text-center'>
-				<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
-					CREAR PEDIDO
-				</button>
+			<div class='row'>
+				<div class='col-sm-3'>
+					<div class='form-group'>
+					
+						<input name='pago_con' type='number' class='form-control' placeholder='Paga con *'>
+					</div>
+				</div>
+				<div class='col-sm-6'>
+				
+					<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
+						CREAR PEDIDO
+					</button>
+				
+				</div>
 			</div>
+			
 			<div class='modal fade' id='modal-default'>
 				<div class='modal-dialog'>
 					<div class='modal-content'>
@@ -191,10 +212,20 @@ class Ajax extends BaseController
 					</div>
 				</div>
 			</div>
-			<div class='text-center'>
-				<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
-					CREAR PEDIDO
-				</button>
+			<div class='row'>
+				<div class='col-sm-3'>
+					<div class='form-group'>
+					
+						<input name='pago_con' type='number' class='form-control' placeholder='Paga con *'>
+					</div>
+				</div>
+				<div class='col-sm-6'>
+				
+					<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modal-default'>
+						CREAR PEDIDO
+					</button>
+				
+				</div>
 			</div>
 			<div class='modal fade' id='modal-default'>
 				<div class='modal-dialog'>
