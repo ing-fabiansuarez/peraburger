@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\CategoryModel;
+use App\Models\DetailorderModel;
 use App\Models\EmployeeModel;
 use App\Models\OrderModel;
 use App\Models\PermissionModel;
@@ -203,5 +204,70 @@ class Informes extends BaseController
     {
         $date = $this->request->getPost('date');
         return redirect()->to(base_url() . route_to('informe_daily_box', $date));
+    }
+
+    public function dateReportKathe()
+    {
+        $date = $this->request->getPost('date');
+        return redirect()->to(base_url() . route_to('informe_kathe', $date));
+    }
+
+    public function reportKathe($date)
+    {
+        $mdlPermission = new PermissionModel();
+        if (!$mdlPermission->hasPermission(5)) {
+            return view('permission/donthavepermission');
+        }
+
+        $mdlCategories = new CategoryModel();
+        $mdlDetail = new DetailorderModel();
+        $mdlProduct = new ProductModel();
+
+        //CONSULTAS A LA BASE DE DATOS
+        $query = $mdlDetail->table('detailorder')
+            /* ->select('product_id_product,order_id_order,quantity_detailorder') */
+            ->select('product_id_product,quantity_detailorder,name_product')
+            ->join('order', 'detailorder.order_id_order = order.id_order')
+            ->join('product', 'product.id_product = detailorder.product_id_product')
+            ->where('order.date_order', $date)
+            ->get()->getResultArray();
+        $products = $mdlProduct->table('product')
+            ->select('id_product,name_product,category_id_category')
+            ->join('category', 'product.category_id_category = category.id_category')
+            ->get()->getResultArray();
+
+        //CONTADOR DE CANTIDADES POR PRODUCTO
+        $arrayProducts = array();
+        foreach ($products as $product) {
+            $countProducts = 0;
+            foreach ($query as $row) {
+                if ($product['id_product'] == $row['product_id_product']) {
+                    $countProducts += 1 * $row['quantity_detailorder'];
+                }
+            }
+            array_push($arrayProducts, array_merge($product, ['sumatoria' => $countProducts]));
+        }
+
+        //ARRAY DE TODA LA INFORMACION
+        $arrayCategories = array();
+
+        foreach ($mdlCategories->findAll() as $category) {
+            $contadorCategory = 0;
+            $arrayProductsForCategory = array();
+            foreach ($arrayProducts as $product) {
+                if ($product['category_id_category'] == $category['id_category']) {
+                    //aqui se muestran todos los productos
+                    array_push($arrayProductsForCategory, $product);
+                    $contadorCategory += $product['sumatoria'];
+                }
+            }
+            array_push($arrayCategories, array_merge($category, ['sumatoria' => $contadorCategory, 'products' => $arrayProductsForCategory]));
+        }
+
+
+        return view('admin/contents/informes/kathe_report', [
+            'date' => $date,
+            'arrayCategories' => $arrayCategories
+        ]);
     }
 }

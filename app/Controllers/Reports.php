@@ -214,18 +214,19 @@ class Reports extends BaseController
         $pdf->cell(30, 1, '', 0, 0, 'L');
         $pdf->MultiCell(40, 5, utf8_decode($client['name_client'] . ' ' . $client['surname_client']), 1, 'C');
         $pdf->cell(30, 5, '', 0, 0, 'L');
-        
-        if ($order->typeshipping_id_typeshipping == 1) {
-            
-            $pdf->SetFont('Helvetica', '', 9);
-            $pdf->MultiCell(40, 8, utf8_decode('PARA LLEVAR'), 0, 'L');
-        } else {
-            
-            $pdf->MultiCell(40, 5, utf8_decode('Dirección:'), 0, 'L');
 
-            $pdf->SetFont('Arial', '', 9);
-            $pdf->cell(30, 1, '', 0, 0, 'L');
-            $pdf->MultiCell(40, 4, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
+        if ($order->typeshipping_id_typeshipping == 1) {
+            if ($order->getDomicilio()['address_domicilio'] == '') {
+                $pdf->SetFont('Helvetica', '', 9);
+                $pdf->MultiCell(40, 8, utf8_decode('PARA LLEVAR'), 0, 'L');
+            } else {
+
+                $pdf->MultiCell(40, 5, utf8_decode('Dirección:'), 0, 'L');
+
+                $pdf->SetFont('Arial', '', 9);
+                $pdf->cell(30, 1, '', 0, 0, 'L');
+                $pdf->MultiCell(40, 4, utf8_decode($domicilio['address_domicilio'] . ' Barrio ' . $domicilio['neighborhood_domicilio']), 0, 'L');
+            }
         }
 
 

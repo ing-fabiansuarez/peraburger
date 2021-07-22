@@ -80,6 +80,8 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->get('reportediario/(:segment)/(:segment)', 'Informes::generalReport/$1/$2', ['as' => 'informe_general_report']);
 	$routes->post('validaterangedate','Informes::validateFormRangeDate',['as'=>'validateformdaterange']);
 	$routes->post('validatedate','Informes::validateFormDate',['as'=>'validate_date']);
+	$routes->get('reporteskathe/(:segment)', 'Informes::reportKathe/$1', ['as' => 'informe_kathe']); 
+	$routes->post('formdatekathe','Informes::dateReportKathe',['as'=>'validate_date_report_kathe']);
 
 	//cotizador
 	$routes->get('carne', 'Quote::viewMeat', ['as' => 'quote_meat']); 

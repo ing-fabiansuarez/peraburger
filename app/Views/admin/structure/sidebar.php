@@ -97,7 +97,15 @@
                     <a href="<?= base_url() . route_to('informe_daily_box', date("Y-m-d")) ?>" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
-                            Reporte diario
+                            Caja de cierre
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('informe_kathe', date("Y-m-d")) ?>" class="nav-link">
+                        <i class="nav-icon fas fa-flag-checkered"></i>
+                        <p>
+                            Estadisticas Kathe
                         </p>
                     </a>
                 </li>
