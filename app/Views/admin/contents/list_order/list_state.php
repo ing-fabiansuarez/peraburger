@@ -65,9 +65,13 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <?php if ($refOrder == $order->id_order && $order->state_id_state == 2) :
+                                    echo '<br>' . $order->durationTime();
+                                endif ?>
                             </td>
                             <td>
                                 <?= $order->hour_order . '<br>' . $order->date_order . '<br>' . $order->getNameEmployee() ?>
+
                             </td>
                             <td style="max-width: 100px;"><?= $order->observations_order ?></td>
                             <td><?= '$ ' . number_format($order->getTotalWthitOutDomicilio()) . '<br>';

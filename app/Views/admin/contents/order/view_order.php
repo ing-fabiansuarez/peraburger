@@ -61,31 +61,7 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-                                <div class="card card-dark shadow-sm">
-                                    <div class="card-header">
-                                        Acciones:
-                                    </div>
-                                    <div class="card-body">
-
-                                        <div class="row no-print">
-                                            <form action="<?= base_url() . route_to('print_order') ?>" method="post" target="_blank">
-                                                <input type="hidden" name="reference" value="<?= $order->id_order ?>">
-                                                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
-                                                    <i class="fas fa-download"></i> Cliente
-                                                </button>
-                                            </form>
-                                            <?php if (isset($domi)) { ?>
-                                                <form action="<?= base_url() . route_to('print_sticker') ?>" method="post" target="_blank">
-                                                    <input type="hidden" name="reference" value="<?= $order->id_order ?>">
-                                                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px; margin-bottom: 5px;">
-                                                        <i class="fas fa-print"></i> Etiqueta
-                                                    </button>
-                                                </form>
-                                            <?php } ?>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                
                                 <div class="card card-dark shadow-sm">
                                     <div class="card-header">
                                         Observaciones:

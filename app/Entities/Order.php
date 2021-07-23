@@ -13,6 +13,7 @@ use App\Models\TypeshippingModel;
 use App\Models\WhitoutingredientModel;
 use App\Models\WithadditionModel;
 use CodeIgniter\Entity;
+use DateTime;
 
 class Order extends Entity
 {
@@ -160,14 +161,31 @@ class Order extends Entity
     public function durationTime()
     {
         $mdlOrder = new OrderModel();
-        dd(
-            $mdlOrder->db->table('detailorder')
-                ->select('*')
-                ->join('order', 'order.id_order = detailorder.order_id_order')
-                ->where('order.date_order', $this->date_order)
-                ->where('order.state_id_state', 2)
-                ->orderBy('order.hour_order', 'asc')
-                ->get()->getResultArray()
-        );
+
+        //constantes por las variables
+        $timeMeat = 15; //minutos
+        $timePlus = 5; //minutos
+        $grillCapacity = 24; //carnes
+
+        $query = $mdlOrder->db->table('detailorder')
+            ->select('quantity_detailorder')
+            ->join('order', 'order.id_order = detailorder.order_id_order')
+            ->join('product', 'product.id_product = detailorder.product_id_product')
+            ->where('order.date_order', $this->date_order)
+            ->where('order.state_id_state', 2)
+            ->where('category_id_category', 1)
+            ->orderBy('order.hour_order', 'asc')
+            ->get()->getResultArray();
+
+        $amountInGrill = 0;
+        foreach ($query as $row) {
+            $amountInGrill += 1 * $row['quantity_detailorder'];
+        }
+        if ($grillCapacity > $amountInGrill) {
+            return 'Se demora Aprox. ' . $timeMeat . ' a ' . ($timeMeat + $timePlus) . ' min';
+        } else {
+            $timeAprox = ($timeMeat * ceil($amountInGrill / $grillCapacity));
+            return 'Se demora Aprox. ' . $timeAprox . ' a ' . ($timeAprox + $timePlus) . ' min';
+        }
     }
 }
