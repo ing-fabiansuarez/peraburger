@@ -247,10 +247,6 @@ class Reports extends BaseController
             $pdf->cell(30, 1, '', 0, 0, 'L');
             $pdf->MultiCell(40, 4,  utf8_decode($domicilio['observation_domicilio']), 0, 'L');
         }
-
-        $this->response->setHeader('Content-Type', 'application/pdf');
-        $pdf->AutoPrint(true);
-        $pdf->Output();
     }
 }
 
