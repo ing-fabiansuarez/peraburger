@@ -153,7 +153,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($arrayEmployees as $employee) : ?>
+                                <?php foreach ($arrayEmployees as $employee) : 
+                                    if($employee['total']!=0):
+                                    ?>
                                     <tr>
                                         <td><?= $employee['id_employee'] ?></td>
                                         <td><?= $employee['name_employee'] . ' ' . $employee['surname_employee'] ?></td>
@@ -161,7 +163,7 @@
                                         <td><?= '$ ' . number_format($employee['domi']) ?></td>
                                         <td><?= '$ ' . number_format($employee['total']) ?></td>
                                     </tr>
-                                <?php endforeach ?>
+                                <?php endif; endforeach ?>
                             </tbody>
                         </table>
                     </div>
