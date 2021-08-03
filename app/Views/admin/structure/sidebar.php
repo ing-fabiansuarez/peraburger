@@ -79,6 +79,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-header">BASE DE DATOS</li>
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('view_domiciliaries') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Domiciliarios
+                        </p>
+                    </a>
+                </li>
 
 
 
@@ -118,15 +127,15 @@
                     </a>
                 </li>
 
-                <li class="nav-header">DOMICILIARIO</li>
                 <li class="nav-item">
-                    <a href="<?= base_url() . route_to('view_domiciliaries') ?>" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
+                    <a href="<?= base_url() . route_to('month_repot', date("Y"), date("m")) ?>" class="nav-link">
+                        <i class="nav-icon fas fa-robot"></i>
                         <p>
-                            Crear Domiciliario
+                            Reporte Mensual
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-header"></li>
                 <li class="nav-item">
                     <a href="<?= base_url() . route_to('view_domiciliaries') ?>" class="nav-link">

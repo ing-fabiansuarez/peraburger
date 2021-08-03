@@ -270,4 +270,19 @@ class Informes extends BaseController
             'arrayCategories' => $arrayCategories
         ]);
     }
+
+    public function reportMonth($year, $month)
+    {
+        $mdlPermission = new PermissionModel();
+        if (!$mdlPermission->hasPermission(6)) {
+            return view('permission/donthavepermission');
+        }
+        $mdlOrder = new OrderModel();
+        $query = "`date_order` LIKE '%$year-$month-%'";
+        $list_orders = $mdlOrder->where($query)->findAll();
+
+        return view('admin/contents/informes/month_report', [
+            'list_orders' => $list_orders
+        ]);
+    }
 }

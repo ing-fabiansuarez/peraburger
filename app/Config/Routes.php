@@ -82,6 +82,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->post('validatedate','Informes::validateFormDate',['as'=>'validate_date']);
 	$routes->get('reporteskathe/(:segment)', 'Informes::reportKathe/$1', ['as' => 'informe_kathe']); 
 	$routes->post('formdatekathe','Informes::dateReportKathe',['as'=>'validate_date_report_kathe']);
+	$routes->get('reportemensual/(:segment)/(:segment)', 'Informes::reportMonth/$1/$2', ['as' => 'month_repot']);
 
 	//cotizador
 	$routes->get('carne', 'Quote::viewMeat', ['as' => 'quote_meat']); 
