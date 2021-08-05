@@ -6,7 +6,9 @@ use App\Models\ClientModel;
 use App\Models\DetailorderModel;
 use App\Models\DomicilioModel;
 use App\Models\EmployeeModel;
+use App\Models\OrderHasPaymentMethodModel;
 use App\Models\OrderModel;
+use App\Models\PaymentMethodModel;
 use App\Models\PrintModel;
 use App\Models\StateModel;
 use App\Models\TypeshippingModel;
@@ -68,6 +70,16 @@ class Order extends Entity
         $mdlEmployee = new EmployeeModel();
 
         return $mdlEmployee->find($this->attributes['employee_id_employee'])['name_employee'];
+    }
+    public function getNamePaymentMethod()
+    {
+        $mdlPaymentMethod = new PaymentMethodModel();
+        $mdlOrderHasPayment = new OrderHasPaymentMethodModel();
+        if (!$payment = $mdlOrderHasPayment->select('*')->where('order_id_order', $this->attributes['id_order'])->first()) {
+            return "NO DEFINIDO";
+        } else {
+            return $mdlPaymentMethod->find($payment['paymentmethod_id_paymentmethod'])['name_paymentmethod'];
+        }
     }
     public function getDomicilio()
     {

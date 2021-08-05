@@ -118,14 +118,6 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="<?= base_url() . route_to('informe_general_report', date("Y-m-d"), date("Y-m-d")) ?>" class="nav-link">
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>
-                            Reporte General
-                        </p>
-                    </a>
-                </li>
 
                 <li class="nav-item">
                     <a href="<?= base_url() . route_to('month_repot', date("Y"), date("m")) ?>" class="nav-link">
@@ -135,6 +127,17 @@
                         </p>
                     </a>
                 </li>
+                
+                <li class="nav-item">
+                    <a href="<?= base_url() . route_to('informe_general_report', date("Y-m-d"), date("Y-m-d")) ?>" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Reporte General
+                        </p>
+                    </a>
+                </li>
+
+                
 
                 <li class="nav-header"></li>
                 <li class="nav-item">

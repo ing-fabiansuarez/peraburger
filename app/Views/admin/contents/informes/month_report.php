@@ -110,6 +110,7 @@
                                 <th>Elaborado por</th>
                                 <th>Total</th>
                                 <th>Tipo de Env&iacute;o</th>
+                                <th>Medio de Pago</th>
                                 <th>Estado</th>
                                 <th>Turno</th>
                                 <th>N° Factura</th>
@@ -138,7 +139,9 @@
                                                                     echo 'bg-primary';
                                                                     break;
                                                             }
-                                                            ?>"><?= $order->getTypeofShipping()['name_typeshipping'] ?></span></td>
+                                                            ?>"><?= $order->getTypeofShipping()['name_typeshipping'] ?></span>
+                                    </td>
+                                    <td><?= $order->getNamePaymentMethod() ?></td>
                                     <td>
                                         <span class="badge <?php switch ($order->getState()['id_state']) {
                                                                 case 1:
@@ -156,6 +159,7 @@
                                                             }
                                                             ?>"><?= $order->getState()['name_state'] ?></span>
                                     </td>
+
                                     <td>
                                         <?= $order->turnmachine_order ?>
                                     </td>

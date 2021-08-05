@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CategoryModel;
 use App\Models\DetailorderModel;
 use App\Models\EmployeeModel;
+use App\Models\OrderHasPaymentMethodModel;
 use App\Models\OrderModel;
 use App\Models\PermissionModel;
 use App\Models\ProductModel;
@@ -50,26 +51,22 @@ class Informes extends BaseController
         $quantityOrdersDisabled = 0;
 
         foreach ($list_orders as $order) {
-            if ($order->state_id_state == 3) {
-                $totalSales += $order->getTotalWthitOutDomicilio();
-                $totalDomis += $order->getDomicilio()['price_domicilio'];
+            $totalSales += $order->getTotalWthitOutDomicilio();
+            $totalDomis += $order->getDomicilio()['price_domicilio'];
 
-                if ($order->typeshipping_id_typeshipping == 1) {
-                    $moneyOrdersDomis += $order->getTotalWthitOutDomicilio();
-                    $quantityOrdersDomis += 1;
-                } else if ($order->typeshipping_id_typeshipping == 2) {
-                    $moneyOrdersLocal += $order->getTotalWthitOutDomicilio();
-                    $quantityOrdersLocal += 1;
-                }
-            } else if ($order->state_id_state == 4) {
-                $moneyOrdersDisabled += $order->getTotalWthitOutDomicilio();
-                $quantityOrdersDisabled += 1;
+            if ($order->typeshipping_id_typeshipping == 1) {
+                $moneyOrdersDomis += $order->getTotalWthitOutDomicilio();
+                $quantityOrdersDomis += 1;
+            } else if ($order->typeshipping_id_typeshipping == 2) {
+                $moneyOrdersLocal += $order->getTotalWthitOutDomicilio();
+                $quantityOrdersLocal += 1;
             }
         }
 
         //Consulta de reportes por cliente
         $mdlEmployee = new EmployeeModel();
         $employees = $mdlEmployee->find();
+        $mdlOrderHasPay = new OrderHasPaymentMethodModel();
         $arrayEmployees = array();
 
         foreach ($employees as $employee) {
@@ -77,15 +74,30 @@ class Informes extends BaseController
                 'domi' => 0,
                 'local' => 0,
                 'total' => 0,
+                'efectivo' => 0,
+                'datafono' => 0,
+                'transferencia' => 0
             ];
             foreach ($list_orders as $order) {
-                if ($order->state_id_state == 3) {
-                    if ($order->employee_id_employee == $employee['id_employee']) {
-                        $sales['total'] += $order->getTotalWthitOutDomicilio();
-                        if ($order->typeshipping_id_typeshipping == 1) {
-                            $sales['domi'] += $order->getTotalWthitOutDomicilio();
-                        } else if ($order->typeshipping_id_typeshipping == 2) {
-                            $sales['local'] += $order->getTotalWthitOutDomicilio();
+                if ($order->employee_id_employee == $employee['id_employee']) {
+                    $sales['total'] += $order->getTotalWthitOutDomicilio();
+                    if ($order->typeshipping_id_typeshipping == 1) {
+                        $sales['domi'] += $order->getTotalWthitOutDomicilio();
+                    } else if ($order->typeshipping_id_typeshipping == 2) {
+                        $sales['local'] += $order->getTotalWthitOutDomicilio();
+                    }
+                    if (!$id_payment = $mdlOrderHasPay->where('order_id_order', $order->id_order)->first()) {
+                    } else {
+                        switch ($id_payment['paymentmethod_id_paymentmethod']) {
+                            case 1:
+                                $sales['efectivo'] += $order->getTotalWthitOutDomicilio();
+                                break;
+                            case 2:
+                                $sales['datafono'] += $order->getTotalWthitOutDomicilio();
+                                break;
+                            case 3:
+                                $sales['transferencia'] += $order->getTotalWthitOutDomicilio();
+                                break;
                         }
                     }
                 }

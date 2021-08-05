@@ -117,7 +117,7 @@
             </div> -->
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-store"></i></span>
 
@@ -136,7 +136,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="card card-secondary">
                     <div class="card-header">
                         <h3 class="card-title">Ventas por Trabajor:</h3>
@@ -147,23 +147,26 @@
                                 <tr>
                                     <th>Cedula</th>
                                     <th>Nombre</th>
-                                    <th>Ventas Local</th>
-                                    <th>Ventas Domicilio</th>
+                                    <th>Efectivo</th>
+                                    <th>Datafono</th>
+                                    <th>Transf.</th>
                                     <th>Ventas Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($arrayEmployees as $employee) : 
-                                    if($employee['total']!=0):
-                                    ?>
-                                    <tr>
-                                        <td><?= $employee['id_employee'] ?></td>
-                                        <td><?= $employee['name_employee'] . ' ' . $employee['surname_employee'] ?></td>
-                                        <td><?= '$ ' . number_format($employee['local']) ?></td>
-                                        <td><?= '$ ' . number_format($employee['domi']) ?></td>
-                                        <td><?= '$ ' . number_format($employee['total']) ?></td>
-                                    </tr>
-                                <?php endif; endforeach ?>
+                                <?php foreach ($arrayEmployees as $employee) :
+                                    if ($employee['total'] != 0) :
+                                ?>
+                                        <tr>
+                                            <td><?= $employee['id_employee'] ?></td>
+                                            <td><?= $employee['name_employee'] . ' ' . $employee['surname_employee'] ?></td>
+                                            <td><?= '$ ' . number_format($employee['efectivo']) ?></td>
+                                            <td><?= '$ ' . number_format($employee['datafono']) ?></td>
+                                            <td><?= '$ ' . number_format($employee['transferencia']) ?></td>
+                                            <td><?= '$ ' . number_format($employee['total']) ?></td>
+                                        </tr>
+                                <?php endif;
+                                endforeach ?>
                             </tbody>
                         </table>
                     </div>
@@ -197,6 +200,7 @@
                                 <th>Hora</th>
                                 <th>Total</th>
                                 <th>Tipo de Env&iacute;o</th>
+                                <th>Medio de Pago</th>
                                 <th>Estado</th>
                                 <th>Turno</th>
                                 <th>Consecutivo</th>
@@ -248,7 +252,11 @@
                                                                     echo 'bg-primary';
                                                                     break;
                                                             }
-                                                            ?>"><?= $order->getTypeofShipping()['name_typeshipping'] ?></span></td>
+                                                            ?>"><?= $order->getTypeofShipping()['name_typeshipping'] ?></span>
+                                    </td>
+                                    <td>
+                                        <?= $order->getNamePaymentMethod() ?>
+                                    </td>
                                     <td>
                                         <span class="badge <?php switch ($order->getState()['id_state']) {
                                                                 case 1:

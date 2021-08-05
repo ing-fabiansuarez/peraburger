@@ -35,7 +35,7 @@
                                 <a href="<?= base_url() . route_to('view_load_order', $order->id_order) ?>">
                                     <?= $order->id_order . '<br><b>' . $order->getNameClient() . '</b>' ?>
                                 </a>
-
+                                <br><b><?= $order->getNamePaymentMethod() ?></b>
                             </td>
                             <td>
                                 <table class="table table-hover">
@@ -142,8 +142,9 @@
                             </td>
                             <td>
                                 <a href="<?= base_url() . route_to('view_load_order', $order->id_order) ?>">
-                                    <?= $order->id_order . '<br><b>' . $order->getNameClient() . '</b>' ?>
+                                    <?= $order->id_order . '<br><b>' . $order->getNameClient() . '</b>'   ?>
                                 </a>
+                                <br><b><?= $order->getNamePaymentMethod() ?></b>
                             </td>
                             <td>
                                 <table class="table table-hover">

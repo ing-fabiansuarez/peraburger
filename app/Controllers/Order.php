@@ -10,6 +10,7 @@ use App\Models\ClientModel;
 use App\Models\DetailorderModel;
 use App\Models\DomicilioModel;
 use App\Models\IngredientModel;
+use App\Models\OrderHasPaymentMethodModel;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
 use App\Models\RecipeModel;
@@ -62,6 +63,7 @@ class Order extends BaseController
         /* $REFERENCE = date("Y-m-d") . '-' . time(); */
         $REFERENCE = time();
         $name = $this->request->getPostGet('name');
+        $payment_method = $this->request->getPostGet('payment_method');
         $surname = '';
         $observations_order = $this->request->getPostGet('observation');
 
@@ -71,6 +73,7 @@ class Order extends BaseController
                     'typeshipping' => 'required',
                     'name' => 'required',
                     'whatsapp' => 'required',
+                    'payment_method' => 'required'
                 ]
             )) {
                 return redirect()->back()->with('error', [
@@ -117,6 +120,7 @@ class Order extends BaseController
                 [
                     'typeshipping' => 'required',
                     'name' => 'required',
+                    'payment_method' => 'required'
                 ]
             )) {
                 return redirect()->back()->with('error', [
@@ -126,7 +130,7 @@ class Order extends BaseController
             }
             $domicilio = 1;
         }
-        
+
         $mdlClient = new ClientModel();
 
         try {
@@ -163,8 +167,16 @@ class Order extends BaseController
         $new_order->setTurnMachine();
 
         $mdlOrder = new OrderModel();
+        $mdlOrderHasPaymentMethod = new OrderHasPaymentMethodModel();
         try {
             $mdlOrder->insert($new_order);
+
+            //qui vamos a agregar el medio de pago
+            $mdlOrderHasPaymentMethod->insert([
+                'paymentmethod_id_paymentmethod' => $payment_method,
+                'order_id_order' => $REFERENCE
+            ]);
+
         } catch (Exception $e) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
@@ -173,6 +185,8 @@ class Order extends BaseController
         }
         //d($new_order);
         //HASTA AQUI SE A CREADO TODO DE LA NUEVA ORDEN BIEN
+
+        //aqui se creara los productos
 
         $mdlDetailOrder = new DetailorderModel();
         $mdlProducts = new ProductModel();
@@ -239,7 +253,7 @@ class Order extends BaseController
             }
         }
         session()->remove('list_order');
-        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")) . '?refOrderToHighlight=' . $REFERENCE.'&pago_con=' . $this->request->getPostGet('pago_con'));
+        return redirect()->to(base_url() . route_to('view_list_order', 2, date("Y-m-d")) . '?refOrderToHighlight=' . $REFERENCE . '&pago_con=' . $this->request->getPostGet('pago_con'));
     }
 
     public function viewCreateOrderFinish()

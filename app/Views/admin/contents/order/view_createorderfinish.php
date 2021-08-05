@@ -67,13 +67,24 @@
                     <div class="card-body">
                         <form action="<?= base_url() . route_to('create_order') ?>" method="post">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-8">
                                     <div class="form-group">
                                         <label>Tipo</label>
                                         <select name="typeshipping" id="typeshipping" class="form-control">
                                             <option value="2">Local</option>
                                             <option value="3">Esperan para llevan - Domicilio sin dirección</option>
                                             <option value="1">Domicilio con dirección</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Medio de pago</label>
+                                        <select name="payment_method" class="form-control" required>
+                                            <option value="">Medio de pago*</option>
+                                            <option value="1">EFETIVO</option>
+                                            <option value="2">DATAFONO</option>
+                                            <option value="3">TRANSFERENCIA</option>
                                         </select>
                                     </div>
                                 </div>
