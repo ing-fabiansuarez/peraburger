@@ -67,7 +67,7 @@ class Reports extends BaseController
         $pdf->cell(50, 10, '', 0, 1, 'C');
         $pdf->Image(base_url('', 'http') . '/public/img/peraburgelogo1.png', 13, 1, 50);
         $pdf->cell(69, 4, 'FACTURA DE VENTA', 0, 1, 'C');
-        $pdf->cell(69, 4, utf8_decode('N° ' . $order->consecutive_order), 0, 1, 'C');
+        $pdf->cell(69, 4, utf8_decode('N° K-' . $order->consecutive_order), 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 8);
         $pdf->cell(69, 4, 'KATHE CREATIVA SAS', 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 10);
@@ -106,7 +106,7 @@ class Reports extends BaseController
         $pdf->cell(10, 4, '', 0, 1, 'C');
         $pdf->cell(69, 4, '------------------------------------------------', 0, 1, 'C');
         $pdf->SetFont('Times', 'B', 9);
-        $pdf->MultiCell(69, 4, utf8_decode('Resolución DIAN N° 18764013534966 con prefijo K desde 1 hasta 2000 con vigencia desde 21/05/2021 hasta 20/05/2022'), 0, 'C');
+        $pdf->MultiCell(69, 4, utf8_decode('Resolución DIAN N° 18764017921434 con prefijo K desde 2001 hasta 15000 con vigencia desde 11/09/2021 hasta 10/09/2022'), 0, 'C');
         $pdf->cell(10, 4, '', 0, 1, 'C');
         $pdf->cell(35, 4, 'PeRa Burger', 0, 0, 'L');
         $pdf->cell(34, 4, date('Y-m-d g:i a'), 0, 1, 'R');
