@@ -25,7 +25,7 @@
 
                 <div class="card card-success shadow-sm">
                     <div class="card-header">
-                        <h3 class="card-title"><?= $order->id_order . '<br>' . $client['name_client'] . ' ' . $client['surname_client'] ?><br><?= $order->getState()['name_state'] ?></h3>
+                        <h3 class="card-title"><?= $order->id_order . '<br>' . $client['name_client'] . ' ' . $client['surname_client'] ?><br><?= $order->getState()['name_state'] ?> <br><?= $order->getNamePaymentMethod()  ?></h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -36,14 +36,21 @@
 
                         <div class="row">
                             <div class="col-md-4">
+                                <?php if (!empty(session('msg'))) : ?>
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <h5><i class="icon fas fa-check"></i> <?= session('msg.title') ?></h5>
+                                        <?= session('msg.body') ?>
+                                    </div>
+                                <?php endif ?>
                                 <div class="card card-dark shadow-sm">
                                     <div class="card-header">
                                         TURNO: <b><?= $order->turnmachine_order ?></b><br>
                                     </div>
                                     <div class="card-body">
-                                        <b>Fecha:</b> <?= $order->date_order . ' ' . $order->hour_order ?> 
+                                        <b>Fecha:</b> <?= $order->date_order . ' ' . $order->hour_order ?>
                                         <br><b>Tipo de envio:</b> <?= $typeshipping['name_typeshipping'] ?>
-                                        <br><b>Creado por:</b> <?= $order->getNameEmployee()?>
+                                        <br><b>Creado por:</b> <?= $order->getNameEmployee() ?>
                                     </div>
                                 </div>
                                 <?php if (isset($domi)) { ?>
@@ -61,13 +68,34 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-                                
+
                                 <div class="card card-dark shadow-sm">
                                     <div class="card-header">
                                         Observaciones:
                                     </div>
                                     <div class="card-body">
-                                       <b>Observaciones de Cocina: </b> <?= $order->observations_order ?>
+                                        <b>Observaciones de Cocina: </b> <?= $order->observations_order ?>
+                                    </div>
+                                </div>
+                                <div class="card card-dark shadow-sm">
+                                    <div class="card-header">
+                                        Cambiar medio de pago
+                                    </div>
+                                    <div class="card-body">
+                                        <b>Medio de pago Actual:</b> <?= $order->getNamePaymentMethod() ?>
+                                        <br>
+                                        <form action="<?= base_url() . route_to('change_method_payment') ?>" method="post">
+                                            <div class="form-group">
+                                                <label>Cambiar por</label>
+                                                <input type="hidden" name="id_order" value="<?= $order->id_order ?>">
+                                                <select name="method_payment" class="custom-select">
+                                                    <?php foreach ($methodpayments as $payment) : ?>
+                                                        <option value="<?= $payment['id_paymentmethod'] ?>"><?= $payment['name_paymentmethod'] ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-block btn-primary btn-sm">Guardar Cambios</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -141,14 +169,8 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-
-
             </div>
-
-            
-
         </div>
     </div>
-
 </section>
 <?= $this->endSection() ?>

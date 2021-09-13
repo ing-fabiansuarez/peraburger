@@ -12,6 +12,7 @@ use App\Models\DomicilioModel;
 use App\Models\IngredientModel;
 use App\Models\OrderHasPaymentMethodModel;
 use App\Models\OrderModel;
+use App\Models\PaymentMethodModel;
 use App\Models\ProductModel;
 use App\Models\RecipeModel;
 use App\Models\TypeshippingModel;
@@ -30,13 +31,15 @@ class Order extends BaseController
         $mdlDetailOrder = new DetailorderModel();
         $mdlTypeshipping = new TypeshippingModel();
         $mdlDomicilio = new DomicilioModel();
+        $mdlPayment = new PaymentMethodModel();
 
         return view('admin/contents/order/view_order', [
             'order' => $order = $mdlOrder->find($REF),
             'list_of_products' => $order->getListofProducts(),
             'client' => $mdlClient->find($order->client_id_client),
             'typeshipping' => $mdlTypeshipping->find($order->typeshipping_id_typeshipping),
-            'domi' => $mdlDomicilio->find($REF)
+            'domi' => $mdlDomicilio->find($REF),
+            'methodpayments' => $mdlPayment->findAll()
         ]);
     }
 
@@ -176,7 +179,6 @@ class Order extends BaseController
                 'paymentmethod_id_paymentmethod' => $payment_method,
                 'order_id_order' => $REFERENCE
             ]);
-
         } catch (Exception $e) {
             return redirect()->back()->with('error', [
                 'title' => 'Alerta!',
@@ -350,5 +352,20 @@ class Order extends BaseController
     public function d()
     {
         $this->session->destroy();
+    }
+
+    public function changeMethodPayment()
+    {
+        $id_order = $this->request->getPost('id_order');
+        $mdlHasPayment = new OrderHasPaymentMethodModel();
+        $mdlHasPayment
+            ->set('paymentmethod_id_paymentmethod', $this->request->getPost('method_payment'))
+            ->where('order_id_order', $id_order)
+            ->update();
+
+        return redirect()->to(base_url() . route_to('view_load_order', $id_order))->with('msg', [
+            'title' => 'Se cambio el metodo de pago',
+            'body' => 'El medio de pago de la orden ha cambiado',
+        ]);
     }
 }

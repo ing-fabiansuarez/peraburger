@@ -43,6 +43,7 @@ $routes->group('/',['filter'=>'auth'], function ($routes) {
 	$routes->post('crearpedido', 'Order::viewCreateOrderFinish', ['as' => 'view_createorder_finish']);
 	$routes->post('createpedido', 'Order::createOrder', ['as' => 'create_order']);
 	$routes->get('pedido/(:segment)', 'Order::viewLoadOrder/$1', ['as' => 'view_load_order']);
+	$routes->post('pedido/cambiarpayment', 'Order::changeMethodPayment', ['as' => 'change_method_payment']);
 
 	//routes para list of ordenes
 	$routes->get('listadepedidos/(:num)/(:segment)', 'Listorders::view_main/$1/$2', ['as' => 'view_list_order']);
